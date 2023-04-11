@@ -1,0 +1,17 @@
+{
+  "index": "바닐라코딩 Camp Vanilla",
+  "week1" : "WEEK1",
+  "week2": "WEEK2",
+  "week3": "WEEK3",
+  "week5": "WEEK5",
+  "week6": "WEEK6",
+  "week7": "WEEK7",
+  "week8": "WEEK8",
+  "week9": "WEEK9",
+  "contact": {
+    "title": "Contact ↗",
+    "type": "page",
+    "href": "https://www.vanillacoding.co",
+    "newWindow": true
+  }
+}

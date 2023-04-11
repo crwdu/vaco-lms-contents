@@ -1,0 +1,9 @@
+{
+  "monolith-structure": "Monolith Structure",
+  "authentication": "Authentication",
+  "process-thread": "Process vs Thread",
+  "sql-nosql": "SQL vs NoSQL",
+  "database-index": "Database Index",
+  "scaling-techniques": "Scaling Techniques",
+  "error-handling": "Error Handling"
+}

@@ -1,0 +1,10 @@
+.next
+node_modules/
+.env
+.env.local
+.env.development
+.env.production
+.env.dev
+.env.prod
+.DS_Store
+next-env.d.ts

@@ -1,0 +1,10 @@
+{
+  "amazon-web-services": "Amazon Web Services",
+  "simple-storage-services": "Simple Storage Services",
+  "elastic-computer-cloud": "Elastic Computer Cloud (EC2)",
+  "elastic-beanstalk": "Elastic Beanstalk",
+  "deployment": "Deployment",
+  "debugging-deployed-environment": "Debugging Deployed Environment",
+  "continuous-deployment": "Continuous Deployment / Continuous Intergration (CI/CD)",
+  "zero-downtime-deployment": "Zero Downtime Deployment"
+}
