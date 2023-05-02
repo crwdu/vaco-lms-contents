@@ -171,6 +171,10 @@ const config = {
                       {(isQuestionProgressing && !answer) ? (
                         <div className="relative flex mt-[16px] ml-[16px] mr-[16px] bg-[#F8F9FB] rounded-t-2xl rounded-br-2xl w-[80px] h-[56px]">
                           <Lottie
+                            style={{
+                              transform: "scale(1.5)",
+                              opacity: "60%"
+                            }}
                             animationData={answerAnimation}
                             loop={true}
                           />
