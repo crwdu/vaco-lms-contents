@@ -1,5 +1,6 @@
 {
-  "recursion": "Recursion",
-  "higher-order-function": "Higher Order Function",
-  "closure": "Closure"
+  "browser-rendering-process": "Browser Rendering Process",
+  "asynchronous-programming": "Asynchronous Programming",
+  "event-loop": "Event Loop",
+  "interview-questions": "Interview Questions"
 }

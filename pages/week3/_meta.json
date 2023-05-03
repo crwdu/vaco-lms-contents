@@ -1,5 +1,7 @@
 {
-  "browser-rendering-process": "Browser Rendering Process",
-  "asynchronous-programming": "Asynchronous Programming",
-  "event-loop": "Event Loop"
+  "grammar-review": "Grammar Review",
+  "recursion": "Recursion",
+  "higher-order-function": "Higher Order Function",
+  "closure": "Closure",
+  "interview-questions": "Interview Questions"
 }

@@ -1,5 +1,7 @@
 {
+  "scope": "Scope",
   "hoisting": "Hoisting",
   "primitive-reference": "Primitive & Reference",
-  "dom-events": "DOM Events (NI)"
+  "dom-events": "DOM Events",
+  "interview-questions": "Interview Questions"
 }

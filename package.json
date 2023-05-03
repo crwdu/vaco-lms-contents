@@ -21,9 +21,10 @@
     "@codesandbox/sandpack-react": "^2.1.10",
     "@codesandbox/sandpack-themes": "^2.0.21",
     "@tailwindcss/typography": "^0.5.8",
+    "antd": "^5.4.6",
     "next": "^13.0.6",
-    "nextra": "2.0.1",
-    "nextra-theme-docs": "2.0.1",
+    "nextra": "^2.4.2",
+    "nextra-theme-docs": "^2.4.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
