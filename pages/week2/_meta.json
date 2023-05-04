@@ -1,6 +1,6 @@
 {
+  "coffee-chat": "Coffee Chat",
   "browser-rendering-process": "Browser Rendering Process",
   "asynchronous-programming": "Asynchronous Programming",
-  "event-loop": "Event Loop",
-  "interview-questions": "Interview Questions"
+  "event-loop": "Event Loop"
 }
