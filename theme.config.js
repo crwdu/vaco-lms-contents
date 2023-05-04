@@ -200,13 +200,14 @@ const config = {
                   <Formik
                     onSubmit={async (values, { resetForm }) => {
                       const { qna } = values;
+                      const trimedQna = qna.replace(/\s+/g, "");
 
-                      if (qna.length < 4) return;
+                      if (trimedQna.length < 4) return;
 
                       const copiedQnaList = cloneDeep(qnaList);
 
                       copiedQnaList.push({
-                        question: qna,
+                        question: trimedQna,
                         answer: null,
                         time: new Date()
                       });
@@ -216,27 +217,47 @@ const config = {
                       setQnaList(copiedQnaList);
 
                       try {
-                        const response = await fetch(`${process.env.NEXT_PUBLIC_URI}/api/qna`, {
+                        const userResponse = await fetch(`${process.env.NEXT_PUBLIC_URI}/api/user`, {
+                          method: "GET",
+                          headers: {
+                            "Content-Type": "application/json",
+                          },
+                        });
+                        const { result: userResult } = await userResponse.json();
+                        const { user } = userResult.data;
+
+                        const userId = user.id;
+                        const campVanilla = user.courses.find((course) => (course.is_admission_exist && course.schedule));
+                        const splitedHref = window.location.href.split("/");
+                        const lessonTitle = splitedHref[splitedHref.length - 1];
+
+                        const qnaResponse = await fetch(`${process.env.NEXT_PUBLIC_URI}/api/qna`, {
                           method: "POST",
                           headers: {
                             "Content-Type": "application/json",
                           },
-                          body: JSON.stringify({ qna }),
+                          body: JSON.stringify({
+                            userId,
+                            courseId: campVanilla.course_id,
+                            scheduleId: campVanilla.schedule,
+                            qna: trimedQna,
+                            lessonTitle,
+                          }),
                         });
-                        const { result } = await response.json();
+                        const { result: qnaResult } = await qnaResponse.json();
 
-                        if (result.ok) {
+                        if (qnaResult.ok) {
                           const lastIndex = (copiedQnaList.length - 1);
                           const lastItem = cloneDeep(copiedQnaList[lastIndex]);
 
-                          lastItem["answer"] = result.data;
+                          lastItem["answer"] = qnaResult.data;
                           copiedQnaList[lastIndex] = lastItem;
 
                           setQnaList(copiedQnaList);
                           setQuestionProgress(false);
                         }
-                      } catch (err) {
-                        console.log(err);
+                      } catch (error) {
+                        console.log(error);
                       }
                     }}
                     initialValues={{ qna: "" }}
