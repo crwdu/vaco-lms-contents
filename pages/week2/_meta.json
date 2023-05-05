@@ -1,6 +1,6 @@
 {
-  "coffee-chat": "Coffee Chat",
-  "browser-rendering-process": "Browser Rendering Process",
-  "asynchronous-programming": "Asynchronous Programming",
-  "event-loop": "Event Loop"
+  "01-coffee-chat": "커피챗",
+  "02-hoisting": "호이스팅",
+  "03-higher-order-functions": "고차 함수",
+  "04-asynchronous-programming": "비동기 프로그래밍"
 }

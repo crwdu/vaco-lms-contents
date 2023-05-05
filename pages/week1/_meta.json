@@ -1,7 +1,6 @@
 {
-  "coffee-chat": "Coffee Chat",
-  "dom-events": "DOM Events",
-  "scope": "Scope",
-  "hoisting": "Hoisting",
-  "primitive-reference": "Types, Primitive & Reference"
+  "01-coffee-chat": "커피챗",
+  "02-dom-events": "DOM 이벤트",
+  "03-scope": "스코프",
+  "04-primitive-reference": "원시값과 참조값"
 }

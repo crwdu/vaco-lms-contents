@@ -1,6 +1,5 @@
 {
-  "coffee-chat": "Coffee Chat",
-  "recursion": "Recursion",
-  "higher-order-function": "Higher Order Function",
-  "closure": "Closure"
+  "01-coffee-chat": "커피챗",
+  "02-recursion": "재귀 함수",
+  "03-closure": "클로져"
 }
