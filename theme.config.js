@@ -63,6 +63,8 @@ const config = {
       const formContainerRef = useRef(null);
       const textareaRef = useRef(null);
 
+      const isInitialQnaView = localStorage.getItem("isInitialQnaView");
+
       useEffect(() => {
         if (isStartingQna && qnaList.length && qnacontainerRef.current) {
           qnacontainerRef.current.scrollTop = qnacontainerRef.current.scrollHeight;
@@ -77,6 +79,18 @@ const config = {
 
       return (
         <>
+          {(!isStartingQna && !isInitialQnaView) && (
+            <>
+              <div className="fixed flex justify-center items-center w-[179px] h-[52px] bg-[#0040FF] right-[116px] bottom-[40px] rounded-lg">
+                <span className="text-xs text-white">
+                  학습 도중 어려움이 생기면, <br/>
+                  무엇이든 KEN에게 물어보세요.
+                </span>
+              </div>
+              <div className="fixed w-[12px] h-[12px] bg-[#0040FF] right-[112px] bottom-[60px] rotate-45" />
+            </>
+          )}
+
           {isStartingQna ? (
             <div className="flex flex-col fixed border border-[#C9D1DD] w-[370px] h-[680px] rounded-[20px] right-[40px] bg-white bottom-[40px]">
               <div className="flex items-center h-[60px] border-b border-[#C9D1DD] pt-[18px] pb-[18px]">
@@ -89,7 +103,13 @@ const config = {
 
                 <div className="font-bold ml-[117px] text-base">KEN</div>
 
-                <div className="cursor-pointer w-[14px] h-[14px] ml-[128px]" onClick={() => setQnaStatus((prev) => !prev)}>
+                <div
+                  className="cursor-pointer w-[14px] h-[14px] ml-[128px]"
+                  onClick={() => {
+                    localStorage.setItem("isInitialQnaView", false);
+                    setQnaStatus((prev) => !prev)
+                  }}
+                >
                   <Image
                     src={cancelIcon}
                     alt="cancel"
@@ -207,7 +227,7 @@ const config = {
                       const copiedQnaList = cloneDeep(qnaList);
 
                       copiedQnaList.push({
-                        question: trimedQna,
+                        question: qna,
                         answer: null,
                         time: new Date()
                       });
@@ -239,25 +259,34 @@ const config = {
                           body: JSON.stringify({
                             userId,
                             courseId: campVanilla.course_id,
-                            scheduleId: campVanilla.schedule,
                             qna: trimedQna,
                             lessonTitle,
                           }),
                         });
                         const { result: qnaResult } = await qnaResponse.json();
 
-                        if (qnaResult.ok) {
-                          const lastIndex = (copiedQnaList.length - 1);
-                          const lastItem = cloneDeep(copiedQnaList[lastIndex]);
+                        const lastIndex = (copiedQnaList.length - 1);
+                        const lastItem = cloneDeep(copiedQnaList[lastIndex]);
 
-                          lastItem["answer"] = qnaResult.data;
-                          copiedQnaList[lastIndex] = lastItem;
+                        lastItem["answer"] = qnaResult?.ok
+                          ? qnaResult.data
+                          : "질문하신 내용은 대답하기 어렵습니다. 더 공부해서 돌아올께요.";
 
-                          setQnaList(copiedQnaList);
-                          setQuestionProgress(false);
-                        }
+                        copiedQnaList[lastIndex] = lastItem;
+
+                        setQnaList(copiedQnaList);
+                        setQuestionProgress(false);
                       } catch (error) {
                         console.log(error);
+
+                        const lastIndex = (copiedQnaList.length - 1);
+                        const lastItem = cloneDeep(copiedQnaList[lastIndex]);
+
+                        lastItem["answer"] = "질문하신 내용은 대답하기 어렵습니다. 더 공부해서 돌아올께요.";
+                        copiedQnaList[lastIndex] = lastItem;
+
+                        setQnaList(copiedQnaList);
+                        setQuestionProgress(false);
                       }
                     }}
                     initialValues={{ qna: "" }}
