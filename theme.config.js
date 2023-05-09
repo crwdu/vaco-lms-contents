@@ -34,15 +34,12 @@ const config = {
     </>
   ),
   logoLink: process.env.NEXT_PUBLIC_URI,
-  editLink: {
-    component: null,
-  },
   feedback: {
     content: null,
   },
   docsRepositoryBase: "https://github.com/shuding/nextra-docs-template",
   sidebar: {
-    defaultMenuCollapseLevel: 0,
+    defaultMenuCollapseLevel: 1,
   },
   head: (
     <>
@@ -57,13 +54,20 @@ const config = {
       const [isStartingQna, setQnaStatus] = useState(false);
       const [isQuestionProgressing, setQuestionProgress] = useState(false);
       const [qnaList, setQnaList] = useState([]);
+      const [hasVisitedContentPage, setHasVisitedContentPage] = useState(true);
 
       const qnacontainerRef = useRef(null);
       const containerRef = useRef(null);
       const formContainerRef = useRef(null);
       const textareaRef = useRef(null);
 
-      const isInitialQnaView = localStorage.getItem("isInitialQnaView");
+      useEffect(() => {
+        const hasVisited = localStorage.getItem("hasVisitedContentPage");
+
+        if (!hasVisited) {
+          setHasVisitedContentPage(false)
+        }
+      }, [hasVisitedContentPage]);
 
       useEffect(() => {
         if (isStartingQna && qnaList.length && qnacontainerRef.current) {
@@ -79,7 +83,7 @@ const config = {
 
       return (
         <>
-          {(!isStartingQna && !isInitialQnaView) && (
+          {(!isStartingQna && !hasVisitedContentPage) && (
             <>
               <div className="fixed flex justify-center items-center w-[179px] h-[52px] bg-[#0040FF] right-[116px] bottom-[44px] rounded-lg">
                 <span className="text-xs text-white">
@@ -106,7 +110,8 @@ const config = {
                 <div
                   className="cursor-pointer w-[14px] h-[14px] ml-[128px]"
                   onClick={() => {
-                    localStorage.setItem("isInitialQnaView", false);
+                    localStorage.setItem("hasVisitedContentPage", true);
+                    setHasVisitedContentPage(true);
                     setQnaStatus((prev) => !prev)
                   }}
                 >
