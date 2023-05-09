@@ -1,7 +1,6 @@
 {
-  "single-page-application": "Single Page Application",
+  "coffee-chat": "Coffee Chat",
   "react-introduction": "React Introduction",
-  "javascript-syntax-expression": "Javascript Syntax Expression (JSX)",
   "props": "Props",
   "states": "States",
   "promise": "Promise",

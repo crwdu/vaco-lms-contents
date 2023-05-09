@@ -1,28 +1,375 @@
-import { Callout } from "nextra-theme-docs"
+# Promise introduction
 
-# 🖋  바코바코바코바
+비동기 흐름을 제어하는 가장 전통적인 방법은 아래와 같이 콜백 함수를 이용하는 것입니다.
 
-숫자가 인자로 주어졌을 때, 다음과 같은 조건을 만족하는 함수를 작성해 주세요!
+```javascript
+function doSomethingAsync(callback) {
+  setTimeout(function () {
+    callback();
+  }, 1000);
+}
 
-1. 인자가 1인 경우 문자열 "바"를 반환해야 합니다.
-2. 인자가 2인 경우 문자열 "바코"를 반환해야 합니다.
-3. 인자가 3인 경우 문자열 "바코바"를 반환해야 합니다.
+doSomethingAsync(function done1() {
+  console.log("done async work!");
+});
 
-<Callout type="info" emoji="ℹ️">
-주어진 인자는 항상 1 이상 입니다.
-</Callout>
+doSomethingAsync(function done2() {
+  alert("done async work!!");
+});
+```
 
-<Callout type="error" emoji="🚫">
-repeat 메서드를 사용하지 말고 직접 구현해 주세요.&#x20;
-</Callout>
+비동기의 흐름을 이해하는 학습의 목적으로는 위와 같이 원초적인 콜백 함수를 이용한 처리 방법이 가장 최선이라고 생각하지만, **현업에서는 불편한 점이 많고 더 나은 해결책들이 존재**합니다.
 
-|  인자 |   리턴 값   |
-| :-: | :------: |
-|  1  |    "바"   |
-|  2  |   "바코"   |
-|  3  |   "바코바"  |
-|  4  |  "바코바코"  |
-|  5  |  "바코바코바" |
-|  6  | "바코바코바코" |
+‌
 
-[Codepen에서 직접해보기](https://codepen.io/vanillacoding/pen/jOGoeyB)
+## What's the problem with callbacks?
+
+콜백 함수를 이용한 패턴이 어떤 문제들이 있는지 한번 살펴보도록 하겠습니다. 문제에 대한 이해가 선행되어야 해결책에 대한 이해가 따를 수 있습니다.
+
+비동기로 실행되는 코드는 아래와 같이 콜백 함수 내부에서 에러에 대한 분기 처리가 필수적입니다.
+
+```javascript
+// 새 파일을 만들어 아래 내용을 붙여넣으시고,
+// 터미널에서 `node 파일명.js`를 이용해 실행할 수 있습니다.
+const fs = require("fs");
+
+function getFile(path, callback) {
+  fs.readFile(path, "utf-8", (err, data) => {
+    callback(err, data);
+  });
+}
+
+getFile("./promise.md", function done(err, data) {
+  if (err) {
+    // do error handling..
+  } else {
+    // do something with the data
+  }
+
+  console.log("async work done!");
+});
+```
+
+‌
+
+비동기 작업이 연속된다면 더욱 복잡해집니다. 콜백 함수가 **중첩됨에 따라 들여쓰기 간격이 깊어져 가독성이 떨어지고, 에러 핸들링에 대한 로직까지 더해져 더욱 이해하기 힘든 코드가 나올 수 있습니다.**
+
+흔히 **콜백 지옥(Callback Hell)** 이라고 부릅니다.
+
+```javascript
+/* Callback Hell: 콜백지옥 */
+
+// Async #1
+fs.readdir(source, function (err, files) {
+  if (err) {
+    console.log("Error finding files: " + err);
+  } else {
+    files.forEach(function (filename, fileIndex) {
+      console.log(filename);
+
+      // Async #2
+      gm(source + filename).size(function (err, values) {
+        if (err) {
+          console.log("Error identifying file size: " + err);
+        } else {
+          console.log(filename + " : " + values);
+          aspect = values.width / values.height;
+          widths.forEach(
+            function (width, widthIndex) {
+              height = Math.round(width / aspect);
+              console.log(
+                "resizing " + filename + "to " + height + "x" + height
+              );
+
+              // Async #3
+              this.resize(width, height).write(
+                dest + "w" + width + "_" + filename,
+                function (err) {
+                  if (err) console.log("Error writing file: " + err);
+                }
+              );
+            }.bind(this)
+          );
+        }
+      });
+    });
+  }
+});
+```
+
+‌
+
+현재 콜백 함수 패턴에서 우리는 비동기 함수에 콜백 함수를 넘겨주고 그 콜백 함수가 호출되길 기다립니다. 만약에 콜백 함수가 호출되지 않는다면 우리는 어떻게 할 수 있을까요? 호출되지 않는다는 사실은 어떻게 알 수 있을까요? 결과를 나중에 알 수 있으니 어떤 값을 반환해줄 수도 없습니다. 이 부분에 대해 조금 추상적으로 이야기하자면, 우리가 굉장히 **수동적인 자세로 비동기 처리하고 있다는 사실**을 알아야 합니다.
+
+## Promise
+
+프로미스는 기본적으로 아래와 같은 형태의 객체입니다.
+
+```javascript
+const promise = new Promise();
+```
+
+프로미스 생성자 함수는 함수를 인자로 받습니다.
+
+```javascript
+const promise = new Promise(function () {
+  // something..
+});
+```
+
+‌
+
+프로미스 생성자 함수에 인자로 들어간 함수는 일반적으로 `resolve`, `reject`라고 부르는 2개의 매개 변수를 사용할 수 있습니다. `resolve`와 `reject`는 함수입니다.
+
+```javascript
+const promise = new Promise(function (resolve, reject) {
+  // do something async here..
+});
+```
+
+‌
+
+프로미스 생성자 함수에 인자로 들어간 함수 내부에서 우리는 비동기 작업을 하고, 비동기 작업이 성공하면 `resolve`를 실행해야 하고, 실패하면 `reject`를 실행해야 합니다.
+
+```javascript
+const promise = new Promise(function (resolve, reject) {
+  // do something async here..
+  fs.readFile(path, "utf-8", (err, data) => {
+    if (err) {
+      reject(err);
+    } else {
+      resolve(data);
+    }
+  });
+});
+```
+
+‌
+
+위와 같이 생성한 **프로미스 객체는 미래에 맞이할 성공 혹은 실패에 대한 결과값**을 나타냅니다. **미래에 결과를 돌려주겠다는 약속**입니다. 모든 프로미스 객체는 다음 세 가지 상태 중 하나의 상태를 가지며, **한 번이라도 성공하거나 실패한 프로미스는 초기 상태로 돌아갈 수 없습니다.**
+
+- **Pending**: 아직 결과가 정해지지 않은 상태
+- **Fulfilled**: 성공한 상태
+- **Rejected**: 실패한 상태
+
+프로미스 인스턴스는 `.then`, `.catch` 등의 메소드를 사용할 수 있습니다.
+
+[Promise - JavaScript | MDN](https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/Promise)
+
+# Dive into promise
+
+```javascript
+const promise = new Promise(function (resolve, reject) {
+  // do something async here..
+  fs.readFile(path, "utf-8", (err, data) => {
+    if (err) {
+      reject(err);
+    } else {
+      resolve(data);
+    }
+  });
+});
+
+promise.then(function (data) {
+  console.log("Promise success!", data);
+});
+
+promise.catch(function (err) {
+  console.log("Promise Failed!", err);
+});
+```
+
+‌
+
+프로미스의 `then`, `catch` 메소드는 아래와 같이 연결하여 사용할 수 있습니다. 즉, Chaining이 가능합니다.
+
+```javascript
+const promise = new Promise(function (resolve, reject) {
+  // do something async here..
+  fs.readFile(path, "utf-8", (err, data) => {
+    if (err) {
+      reject(err);
+    } else {
+      resolve(data);
+    }
+  });
+});
+
+promise
+  .then(function (data) {
+    console.log("Promise success!", data);
+  })
+  .catch(function (err) {
+    console.log("Promise Failed!", err);
+  });
+```
+
+‌
+
+여러 가지 단계를 아래와 같이 차례대로 연결할 수도 있습니다.
+
+```javascript
+const promise = new Promise(function (resolve, reject) {
+  // do something async here..
+  fs.readFile(path, "utf-8", (err, data) => {
+    if (err) {
+      reject(err);
+    } else {
+      resolve(data);
+    }
+  });
+});
+
+promise
+  .then(function done(data) {
+    console.log("Promise success!", data);
+    return 1;
+  })
+  .then(function handleOne(one) {
+    console.log("I am one.");
+    return one + 1;
+  })
+  .then(function handleTwo(two) {
+    console.log("I am two.");
+  })
+  .catch(function handleError(err) {
+    console.log("Promise Failed!", err);
+  });
+```
+
+‌
+
+프로미스를 이용한 위의 예제는 기존 콜백 지옥 패턴과는 몇 가지 큰 차이가 있습니다.
+
+‌
+
+### We have return values
+
+동기 흐름의 코드에서 우리는 함수 연산에 관한 결과로서 반환값을 지정할 수 있고, 그 결과를 받아 추가적인 연산을 진행할 수 있습니다. 콜백 함수를 이용한 상황에서는 비동기 함수의 반환값을 받을 수 없으므로, 동기 함수처럼 반환값을 지정해줄 수 없었습니다.
+
+하지만 프로미스를 이용할 경우, (미래에 성공이나 실패에 관한 결과를 알려줄 것이라는) 약속을 담은 객체가 우리 손에 쥐어지기 때문에 이 프로미스 객체를 이용해 반환하거나 자유롭게 다른 모듈로 넘겨줄 수 있습니다. **비동기 상황에서도 우리가 동기적 코드의 흐름과 조금 더 유사하게 제어할 수 있도록 개선**되었습니다.
+
+### Better error handling
+
+동기적으로 실행되는 코드는 아래와 같이 `try..catch` 구문을 이용해 에러에 대한 대처를 할 수 있습니다. `try` 구문 내에서 발생하는 모든 에러는 `catch` 구문으로 넘겨지도록 설계되어 있습니다.
+
+```javascript
+try {
+  something();
+  somethingElse();
+  somethingOther();
+} catch (err) {
+  // Error Handling
+  console.error(err);
+}
+```
+
+프로미스 또한 위와 유사한 방식으로 에러 핸들링 기능이 설계되어 있습니다.
+
+```javascript
+const promise = new Promise(function (resolve, reject) {
+  // do something async here..
+  fs.readFile(path, "utf-8", (err, data) => {
+    if (err) {
+      reject(err);
+    } else {
+      resolve(data);
+    }
+  });
+});
+
+promise
+  .then(function done(data) {
+    console.log("Promise success!", data);
+    return 1;
+  })
+  .then(function handleOne(one) {
+    console.log("I am one.");
+    return one + 1;
+  })
+  .then(function handleTwo(two) {
+    console.log("I am two.");
+  })
+  .catch(function handleError(err) {
+    console.log("Promise Failed!", err);
+  });
+```
+
+`promise` 내부 비동기 로직, `done` 함수, `handleOne` 함수, 혹은 `handleTwo` 함수 어디서 에러가 나더라도 `handleError` 함수가 호출됩니다. **기존** **`try..catch`** **와 유사한 이 흐름은 자바스크립트 개발자들이 친숙한 흐름의 에러 핸들링일 뿐 아니라 실패 로직과 성공 로직의 분리가 더욱 명확해질 수 있게 돕습니다.**
+
+### Open for extension
+
+프로미스는 아래와 같이 **유연한 확장** 또한 가능합니다.
+
+```javascript
+// # 1 Map Implementation
+const a = new Promise(function (resolve, reject) {
+  setTimeout(function () {
+    resolve(1);
+  }, 0);
+});
+
+const b = new Promise(function (resolve, reject) {
+  setTimeout(function () {
+    resolve(2);
+  }, 10);
+});
+
+const c = new Promise(function (resolve, reject) {
+  setTimeout(function () {
+    resolve(3);
+  }, 5);
+});
+
+Promise.prototype.map = function (fn) {
+  return this.then(function (args) {
+    return args.map(function (val) {
+      return fn(val);
+    });
+  });
+};
+
+Promise.all([a, b, c])
+  .map(function (val) {
+    return val + 100;
+  })
+  .then(function (data) {
+    console.log(data); // [101, 102, 103]
+  });
+```
+
+‌
+
+## Execution Order
+
+프로미스의 정확한 실행 순서를 반드시 명심하세요.
+
+```javascript
+console.log(0);
+
+const p1 = new Promise(function (resolve, reject) {
+  console.log(1);
+
+  setTimeout(function () {
+    console.log(2);
+    resolve();
+  }, 1000);
+});
+
+console.log(3);
+
+p1.then(function one() {
+  console.log(4);
+})
+  .then(function two() {
+    console.log(5);
+  })
+  .catch(function onError() {
+    console.log(6);
+  })
+  .finally(function final() {
+    console.log(7);
+  });
+
+console.log(8);
+```

@@ -1,20 +1,140 @@
-import { Callout } from "nextra-theme-docs"
+# Writing better asynchronous code with Async/Await
 
-# 🖋  숫자 쪼개기
+Async / Await 는 Promise에 대한 이해를 기반으로 이해할 수 있는 개념입니다. 또한 Promise는 비동기와 콜백패턴에 대한 이해를 기반으로 그 용도와 작동을 이해할 수 있습니다.
 
-숫자가 인자로 주어졌을 때, 다음과 같은 조건을 만족하는 함수를 작성해 주세요!
+콜백패턴으로 구현된 비동기 코드는 가독성이나 유지보수 측면에서 많은 문제를 가지고 있었고, 이를 해결하기 위해 Promise, 그리고 더 나아가 Async/Await 이라는 기능이 생겨났습니다.
 
-1. 주어진 정수 각 자릿수의 "숫자"를 요소로 가지는 배열을 반환해야 합니다.
-2. 반환된 배열의 요소는 "문자열"이 아닌 "숫자"가 되어야 합니다.
+```javascript
+// Async/Await Example #1
 
-<Callout type="info" emoji="ℹ️">
-음수, 소수점 등은 고려하지 않습니다.
-</Callout>
+const a = new Promise(function (resolve, reject) {
+  setTimeout(function () {
+    resolve(666);
+  }, 1000);
+});
 
-|   인자   |         리턴 값        |
-| :----: | :-----------------: |
-|  2854  |    \[2, 8, 5, 4]    |
-|  96586 |   \[9, 6, 5, 8, 6]  |
-| 136326 | \[1, 3, 6, 3, 2, 6] |
+const b = new Promise(function (resolve, reject) {
+  setTimeout(function () {
+    resolve(777);
+  }, 1000);
+});
 
-[Codepen에서 직접 해보기](https://codepen.io/vanillacoding/pen/qBPGQvq)
+// a, b: promise
+async function process() {
+  const result = (await a) + (await b);
+  console.log(result);
+}
+
+process();
+```
+
+위의 코드를 살펴보면 `a` 와`b` 라는 변수에 Promise 인스턴스를 할당한 상태입니다. Promise에는 함수를 넣어주어야 하고, 함수 안에 인자로는 `resolve` 와 `reject`가 있는데요. 비동기 로직이 성공하면 resolve, 로직이 실패하면 reject 값이 산출되는 함수입니다.
+
+async function은 최근 ES2017 스펙부터 사용이 가능하게 되었고,
+
+그 기능으로는 크게 2가지가 있습니다.
+
+1. 함수 내부에서 await 이라는 키워드를 사용할 수 있게 됩니다. 바꾸어 말하면 await 키워드를 사용하지 않을 것이라면 async function을 사용할 이유가 없습니다(앞으로는 async 키워드 없이도 함수 내부에서 await 키워드를 사용할 수 있도록 하는 자바스크립트와 관련된 작업이 진행 중이지만, 일반적으로 사용하기 위해서는 앞으로 조금 더 시간이 필요할 것 같습니다).
+2. 함수의 반환 값이 바뀝니다. 일반적인 함수와 달리 async 함수는 항상 Promise 객체를 반환합니다.
+
+자바스크립트에서는 처음에 콜백패턴을 사용해오다가 Promise의 등장 이후 비동기 코드를 동기 패턴과 유사하게 작성하여 사용할 수 있게 되었습니다. 그런데 async await는 비동기 코드를 동기적으로 작동하는 코드와 더더욱 유사한 형태로 편리하게 작성할 수 있도록 도와줍니다. async await를 사용하여 비동기 코드의 복잡도도 줄어들고 가독성도 매우 좋아지면서 시각적으로도 동기적으로 작동하는 코드와 유사한 형태로 표현할 수 있게 되었습니다. 이는 자바스크립트 이외의 다른 언어를 사용하는 개발자들과의 협업도 매우 원활해지는 것을 의미합니다.
+
+```javascript
+// Async/Await Example #2
+function resolveAfter2Seconds(x) {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve(x);
+    }, 2000);
+  });
+}
+
+async function add(x) {
+  console.log("start 2");
+  const a = await resolveAfter2Seconds(20);
+  console.log("a", a);
+  const b = await resolveAfter2Seconds(30);
+  console.log("b", b);
+  return x + a + b;
+}
+
+console.log("start 1");
+
+add(10);
+
+console.log("finish");
+```
+
+> Async function은 원래 Promise를 반환하는데, 구문 내부에 return 값이 있다면?
+
+Async 함수의 기본 리턴값은 Promise인데, Async 함수 내부에서 우리가 사용하는 `return` 구문은 해당 Promise에 대한 resolve 값으로 사용된다. 즉, 위 `add(10)` 함수 실행문이 반환하는 결과는 Promise이며, 그 Promise의 resolve 값은 60입니다.
+
+> Q. 맨 아래 3줄의 값이 찍히는 순서는?
+
+`start 1 -> start 2 -> finish -> a 20 -> b 30`
+
+Await을 사용한다 해도, 기본적인 비동기 작업의 흐름이 변경되지는 않습니다.
+
+> Q. 그렇다면 결과가 나오기까지 총 걸린 시간은?
+
+`4.0000001초`
+
+Await을 사용한다고 해서 작업이 끝날 때까지 기다리고 있는 것이 아니라, 기다리는 동안 다음에 할 수 있는 일을 하다가 돌아와서 다시 처리하는 방식으로 작동됩니다. 마치 맥도날드에 가서 주문하면 주문 하나 받고, 하나 만들어서 드리고 그다음 다시 주문받는 것이 아니라... 주문받으면서 동시에 음식도 만드는 방식과 비슷합니다.
+
+`a` 에 담기는 비동기 작업이 resolve될때까지 2초, 그 후에 `b` 에 담기는 비동기 작업이 resolve될때까지 2초가 소요됩니다.
+
+```javascript
+// Async/Await Example #3
+function resolveAfter2Seconds(x) {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve(x);
+    }, 2000);
+  });
+}
+
+async function add2(x) {
+  const a = resolveAfter2Seconds(20);
+  const b = resolveAfter2Seconds(30);
+  return x + (await a) + (await b);
+}
+
+add2(10);
+```
+
+> Q. add2 함수는 실행까지 얼마나 걸릴까요?
+
+`2.0000001초`
+
+Await을 어디에다가 어떻게 거는지에 따라 같은 결과라도 처리 완료까지 걸리는 시간이 달라질 수 있습니다.
+연속해서 처리해야 하는 상황이 아니라면, 예제 2와 비교할 때 처리 완료까지 약 2배가량 시간을 단축할 수 있습니다.
+
+```javascript
+// Async/Await Example #4
+function foo() {
+  return new Promise(function (resolve, reject) {
+    setTimeout(function () {
+      console.log(2);
+      reject();
+    }, 1000);
+  });
+}
+
+async function bar() {
+  try {
+    const a = await foo();
+    const b = await foo();
+    return a;
+  } catch (err) {
+    console.error(err);
+  }
+}
+```
+
+동기 코드에서 에러 핸들링은 try..catch 구문을 활용합니다. 기존 Promise의 장점은 코드의 비동기 흐름을 동기스럽게 제어할 수 있는 것입니다. Async Await을 이용해 try..catch 구문을 사용할 수 있습니다.
+
+try..catch 구문은 자바스크립트에 자체적으로 내장된 것이므로 가장 native하기 때문에 좋습니다. try..catch 구문을 엄격하게 사용하고 싶다면 각 구문마다 걸어둘 수 있습니다.
+
+> Error Handling을 하는 이유
+
+사용자 경험과 개발자 경험을 위해서... 에러를 무서워하지 마세요. 에러는 어디를 수정하면 되는지, 어디를 고치면 되는지 알려주는 고마운 친구입니다!

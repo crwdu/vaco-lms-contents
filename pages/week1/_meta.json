@@ -1,7 +1,6 @@
 {
-  "scope": "Scope",
-  "hoisting": "Hoisting",
-  "primitive-reference": "Primitive & Reference",
-  "dom-events": "DOM Events",
-  "interview-questions": "Interview Questions"
+  "01-coffee-chat": "커피챗",
+  "02-dom-events": "DOM 이벤트",
+  "03-scope": "스코프",
+  "04-primitive-reference": "원시값과 참조값"
 }

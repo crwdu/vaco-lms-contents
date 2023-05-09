@@ -1,0 +1,339 @@
+import { Alert, Collapse, Rate, Button, Result, Typography } from "antd";
+import { SnippetsTwoTone, QuestionCircleTwoTone } from "@ant-design/icons";
+import { red, green } from "@ant-design/colors";
+
+# 고차 함수
+
+## 정의
+
+<Rate disabled={true} value={3} />
+<br/>
+<br/>
+
+> A <b>higher order function</b> is a function that takes a function as an argument, or returns a function.
+
+<br />
+<Alert
+  showIcon
+  message="고차 함수"
+  description="고차 함수(Higher order function)는 함수를 인자로 받거나 함수를 반환하는 함수입니다. 2가지 조건 중 하나라도 충족한다면 고차 함수라고 할 수 있습니다."
+  type="info"
+/>
+
+반대되는 개념으로, 인자로 함수를 받지 않고 함수를 반환하지도 않는다면, 일차원 함수(First order function) / 일반 함수라고 표현한다.
+
+<br />
+<br />
+
+##### 예시 1.
+
+```js showLineNumbers copy
+function foo(a, b) {
+  return a + b;
+}
+
+foo(1, 2);
+```
+
+함수를 반환하지 않고, 함수를 인자로 받지도 않습니다. 즉, **일반 함수**라고 할 수 있습니다.
+
+<br />
+<br />
+
+## 적용 사례
+
+<Rate disabled={true} value={3} />
+<br/>
+<br/>
+
+고차 함수는 어떤 경우에 유용할까요? 한번 예시 코드를 보며 실제 사례들을 살펴보도록 하겠습니다.
+
+<br/>
+<br/>
+
+##### 예시 2-1.
+
+```js showLineNumbers copy
+const list = [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ];
+const evenNumbers = [];
+
+for (let i = 0; i < list.length; i++) {
+  if (list[i] % 2 === 0) {
+    evenNumbers.push(list[i]);
+  }
+}
+
+console.log(evenNumbers); // [ 2, 4, 6, 8, 10 ]
+```
+
+현재 위의 예시 코드에서 우리는 아래와 같은 작업을 수행하고 있습니다.
+
+1. `list` 배열의 각 요소들을 순회하며 짝수인지 판별합니다.
+2. 짝수로 판별된 요소의 경우, `evenNumbers` 배열에 추가합니다.
+
+다시 한번 정리하자면, 주어진 배열에서 우리가 원하는 조건(짝수)에 해당하는 요소들을 거르는 작업을 하고 있습니다.
+
+<br/>
+<br/>
+
+##### 예시 2-2.
+
+어느 날, 제 동료가 기존 코드에 아래와 같은 로직을 추가했습니다. 한번 보실까요?
+
+```js showLineNumbers copy
+const list = [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ];
+const evenNumbers = [];
+
+for (let i = 0; i < list.length; i++) {
+  if (list[i] % 2 === 0) {
+    evenNumbers.push(list[i]);
+  }
+}
+
+console.log(evenNumbers); // [ 2, 4, 6, 8, 10 ]
+
+const oddNumbers = [];
+
+for (let i = 0; i < list.length; i++) {
+  if (list[i] % 2 !== 0) {
+    oddNumbers.push(list[i]);
+  }
+}
+
+console.log(oddNumbers); // [ 1, 3, 5, 7, 9 ]
+```
+
+현재 위의 예시 코드에서 우리는 아래와 같은 작업을 수행하고 있습니다.
+
+1. `list` 배열의 각 요소들을 순회하며 짝수인지 판별합니다.
+2. 짝수로 판별된 요소의 경우, `evenNumbers` 배열에 추가합니다.
+3. `list` 배열의 각 요소들을 순회하며 홀수인지 판별합니다.
+4. 홀수로 판별된 요소의 경우, `oddNumbers` 배열에 추가합니다.
+
+짝수와 홀수, 두 가지 경우를 보면 우리는 주어진 배열에서 원하는 특정 조건에 따라 요소들을 거르는 작업을 하고 있습니다. 어떤 조건에 따라 거르는지는 상황에 따라서 달라지는것 같습니다.
+
+지금과 같은 코드라면, 앞으로 비슷한 상황이 생길 경우 또 비슷한 로직을 작성해야 합니다. 물론 나쁘다고 할 수는 없지만, 더 좋은 방향이 왠지 있을것 같다는 생각입니다. 한번 고민해볼까요?
+
+<br />
+<Alert
+  showIcon
+  message="중복 코드에 집착하지 마세요."
+  description="초보자는 단순히 시각적으로 중복된 코드에 집착하는 경우가 많습니다. 단순히 접근하여 중복된 코드에 집착하지 마세요. '중복된 논리'를 찾아 개선하려고 시도하세요. 코드의 외모를 보고 구분하기 보다는 코드의 내면, 즉 논리적 내용을 보고 구분하려고 하세요."
+  type="warning"
+/>
+
+<br/>
+<br/>
+
+##### 예시 2-3.
+
+위의 예시 코드에서 상황에 따라 특정 조건에 의해 배열의 요소를 거르는 작업을 하는 로직을 재사용할 수 있도록 개선해보았습니다. 한번 살펴볼까요?
+
+```js showLineNumbers copy
+function filter(arr, callback) {
+  const result = [];
+
+  for (let i = 0; i < arr.length; i++) {
+    if (callback(arr[i])) {
+      result.push(arr[i]);
+    }
+  }
+
+  return arr;
+}
+
+const list = [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ];
+
+const evenNumbers = filter(list, function(value) {
+  return value % 2 === 0;
+});
+const oddNumbers = filter(list, function(value) {
+  return value % 2 !== 0;
+});
+
+console.log(evenNumbers); // [ 2, 4, 6, 8, 10 ]
+console.log(oddNumbers); // [ 1, 3, 5, 7, 9 ]
+```
+
+주어진 배열에서 특정 조건에 따라 배열의 요소들을 필터링 해주는 `filter`라는 함수를 만들고, 이 함수를 이용해 기존 코드를 개선해보았습니다.
+
+이 과정에서 어떤 조건에 의해 요소들을 필터링해야 하는지는 상황에 따라 다를 수 있고 동적으로 결정되어야 하기 때문에, `filter` 함수가 두 번째 인자로 `callback`이라는 함수를 받도록 구성해놓았습니다.
+
+현재 `filter` 함수는 `callback`이라는 함수를 인자로 받도록 되어 있습니다. 그러므로, `filter` 함수는 고차 함수라고 할 수 있습니다.
+
+고차 함수로서 다른 함수를 인자로 받는 것이 가능하기에, `filter` 입장에서는 **어떤 조건으로 필터링해야 하는지 모르는 미지의 로직을 당장 구성하지 않고, 상황에 따라 가변적으로 대응이 가능하도록 설계**하였습니다. 이 `callback` 함수의 내용은 상황에 맞게 어떤 로직이든 `filter` 함수를 사용하는 사람이 작성할 수 있으므로 훨씬 유연한 시스템이 구성되었다고 볼 수 있습니다.
+
+만약 고차 함수가 존재하지 않았다면, 우리는 상황에 따라 유연하게 어떤 조건에 따라 배열의 요소들을 필터링할 수 있는 `filter` 함수를 구현하는데 있어 더욱 고민해야 하는 부분이 많았을 것입니다.
+
+<br />
+<Alert
+  showIcon
+  message="시간과 경험, 그리고 꾸준한 노력"
+  description="지금 보여드린 코드 개선작업과 같은 부분은 단시간에 이루어질 수 없고, 긴 시간과 경험이 필요한 부분입니다. 코드의 논리를 살펴보고 많은 시도들을 하며 경험을 쌓아보세요. 많은 시간이 필요하겠지만, 급하게 생각하지 말고 꾸준한 노력을 기울여보세요."
+  type="warning"
+/>
+
+<br/>
+<br/>
+
+## 일급 객체
+
+<Rate disabled={true} value={3} />
+<br/>
+<br/>
+
+> In computer science, a programming language is said to have <b>first-class functions</b> if it treats functions as first-class citizens.
+>
+> This means the language supports passing functions as arguments to other functions, returning them as the values from other functions, and assigning them to variables or storing them in data structures.
+
+<br />
+<Alert
+  showIcon
+  message="일급 함수"
+  description="컴퓨터 공학에서는 어떤 프로그래밍 언어가 함수를 일급 객체로 다룬다면, 우리는 그 언어에서 함수는 일급 함수라고 표현합니다."
+  type="info"
+/>
+
+<br/>
+<br/>
+
+### 일급 객체의 조건
+
+일급 객체란 아래의 조건을 **모두** 갖추어야만 하고, 자바스크립트의 함수는 아래 조건을 모두 갖추었습니다.
+
+- _Passing functions as arguments to other functions._<br />인자로 다른 함수에 전달할 수 있다.
+- _Returning them as ther values from other functions._<br />반환 값으로 사용될 수 있다.
+- _Assigning them to variables or storing them in data structures._<br />변수에 할당될 수 있거나 자료구조(배열, 객체 등)에 저장될 수 있다.
+
+각 조건들에 대해 자바스크립트 함수가 충족하는지 하나씩 확인해볼까요?
+
+<br/>
+<br/>
+
+#### 1. 인자로 다른 함수에 전달할 수 있다.
+
+위에서 살펴보았던 예시 코드에서 봤던 부분이긴 하지만, 그래도 다시 한번 살펴보겠습니다.
+
+##### 예시 3.
+
+```js showLineNumbers copy
+[ 1, 2, 3, 4, 5 ].forEach(function (value) {
+  console.log(value);
+});
+```
+
+여러분이 아마 한번쯤 사용해보셨을만한 배열의 `forEach` 메소드의 경우 함수를 인자로 받습니다. 그러므로 고차 함수라고 할 수 있습니다. 많은 메소드들이 함수를 인자로 받는 형태로 우리에게 주어지기도 합니다.
+
+<br/>
+<br/>
+
+#### 2. 반환 값으로 사용될 수 있다.
+
+##### 예시 4.
+
+```js showLineNumbers {4-7} copy
+function createCountAndLog() {
+  let count = 0;
+
+  return function (...args) {
+    count++;
+    console.log(`${count}번째 출력문: `, ...args);
+  };
+}
+
+const countAndLog = createCountAndLog();
+
+for (let i = 0; i < 100; i++) {
+  countAndLog("안녕하세요!");
+}
+```
+
+위의 예시 코드에서 `createCountAndLog` 함수는 우리가 콘솔 출력문을 몇번이나 사용하는지 사용횟수를 계산해주는 함수를 생성하고 있습니다. `createCountAndLog` 함수의 반환값을 자세히 보세요.
+
+4번째 줄의 익명함수가 반환값으로 사용되고 있습니다. 즉, 10번째 줄에서 `countAndLog` 변수에 담기는 값이 함수라는 의미입니다.
+
+자바스크립트에서는 이와 같이, 함수에서 또 다른 함수를 반환값으로 반환할 수 있습니다.
+
+<br/>
+<br/>
+
+#### 3. 변수에 할당될 수 있거나 자료구조(배열, 객체 등)에 저장될 수 있다.
+
+함수를 변수에 할당하는 것은 함수 표현식과 동일한 부분이기 때문에 별도의 설명은 생략하도록 하겠습니다.
+
+##### 예시 5.
+
+```js showLineNumbers copy
+const person = {
+  name: "ken",
+  printName: function () {
+    console.log(this.name);
+  }
+};
+
+person.printName();
+```
+
+위의 예시 코드에서 `person` 객체의 `printName`이라는 속성에 대한 값으로 우리는 함수를 저장했습니다. 아마 이런 내용은 여러분께도 크게 새롭지 않을거라고 생각합니다만, 함수를 객체라는 자료구조에 저장한 것입니다.
+
+<br/>
+
+<Collapse>
+  <Collapse.Panel header="혹시 자바스크립트 `this`에 대해 잘 모르시나요?">
+    <p>
+      제가 옛날에 좋아했던 자바스크립트 `this` 관련 영상 하나 추천해드리겠습니다. `this`는 옛날이나 지금이나 다 똑같은 내용이라 세월이 조금 지나도 별 지장이 없습니다.
+
+      **Part 1.**
+      <iframe width="560" height="315" src="https://www.youtube.com/embed/ayyuU0xdbIU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+
+      **Part 2.**
+      <iframe width="560" height="315" src="https://www.youtube.com/embed/WOTibnvqF-c" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+
+      **Part 3.**
+      <iframe width="560" height="315" src="https://www.youtube.com/embed/Jm6SkIQreY0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+
+      **Part 4.**
+      <iframe width="560" height="315" src="https://www.youtube.com/embed/HJ_LxtCaNxs" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+
+      **Part 5.**
+      <iframe width="560" height="315" src="https://www.youtube.com/embed/0Khg5HF_AXA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+    </p>
+  </Collapse.Panel>
+</Collapse>
+
+<br/>
+<br/>
+
+##### 예시 6.
+
+```js showLineNumbers copy
+function solveAlgorithm() {
+  console.log("알고리즘 문제 풀기");
+}
+
+function eatLunch() {
+  console.log("점심 먹기");
+}
+
+function drinkCoffee() {
+  console.log("커피 마시기");
+}
+
+function focusOnWork() {
+  console.log("집중 업무 시간");
+}
+
+function goHome() {
+  console.log("퇴근하고 집에 가기");
+}
+
+const dailyRoutine = [ solveAlgorithm, eatLunch, drinkCoffee, focusOnWork, goHome ];
+
+dailyRoutine.forEach(function(fn) {
+  fn();
+});
+```
+
+위의 예시 코드에서 볼 수 있듯이 함수들은 배열에 담을 수도 있습니다. 이런 부분은 조금 생소할 수 있겠지만, 자세히 알고 보면 크게 복잡할것은 없습니다.
+
+실제로 함수를 배열에 담아 사용하게 되는 경우는, 일반적인 경우에는 드문 편이고 함수형 프로그래밍 등 조금은 특별한 상황에 국한되어서 자주 사용되는 편입니다.
