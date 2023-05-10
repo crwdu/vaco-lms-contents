@@ -33,13 +33,13 @@ export default function Nextra({ Component, pageProps }) {
   const formContainerRef = useRef(null);
   const textareaRef = useRef(null);
 
-  useEffect(() => {
-    const hasVisited = localStorage.getItem("hasVisitedContentPage");
+  // useEffect(() => {
+  //   const hasVisited = localStorage.getItem("hasVisitedContentPage");
 
-    if (!hasVisited) {
-      setHasVisitedContentPage(false)
-    }
-  }, [hasVisitedContentPage]);
+  //   if (!hasVisited) {
+  //     setHasVisitedContentPage(false)
+  //   }
+  // }, [hasVisitedContentPage]);
 
   useEffect(() => {
     if (isStartingQna && qnaList.length && qnacontainerRef.current) {
