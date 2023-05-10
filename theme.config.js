@@ -14,6 +14,7 @@ const youtubeUrl = "https://www.youtube.com/channel/UCqw3KRd7EBORZPqpxU4XLEA";
 const refundPolicy = "https://www.notion.so/vanillacoding/Refund-Regulation-5fb4e6da39ae4665b5f376eb1172cf4b";
 
 const config = {
+  darkMode: false,
   logo: (
     <>
       <Image
@@ -37,7 +38,7 @@ const config = {
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <meta property="og:title" content="Nextra" />
       <meta property="og:description" content="The next site builder" />
-      <title>바닐라코딩 Starter Kit</title>
+      <title>바닐라코딩 Camp Vanilla</title>
     </>
   ),
   footer: {
