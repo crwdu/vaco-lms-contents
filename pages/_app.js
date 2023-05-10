@@ -138,7 +138,7 @@ export default function Nextra({ Component, pageProps }) {
       )}
 
       {isStartingQna ? (
-        <div className="flex flex-col fixed border border-[#C9D1DD] w-[370px] h-[680px] rounded-[20px] right-[40px] bg-white bottom-[40px]">
+        <div className="flex flex-col fixed border border-[#C9D1DD] w-[370px] h-[680px] rounded-[20px] right-[40px] bg-white bottom-[40px] z-10">
           <div className="flex items-center h-[60px] border-b border-[#C9D1DD] pt-[18px] pb-[18px]">
             <div className="border border-[#C9D1DD] rounded-[40px] w-[36px] h-[36px] ml-[15px]">
               <Image
@@ -354,7 +354,7 @@ export default function Nextra({ Component, pageProps }) {
         </div>
       ) : (
         <div
-          className="fixed cursor-pointer w-[60px] h-[60px] border border-[#C9D1DD] rounded-[40px] right-[40px] bottom-[40px]"
+          className="z-10 fixed cursor-pointer w-[60px] h-[60px] border border-[#C9D1DD] rounded-[40px] right-[40px] bottom-[40px]"
           onClick={() => setQnaStatus((prev) => !prev)}
         >
           <Image
