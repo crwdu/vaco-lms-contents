@@ -15,14 +15,6 @@ import answerAnimation from "../public/animation/loding.json";
 import useUser from "../hooks/useUser";
 
 export default function Nextra({ Component, pageProps }) {
-  if (process.env.NODE_ENV === "production") {
-    const { isLoggedIn } = useUser();
-
-    if (!isLoggedIn) {
-      return <></>;
-    }
-  }
-
   const [isStartingQna, setQnaStatus] = useState(false);
   const [isQuestionProgressing, setQuestionProgress] = useState(false);
   const [qnaList, setQnaList] = useState([]);
@@ -33,13 +25,19 @@ export default function Nextra({ Component, pageProps }) {
   const formContainerRef = useRef(null);
   const textareaRef = useRef(null);
 
-  // useEffect(() => {
-  //   const hasVisited = localStorage.getItem("hasVisitedContentPage");
+  const { isLoggedIn } = useUser();
 
-  //   if (!hasVisited) {
-  //     setHasVisitedContentPage(false)
-  //   }
-  // }, [hasVisitedContentPage]);
+  if (!isLoggedIn) {
+    return <></>;
+  }
+
+  useEffect(() => {
+    const hasVisited = localStorage.getItem("hasVisitedContentPage");
+
+    if (!hasVisited) {
+      setHasVisitedContentPage(false)
+    }
+  }, [hasVisitedContentPage]);
 
   useEffect(() => {
     if (isStartingQna && qnaList.length && qnacontainerRef.current) {
