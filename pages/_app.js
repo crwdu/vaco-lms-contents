@@ -178,44 +178,53 @@ export default function Nextra({ Component, pageProps }) {
                 </div>
 
                 <div className="rounded-lg w-[338px] bg-[#F8F9FB] mt-[16px] ml-[16px] text-sm">
-                  <div className="pt-[24px] ml-[24px] text-[#405067] mr-[8px]">
-                    <span>KEN을 사용함으로써 귀하는 아래 사용자 동의서에 동의 하는 것으로 간주됩니다.</span>
+                  <div className="pt-[24px] text-[#405067] ml-[16px] mr-[16px]">
+                    <span>
+                      Ken Bot을 사용함으로써 귀하는 아래 사용자 동의서에 동의 하는 것으로 간주됩니다. 하단 사용 안내를 반드시 읽어주세요.
+                    </span>
                   </div>
 
-                  <div className="mt-[24px] ml-[40px] text-[#405067] text-sm mr-[8px]">
-                    <ul className="list-disc">
-                      <li>책임: KEN의 개발자는 이 시스템의 신뢰성을 보장하지 않으며 사용으로 인해 발생하는 어떠한 손해에 대해서도 책임을 지지 않습니다.</li>
-                      <li> 콘텐츠: KEN은 Upstage OCR과 OpenAI chatgpt API를 사용하므로 대화하는 내용과 이미지는 Upstage와 OpenAI로 보내지고 각각 API사용약관에 따라 이 콘텐츠는 서비스 개선을 위해 사용될 수 있습니다.
-                        즉 사용자가 Upstage 및 OpenAI에 콘텐츠 사용 라이선스를 부여합니다. 귀하가 아래 사항에 동의를 하는 경우에만 KEN과 대화를 시작해 주세요.
+                  <div className="pt-[24px] text-[#405067] ml-[16px] mr-[16px]">
+                    <span>
+                      Ken Bot은 OpenAI에서 제공하는 ChatGPT 서비스를 활용해 바닐라코딩 수강생의 질문에 답변을 드리는 서비스입니다.
+                    </span>
+                  </div>
+
+                  <div className="pt-[24px] text-[#405067] ml-[16px] mr-[16px]">
+                    <span>
+                      ChatGPT란 OpenAI에서 개발한 대화형 인공지능 서비스이며 2021년 12월 이후의 정보는 제한되는 등 정확하지 않은 정보가 제공될 수 있습니다.
+                    </span>
+                  </div>
+
+                  <div className="pt-[24px] text-[#405067] ml-[16px] mr-[16px]">
+                    <span>
+                      본 서비스에서 제공되는 답변의 주체는 바닐라코딩이 아닌 OpenAI입니다. 따라서, 대화 내용에 개인정보 등 민감한 정보가 포함되지 않도록 해주시기 바랍니다.
+                    </span>
+                  </div>
+
+
+
+                  <div className="mt-[24px] text-[#405067] text-sm ml-[16px] mr-[16px]">
+                    <span>귀하가 아래 사항에 동의를 하는 경우에만 Ken Bot과 대화를 시작해 주세요.</span>
+                  </div>
+
+                  <div className="mt-[24px] text-[#405067] text-sm ml-[16px] mr-[16px]">
+                    <ul className="list-disc ml-[16px]">
+                      <li>
+                        책임: Ken Bot의 개발자는 이 시스템의 신뢰성을 보장하지 않으며 사용으로 인해 발생하는 어떠한 손해에 대해서도 책임을 지지 않습니다.
+                      </li>
+                      <li>
+                        콘텐츠: Ken Bot은 OpenAI ChatGPT API를 사용하므로 대화하는 내용은 OpenAI와 바닐라코딩으로 보내지고 각각 API 사용약관에 따라 이 콘텐츠는 서비스 개선을 위해 사용될 수 있습니다. 즉 사용자가 OpenAI와 바닐라코딩에 콘텐츠 사용 라이선스를 부여합니다.
+                      </li>
+                      <li>
+                        그외 사항은 Ken Bot이 제공되는 플랫폼의 약관 및 정책에 따릅니다.
                       </li>
                     </ul>
                   </div>
 
-                  <div className="mt-[24px] ml-[24px] text-[#405067] text-sm mr-[8px]">
-                    <span>KEN 이용을 원치 않는 경우 대화창에서 나가실 수 있습니다.</span>
-                  </div>
-
-                  <div className="mt-[24px] ml-[40px] text-[#405067] text-sm mr-[8px]">
-                    <ul className="list-disc">
-                      <li>업스테이지는 민감한 정보를 수집하지 않습니다.</li>
-                      <li>개인정보, 사생활이 포함되거나, 초상권, 명예, 지식재산권 등을 침해하거나, 음란물 등 불법정보는 입력이 금지됩니다.</li>
-                      <li>입력된 콘텐츠는 업스테이지에게 전송되어 서비스 제공, 개선 및 고도화, 신규 서비스 개발을 위해 이용됩니다.</li>
-                      <li>또한, OpenAI ChatGPT API 및 구글 API 사용을 위하여 OpenAI 및 구글로 전송됩니다.</li>
-                      <li>업스테이지는 KEN의 정확성, 신뢰도 등 성능이나 품질에 대해서 어떠한 보증을 제공하지 않습니다. KEN을 이용하여 발생한 결과에 대해 업스테이지는 책임을 지지 않습니다.그외 사항은KEN이 제공되는 플랫폼의 약관 및 정책에 따릅니다.</li>
-                    </ul>
-                  </div>
-
-                  <div className="mt-[24px] ml-[24px] text-[#405067] text-sm mr-[8px]">
+                  <div className="mt-[24px] text-[#405067] text-sm pb-[24px] ml-[16px] mr-[16px]">
                     <span>
-                      [사용 전 꼭 읽어봐주세요!] <br />
-                      KEN은 2021년 10월 이전 데이터로 학습된 Open AI의 모델로 실시간성이 없습니다. OpenAI가 제공하는 답변이 부정확하거나 부적절할수 있습니다. 이미지에서 글씨를 읽을수 있습니다. (1000자 이하)하루 100회의 무료 크레딧을 이용자 분들에게 제공합니다. KEN의 서비스나 정책은 예고없이 변동될 수 있습니다.
-                    </span>
-                  </div>
-
-                  <div className="mt-[24px] ml-[24px] text-[#405067] text-sm mr-[8px] pb-[24px]">
-                    <span>
-                      [새로운 대화시작: 대화 리셋] <br />
-                      대화를 리셋하고 모두 잊고 새로운 대화를 시작할수 있습니다. 새로운 주제를 시작할 때 꼭 눌러주세요.
+                      Ken Bot 이용을 원치 않는 경우 채팅창에서 나가실 수 있습니다.
                     </span>
                   </div>
                 </div>
