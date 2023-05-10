@@ -27,10 +27,6 @@ export default function Nextra({ Component, pageProps }) {
 
   const { isLoggedIn } = useUser();
 
-  if (!isLoggedIn) {
-    return <></>;
-  }
-
   useEffect(() => {
     const hasVisited = localStorage.getItem("hasVisitedContentPage");
 
@@ -50,6 +46,10 @@ export default function Nextra({ Component, pageProps }) {
       qnacontainerRef.current.scrollTop = qnacontainerRef.current.scrollHeight;
     }
   }, [isQuestionProgressing, qnaList.length]);
+
+  if (!isLoggedIn) {
+    return <></>;
+  }
 
   async function handleSubmit(values, { resetForm }) {
     const { qna } = values;
