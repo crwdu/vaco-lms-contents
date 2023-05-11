@@ -26,6 +26,9 @@ const config = {
     </>
   ),
   logoLink: process.env.NEXT_PUBLIC_URI,
+  editLink: {
+    component: () => <></>,
+  },
   feedback: {
     content: null,
   },

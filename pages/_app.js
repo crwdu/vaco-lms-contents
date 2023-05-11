@@ -27,6 +27,8 @@ export default function Nextra({ Component, pageProps }) {
 
   const { isLoggedIn } = useUser();
 
+  let monthDay = null;
+
   useEffect(() => {
     const hasVisited = localStorage.getItem("hasVisitedContentPage");
 
@@ -202,8 +204,6 @@ export default function Nextra({ Component, pageProps }) {
                     </span>
                   </div>
 
-
-
                   <div className="mt-[24px] text-[#405067] text-sm ml-[16px] mr-[16px]">
                     <span>귀하가 아래 사항에 동의를 하는 경우에만 Ken Bot과 대화를 시작해 주세요.</span>
                   </div>
@@ -235,12 +235,21 @@ export default function Nextra({ Component, pageProps }) {
               const question = qnaData["question"];
               const answer = qnaData["answer"];
               const time = qnaData["time"];
+              const currentMonthDay = format(time, "M월 d일");
+
+              let currentTime = format(time, "M월 d일 a h:mm")
+
+              if (monthDay !== currentMonthDay) {
+                monthDay = currentMonthDay;
+              } else {
+                currentTime = "";
+              }
 
               return (
                 <div key={time} className="mt-[24px] mb-[24px]">
                   <div className="flex justify-center items-center">
                     <span className="text-[#405067] text-xs">
-                      {format(time, "hh:mm")}
+                      {currentTime}
                     </span>
                   </div>
 
@@ -336,7 +345,7 @@ export default function Nextra({ Component, pageProps }) {
                       as="textarea"
                       name="qna"
                       className="focus:outline-none resize-none mt-[12px] ml-[12px] w-[270px] h-[24px] text-base"
-                      placeholder="무엇이 궁금한가요?"
+                      placeholder="4~200자 내로 작성해주세요."
                     />
 
                     {!isQuestionProgressing && (
@@ -344,7 +353,7 @@ export default function Nextra({ Component, pageProps }) {
                         className="mt-[6px]"
                         type="submit"
                       >
-                        {values.qna.length ? (
+                        {(values.qna.length > 3) ? (
                           <div className="rounded-full flex justify-center items-center w-[36px] h-[36px] bg-[#0040FF] ml-[8px]">
                             <Image
                               className="inline"
