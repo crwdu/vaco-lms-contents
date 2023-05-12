@@ -1,8 +1,26 @@
 {
-  "coffee-chat": "Coffee Chat",
-  "react-introduction": "React Introduction",
-  "props": "Props",
-  "states": "States",
-  "promise": "Promise",
-  "async-await": "Async / Await"
+  "coffee-chat": {
+    "title": "Coffee Chat",
+    "display": "hidden"
+  },
+  "react-introduction": {
+    "title": "React Introduction",
+    "display": "hidden"
+  },
+  "props": {
+    "title": "props",
+    "display": "hidden"
+  },
+  "states": {
+    "title": "States",
+    "display": "hidden"
+  },
+  "promise": {
+    "title": "Promise",
+    "display": "hidden"
+  },
+  "async-await": {
+    "title": "Async / Await",
+    "display": "hidden"
+  }
 }

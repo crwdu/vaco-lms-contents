@@ -1,5 +1,14 @@
 {
-  "01-coffee-chat": "커피챗",
-  "02-recursion": "재귀 함수",
-  "03-closure": "클로져"
+  "01-coffee-chat": {
+    "title": "커피챗",
+    "display": "hidden"
+  },
+  "02-recursion": {
+    "title": "재귀 함수",
+    "display": "hidden"
+  },
+  "03-closure": {
+    "title": "클로져",
+    "display": "hidden"
+  }
 }

@@ -1,9 +1,34 @@
 {
-  "monolith-structure": "Monolith Structure",
-  "authentication": "Authentication",
-  "process-thread": "Process vs Thread",
-  "sql-nosql": "SQL vs NoSQL",
-  "database-index": "Database Index",
-  "scaling-techniques": "Scaling Techniques",
-  "error-handling": "Error Handling"
+  "monolith-structure": {
+    "title": "Monolith Structure",
+    "display": "hidden"
+  },
+  "authentication": {
+    "title": "Authentication",
+    "display": "hidden"
+  },
+  "process-thread": {
+    "title": "Process vs Thread",
+    "display": "hidden"
+  },
+  "sql-nosql": {
+    "title": "SQL vs NoSQL",
+    "display": "hidden"
+  },
+  "database-index": {
+    "title": "Database Index",
+    "display": "hidden"
+  },
+  "scaling-techniques": {
+    "title": "Scaling Techniques",
+    "display": "hidden"
+  },
+  "error-handling": {
+    "title": "Error Handling",
+    "display": "hidden"
+  },
+  "stream-and-buffer": {
+    "title": "Stream And Buffer",
+    "display": "hidden"
+  }
 }

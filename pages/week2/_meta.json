@@ -1,6 +1,18 @@
 {
-  "01-coffee-chat": "커피챗",
-  "02-hoisting": "호이스팅",
-  "03-higher-order-functions": "고차 함수",
-  "04-asynchronous-programming": "비동기 프로그래밍"
+  "01-coffee-chat": {
+    "title": "커피챗",
+    "display": "hidden"
+  },
+  "02-hoisting": {
+    "title": "호이스팅",
+    "display": "hidden"
+  },
+  "03-higher-order-functions": {
+    "title": "고차 함수",
+    "display": "hidden"
+  },
+  "04-asynchronous-programming": {
+    "title": "비동기 프로그래밍",
+    "display": "hidden"
+  }
 }

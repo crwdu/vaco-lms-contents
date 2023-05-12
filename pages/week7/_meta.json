@@ -1,7 +1,26 @@
 {
-  "coffee-chat": "Coffee Chat",
-  "redux-introduction": "Redux Introduction",
-  "redux-with-react": "Redux with React",
-  "react-redux-hooks": "React Redux Hooks",
-  "redux-conventions": "Redux Conventions"
+  "coffee-chat": {
+    "title": "Coffee Chat",
+    "display": "hidden"
+  },
+  "redux-introduction": {
+    "title": "Redux Introduction",
+    "display": "hidden"
+  },
+  "redux-with-react": {
+    "title": "Redux with React",
+    "display": "hidden"
+  },
+  "react-redux-hooks": {
+    "title": "React Redux Hooks",
+    "display": "hidden"
+  },
+  "redux-conventions": {
+    "title": "Redux Conventions",
+    "display": "hidden"
+  },
+  "redux-style-guide": {
+    "title": "Redux Style Guide",
+    "display": "hidden"
+  }
 }

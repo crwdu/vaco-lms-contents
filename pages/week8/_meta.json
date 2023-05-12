@@ -1,10 +1,38 @@
 {
-  "what-is-node": "What is Node.js",
-  "first-nodejs-program": "First Node.js Program",
-  "what-is-a-server": "What is a Server?",
-  "nodejs-web-server": "Node.js Web Server",
-  "stream-and-buffer": "Stream and Buffer",
-  "expressjs": "Express.js",
-  "database": "Database",
-  "mognodb": "MongoDB"
+  "what-is-node": {
+    "title": "What is Node.js",
+    "display": "hidden"
+  },
+  "first-nodejs-program": {
+    "title": "First Node.js Program",
+    "display": "hidden"
+  },
+  "what-is-a-server": {
+    "title": "What is a Server?",
+    "display": "hidden"
+  },
+  "nodejs-web-server": {
+    "title": "Node.js Web Server",
+    "display": "hidden"
+  },
+  "stream-and-buffer": {
+    "title": "Stream and Buffer",
+    "display": "hidden"
+  },
+  "expressjs": {
+    "title": "Express.js",
+    "display": "hidden"
+  },
+  "database": {
+    "title": "Database",
+    "display": "hidden"
+  },
+  "mongodb": {
+    "title": "MongoDB",
+    "display": "hidden"
+  },
+  "more-react-hooks": {
+    "title": "More React Hooks",
+    "display": "hidden"
+  }
 }

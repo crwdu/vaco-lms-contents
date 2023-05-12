@@ -1,10 +1,34 @@
 {
-  "amazon-web-services": "Amazon Web Services",
-  "simple-storage-services": "Simple Storage Services",
-  "elastic-computer-cloud": "Elastic Computer Cloud (EC2)",
-  "elastic-beanstalk": "Elastic Beanstalk",
-  "deployment": "Deployment",
-  "debugging-deployed-environment": "Debugging Deployed Environment",
-  "continuous-deployment": "Continuous Deployment / Continuous Intergration (CI/CD)",
-  "zero-downtime-deployment": "Zero Downtime Deployment"
+  "amazon-web-services": {
+    "title": "Amazon Web Services",
+    "display": "hidden"
+  },
+  "simple-storage-services": {
+    "title": "Simple Storage Services",
+    "display": "hidden"
+  },
+  "elastic-computer-cloud": {
+    "title": "Elastic Computer Cloud (EC2)",
+    "display": "hidden"
+  },
+  "elastic-beanstalk": {
+    "title": "Elastic Beanstalk",
+    "display": "hidden"
+  },
+  "deployment": {
+    "title": "Deployment",
+    "display": "hidden"
+  },
+  "debugging-deployed-environment": {
+    "title": "Debugging Deployed Environment",
+    "display": "hidden"
+  },
+  "continuous-deployment": {
+    "title": "Continuous Deployment / Continuous Intergration (CI/CD)",
+    "display": "hidden"
+  },
+  "zero-downtime-deployment": {
+    "title": "Zero Downtime Deployment",
+    "display": "hidden"
+  }
 }

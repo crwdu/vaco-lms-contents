@@ -1,7 +1,22 @@
 {
-  "coffee-chat": "Coffee Chat",
-  "lifting-states-up": "Lifting states up",
-  "state-update-is-async": "State update is async",
-  "what-is-side-effect": "What is side effect?",
-  "custom-hooks": "Custom Hooks"
+  "coffee-chat": {
+    "title": "Coffee Chat",
+    "display": "hidden"
+  },
+  "lifting-states-up": {
+    "title": "Lifting states up",
+    "display": "hidden"
+  },
+  "state-update-is-async": {
+    "title": "State update is async",
+    "display": "hidden"
+  },
+  "what-is-side-effect": {
+    "title": "What is side effect?",
+    "display": "hidden"
+  },
+  "custom-hooks": {
+    "title": "Custom Hooks",
+    "display": "hidden"
+  }
 }
