@@ -1,6 +1,6 @@
 import { Alert, Rate } from "antd";
 
-# Promise introduction
+# 프러미스
 
 ## 기본 개념
 
@@ -57,13 +57,13 @@ doSomethingAsync(function done2() {
 <br />
 <br />
 
-프로미스는 기본적으로 아래와 같은 형태의 객체입니다.
+프러미스는 기본적으로 아래와 같은 형태의 객체입니다.
 
 ```js
 const promise = new Promise();
 ```
 
-프로미스 생성자 함수는 함수를 인자로 받습니다.
+프러미스 생성자 함수는 함수를 인자로 받습니다.
 
 ```javascript
 const promise = new Promise(() => {
@@ -71,7 +71,7 @@ const promise = new Promise(() => {
 });
 ```
 
-프로미스 생성자 함수에 인자로 들어간 함수는 일반적으로 `resolve`, `reject`라고 부르는 2개의 매개 변수를 사용할 수 있습니다. `resolve`와 `reject` 또한 함수입니다.
+프러미스 생성자 함수에 인자로 들어간 함수는 일반적으로 `resolve`, `reject`라고 부르는 2개의 매개 변수를 사용할 수 있습니다. `resolve`와 `reject` 또한 함수입니다.
 
 ```javascript
 const promise = new Promise((resolve, reject) => {
@@ -82,7 +82,7 @@ const promise = new Promise((resolve, reject) => {
 <br />
 <br />
 
-프로미스 생성자 함수에 인자로 들어간 함수 내부에서 우리는 비동기 작업을 하고, 비동기 작업이 성공하면 `resolve`를 실행해야 하고, 실패하면 `reject`를 실행해야 합니다. 일반적으로 단일 프러미스 객체 내부에서는 1가지의 비동기 작업만을 수행합니다.
+프러미스 생성자 함수에 인자로 들어간 함수 내부에서 우리는 비동기 작업을 하고, 비동기 작업이 성공하면 `resolve`를 실행해야 하고, 실패하면 `reject`를 실행해야 합니다. 일반적으로 단일 프러미스 객체 내부에서는 1가지의 비동기 작업만을 수행합니다.
 
 ```javascript copy
 const promise = new Promise((resolve, reject) => {
@@ -93,12 +93,12 @@ const promise = new Promise((resolve, reject) => {
 });
 ```
 
-위와 같이 생성한 **프로미스 객체는 미래에 맞이할 성공 혹은 실패에 대한 결과값을 반드시 알려주겠다는 약속**을 의미합니다.
+위와 같이 생성한 **프러미스 객체는 미래에 맞이할 성공 혹은 실패에 대한 결과값을 반드시 알려주겠다는 약속**을 의미합니다.
 
 <br />
 <br />
 
-모든 프로미스 객체는 다음 세 가지 상태 중 하나의 상태를 가지며, **한 번이라도 결과를 맞이한 프로미스는 초기 상태로 돌아갈 수 없습니다.**
+모든 프러미스 객체는 다음 세 가지 상태 중 하나의 상태를 가지며, **한 번이라도 결과를 맞이한 프러미스는 초기 상태로 돌아갈 수 없습니다.**
 
 - **Pending**: 아직 결과가 정해지지 않은 상태
 - **Fulfilled**: 성공한 상태
@@ -113,7 +113,7 @@ const promise = new Promise((resolve, reject) => {
 <br />
 <br />
 
-프로미스 객체는 여러 가지 메소드가 있지만, `.then`, `.catch`를 가장 자주 사용합니다.
+프러미스 객체는 여러 가지 메소드가 있지만, `.then`, `.catch`를 가장 자주 사용합니다.
 
 > [Promise - JavaScript | MDN](https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/Promise)
 
@@ -145,7 +145,7 @@ promise.catch((err) => {
 <br />
 <br />
 
-프로미스의 `then`, `catch` 메소드는 아래와 같이 연결하여 사용할 수 있습니다. 즉, Chaining이 가능합니다.
+프러미스의 `then`, `catch` 메소드는 아래와 같이 연결하여 사용할 수 있습니다. 즉, Chaining이 가능합니다.
 
 ```javascript showLineNumbers copy
 const promise = new Promise((resolve, reject) => {
@@ -204,6 +204,49 @@ promise
   .catch((err) => {
     console.log("Promise Failed!", err);
   });
+```
+
+<br />
+<br />
+
+## 실행 순서
+
+<Rate disabled={true} value={4} />
+<br />
+<br />
+
+아래 예시 코드의 콘솔 출력문의 순서를 잘 살펴보세요.
+
+- 숫자 순번으로 출력됩니다.
+- 0~3까지는 동기 방식으로 호출됩니다.
+- 4~7까지는 비동기 방식으로 호출됩니다.
+
+```javascript showLineNumbers copy
+console.log(0);
+
+const promise = new Promise((resolve, reject) => {
+  console.log(1);
+
+  setTimeout(() => {
+    console.log(4);
+    resolve();
+  }, 0);
+});
+
+console.log(2);
+
+promise
+  .then(() => {
+    console.log(5);
+  })
+  .then(() => {
+    console.log(6);
+  })
+  .finally(() => {
+    console.log(7);
+  });
+
+console.log(3);
 ```
 
 <br />
@@ -301,24 +344,24 @@ function getCatFacts() {
 <br />
 <br />
 
-### 반환값
+### 1. 반환값
 
 우선 동기 함수의 가장 중요한 특징 한 가지를 다시 한번 기억해보세요.
 
 > **반환값이 있다.**
 
-위에서 보여드렸던 예시 1번의 콜백 패턴을 다시 한번 보시면 콜백 함수는 반환값을 받아서 로직을 처리하지 않는다는 것을 볼 수 있습니다. 이것은 동기 로직과 완전히 작업 흐름이 다르다는 것을 의미합니다.
+위에서 보여드렸던 예시 1번의 콜백 패턴을 다시 한번 보시면 콜백 함수는 반환값을 받아서 로직을 처리하지 않는다는 것을 볼 수 있습니다. 이것은 동기 로직과 완전히 작업 흐름이 다르다는 것을 의미합니다. 작업하는 사람 입장에서 완전히 다른 2가지 방식의 흐름을 다루어야 하는 것이죠.
 
 하지만 예시 2번의 프러미스 패턴을 보시면 프러미스 객체를 반환값으로 받아서 비동기 로직을 처리하도록 되어 있습니다. 일반적인 동기 로직과 작성 흐름이 동일합니다.
 
 동기 흐름의 코드에서 우리는 함수 연산에 관한 결과로서 반환값을 지정할 수 있고, 그 결과를 받아 추가적인 연산을 진행할 수 있습니다. 콜백 함수를 이용한 상황에서는 비동기 함수의 반환값을 받을 수 없으므로, 동기 함수처럼 반환값을 지정해줄 수 없었습니다.
 
-하지만 프로미스를 이용할 경우, (미래에 성공이나 실패에 관한 결과를 알려줄 것이라는) 약속을 담은 객체가 우리 손에 쥐어지기 때문에 이 프로미스 객체를 이용해 반환하거나 자유롭게 다른 함수 혹은 모듈 등으로 전달할 수 있습니다. **비동기 상황에서도 우리가 동기적 코드의 흐름과 훨씬 더 유사하게 제어할 수 있도록 개선**되었습니다.
+하지만 프러미스를 이용할 경우, (미래에 성공이나 실패에 관한 결과를 알려줄 것이라는) 약속을 담은 객체가 우리 손에 쥐어지기 때문에 이 프러미스 객체를 이용해 반환하거나 자유롭게 다른 함수 혹은 모듈 등으로 전달할 수 있습니다. **비동기 상황에서도 우리가 동기적 코드의 흐름과 훨씬 더 유사하게 제어할 수 있도록 개선**되었습니다.
 
 <br />
 <br />
 
-### 에러 핸들링
+### 2. 에러 핸들링
 
 일반적인 콜백 패턴에서는 콜백 함수의 매개변수로 에러에 대한 데이터를 받고 그에 대한 존재여부를 판단하여 에러 핸들링을 수행합니다.
 
@@ -361,9 +404,12 @@ function getCatFacts(callback) {
 
 ```javascript showLineNumbers copy
 try {
-  something();
-  somethingElse();
-  somethingOther();
+  console.log(1);
+
+  throw new Error();
+
+  // 위에서 오류가 발생했으므로, 실행되지 않음.
+  console.log(2);
 } catch (err) {
   // do something with error
 }
@@ -374,27 +420,16 @@ try {
 
 프러미스 또한 위와 유사한 흐름으로 에러 핸들링 기능이 설계되어 있습니다.
 
-```javascript showLineNumbers copy
+```javascript {9} showLineNumbers copy
 const promise = new Promise((resolve, reject) => {
-  const xhr = new XMLHttpRequest();
-
-  xhr.onreadystatechange = () => {
-    if (xhr.readyState === XMLHttpRequest.DONE) {
-      resolve(xhr.responseText);
-    }
-  };
-
-  xhr.addEventListener("error", (err) => {
-    reject(err);
-  });
-
-  xhr.open("GET", "https://cat-fact.herokuapp.com/facts", true);
-  xhr.send(null);
+  setTimeout(() => {
+    resolve();
+  }, 0);
 });
 
 promise
   .then(function done(data) {
-    console.log("Promise success!", data);
+    throw new Error();
     return 1;
   })
   .then(function handleOne(one) {
@@ -409,16 +444,18 @@ promise
   });
 ```
 
-`promise` 내부 비동기 로직, `done` 함수, `handleOne` 함수, 혹은 `handleTwo` 함수 어디서 에러가 나더라도 `handleError` 함수가 호출됩니다.
+현재 예시에서는 `done` 함수에서 고의적으로 에러를 발생시키고 있습니다. 그렇기에 `handleOne`, `handleTwo` 함수는 실행되지 않고, 곧바로 `handleError` 함수가 실행됩니다.
+
+이 흐름은 다른 곳에서 에러가 발생하더라도 동일하게 적용됩니다. `promise` 내부 비동기 로직, `done` 함수, `handleOne` 함수, 혹은 `handleTwo` 함수 어디서 에러가 발생하더라도 우리 로직은 실행이 중단되고 `handleError` 함수가 호출됩니다.
 
 **기존** **`try..catch`** **와 유사한 이 흐름은 자바스크립트의 기본 문법이 제공하는 흐름의 에러 핸들링일 뿐 아니라 실패 로직과 성공 로직의 분리가 더욱 명확해질 수 있게 돕습니다.**
 
 <br />
 <br />
 
-### 확장성
+### 3. 확장성
 
-프로미스는 객체 지향 프로그래밍에 기반하여 만들어졌기 때문에, 아래와 같이 **유연한 확장** 또한 가능합니다.
+프러미스는 객체 지향 프로그래밍에 기반하여 만들어졌기 때문에, 아래와 같이 **유연한 확장** 또한 가능합니다.
 
 아래 예시 코드는 조금 어려울 수 있으니, 참고용으로만 보세요.
 
@@ -462,40 +499,15 @@ Promise.all([a, b, c])
 <br />
 <br />
 
-## 실행 순서
+## 요약
 
-<Rate disabled={true} value={4} />
 <br />
 <br />
 
-프러미스의 정확한 실행 순서를 반드시 이해해보도록 하세요.
+혹시라도 프러미스에 대한 내용이 잘 이해되지 않았다면, 시간을 두고 여러번 살펴보세요. 매우 중요한 내용이며, 구직활동에서 가장 자주 언급되는 주제 중 하나입니다. 우리가 앞으로 배우게 될 `async/await` 이라는 문법 또한 프러미스에 기반하여 동작하는 문법이므로, 프러미스에 대한 이해는 필수적이라고 할 수 있습니다.
 
-```javascript showLineNumbers copy
-console.log(0);
+프러미스의 사용법을 익히는 것은 누구나 시간만 들이면 익숙해지는 부분입니다. 진정 중요한 부분은 단지 사용법을 아는 개발자를 뛰어넘어, 근본적인 이유를 파악하고 사용할 수 있는 개발자가 되도록 노력하는 것입니다.
 
-const p1 = new Promise((resolve, reject) => {
-  console.log(1);
+많은 사람들이 콜백 지옥에 대한 해결책이라고 말하니 그렇게 단편적으로 받아들이고 더 이상 스스로 고민하지 않는 사람들도 매우 많습니다. 강의에서, 인터넷 블로그에서 누가 뭐라 말하더라도 반드시 스스로 다시 한번 고민하고 또 고민하는 시간을 갖도록 하세요. 제가 설명드리는 내용들 또한 마찬가지입니다.
 
-  setTimeout(() => {
-    console.log(2);
-    resolve();
-  }, 1000);
-});
-
-console.log(3);
-
-p1.then(() => {
-  console.log(4);
-})
-  .then(() => {
-    console.log(5);
-  })
-  .catch(() => {
-    console.log(6);
-  })
-  .finally(() => {
-    console.log(7);
-  });
-
-console.log(8);
-```
+누군가가 설명하는 내용에 의존하게 되면, 결국 쫓아가는 사람이 될 뿐입니다. 설명을 듣더라도, 반드시 다시 한번 스스로 고민하는 시간을 갖도록 하세요.
