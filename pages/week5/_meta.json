@@ -15,10 +15,6 @@
     "title": "States",
     "display": "hidden"
   },
-  "promise": {
-    "title": "Promise",
-    "display": "hidden"
-  },
   "async-await": {
     "title": "Async / Await",
     "display": "hidden"

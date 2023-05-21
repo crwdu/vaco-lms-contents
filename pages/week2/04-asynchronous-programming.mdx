@@ -7,13 +7,13 @@ import { red, green } from "@ant-design/colors";
 ## 기본 개념
 
 <Rate disabled={true} value={5} />
-<br/>
-<br/>
+<br />
+<br />
 
 프로그래밍에는 비동기라는 코드의 동작 흐름에 대한 개념이 있습니다. 개발자라면, 누구나 숨 쉬듯이 사용하는 매우 중요한 개념입니다. 우선 비유를 들어 대략적인 개념을 설명해보도록 하겠습니다.
 
-<br/>
-<br/>
+<br />
+<br />
 
 ### 비동기 시스템
 
@@ -31,8 +31,8 @@ import { red, green } from "@ant-design/colors";
 
 위와 같은 체계가 비동기 방식의 흐름이라고 할 수 있습니다. (실제 코드에서는 조금 다르겠지만) 우선 개념 자체는 간단하죠?
 
-<br/>
-<br/>
+<br />
+<br />
 
 ### 동기 시스템
 
@@ -47,8 +47,8 @@ import { red, green } from "@ant-design/colors";
 
 이와 같은 체계가 동기 체계라고 할 수 있습니다.
 
-<br/>
-<br/>
+<br />
+<br />
 
 ### 개념 정리
 
@@ -58,14 +58,14 @@ import { red, green } from "@ant-design/colors";
 
 프로그래밍에서도 마찬가지입니다. 시간이 다소 소요되는 작업의 경우에는 비동기 방식을 선호하는 경향이 있고, 일반적인 경우에는 디버깅이 용이하고 흐름 파악이 직관적인 동기 방식이 기본적으로 선호됩니다.
 
-<br/>
-<br/>
+<br />
+<br />
 
 ## 비동기 메커니즘
 
 <Rate disabled={true} value={5} />
-<br/>
-<br/>
+<br />
+<br />
 
 ##### 예시 1.
 
@@ -100,6 +100,7 @@ console.log(result);
 
       현재 코드의 흐름은 동기 방식입니다. 앞 단계 작업이 종료되어야 그 후속 작업이 진행될 수 있습니다. 일반적으로 우리가 알고 있는 코드의 실행 흐름이라고 할 수 있습니다.
     </p>
+
   </Collapse.Panel>
 </Collapse>
 
@@ -107,15 +108,23 @@ console.log(result);
 <Collapse>
   <Collapse.Panel header="[영상 설명] 위의 예시 코드는 이런 흐름으로 실행됩니다. 1분 정도 생각해보시고, 열어보세요.">
     <p>
-      100% 동일한 코드는 아닙니다. 그리고 Sorry, 알러지 때문에 선글라스 비디오 필터를 사용했습니다.
+      100% 동일한 코드는 아닙니다. 그리고 Sorry, 알러지 때문에 선글라스 비디오
+      필터를 사용했습니다.
       <br />
-      <iframe src="https://player.vimeo.com/video/824318743?h=277a6bd757" width="640" height="360" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+      <iframe
+        src="https://player.vimeo.com/video/824318743?h=277a6bd757"
+        width="640"
+        height="360"
+        frameborder="0"
+        allow="autoplay; fullscreen; picture-in-picture"
+        allowfullscreen
+      ></iframe>
     </p>
   </Collapse.Panel>
 </Collapse>
 
-<br/>
-<br/>
+<br />
+<br />
 
 ##### 예시 2.
 
@@ -151,24 +160,25 @@ for (let i = 1; i <= 1000; i++) {
 
       이런 비동기 메커니즘을 이해하려면, 비동기 메커니즘과 관련된 브라우저의 구성 요소에 대해 우선적으로 알아야 합니다. 하나씩 차근차근 알아보고 다시 이 예시 코드를 돌아보도록 하겠습니다.
     </p>
+
   </Collapse.Panel>
 </Collapse>
 
 > [`setTimeout`](https://developer.mozilla.org/ko/docs/Web/API/setTimeout) 함수는 2개의 인자를 받습니다. 첫 번째 인자는 함수, 두 번째 인자는 숫자를 받습니다. 두 번째 인자로 주어진 숫자는 시간 값으로 사용되어, 해당 시간이 지난 후 첫 번째 인자로 주어진 함수를 실행되도록 합니다.
 
-<br/>
-<br/>
+<br />
+<br />
 
 ## 브라우저 구성 요소
 
 <Rate disabled={true} value={5} />
-<br/>
-<br/>
+<br />
+<br />
 
 우선 비동기 메커니즘과 관련된 브라우저의 구성 요소에 대해 알아보겠습니다.
 
-<br/>
-<br/>
+<br />
+<br />
 
 ### 자바스크립트 엔진
 
@@ -180,8 +190,8 @@ for (let i = 1; i <= 1000; i++) {
 
 하지만 자바스크립트 엔진의 여러 부분 중, 여러분께서 지금 반드시 알아야 할 부분은 **콜 스택**입니다.
 
-<br/>
-<br/>
+<br />
+<br />
 
 #### 콜 스택
 
@@ -203,11 +213,12 @@ for (let i = 1; i <= 1000; i++) {
 
       스택 구조는 새로운 자료를 위에 쌓고, 가장 위에 쌓인 자료를 꺼내야 하는 방식입니다. 그렇기에 **First In, Last Out (선입후출) 방식**으로 자료가 들어가고 나가게 됩니다.
     </p>
+
   </Collapse.Panel>
 </Collapse>
 
-<br/>
-<br/>
+<br />
+<br />
 
 ### Web API
 
@@ -218,9 +229,10 @@ for (let i = 1; i <= 1000; i++) {
   <Collapse.Panel header="진짜 자바스크립트를 쉽게 판별하는 방법">
     <p>
       알고리즘 문제 풀이 하고 계시죠? 알고리즘 문제를 풀때 사용할 수 있는 기능들은 99.9% 순수 자바스크립트 문법들이라고 볼 수 있습니다.
-      
+
       (0.1% 정도의 예외가 있기는 합니다.)
     </p>
+
   </Collapse.Panel>
 </Collapse>
 
@@ -244,8 +256,8 @@ window.console.log("hello world");
 
 > 어떤 것들이 Web API고, 어떤 것들이 진짜 자바스크립트인지 지금 당장 확실하게 구분짓지 못해도 괜찮습니다. 앞으로 자연스럽게 구별할 수 있게 될 것이니, 여러분이 사용하는 함수나 기능에 대해 그때 그때 자세히 조사해보도록 하세요.
 
-<br/>
-<br/>
+<br />
+<br />
 
 ### 콜백 큐
 
@@ -263,13 +275,14 @@ window.console.log("hello world");
 
       큐 구조는 먼저 대기열에 선 자료가 먼저 나올 수 있고, 나중에 대기열에 선 자료가 나중에 나올 수 있는 방식입니다. 그렇기에 **First In, First Out (선입선출) 방식**으로 자료가 들어가고 나가게 됩니다.
     </p>
+
   </Collapse.Panel>
 </Collapse>
 
 그렇다면, 콜백 큐라는 구조에서 대기하는 함수들은 어떤 규칙에 의해서 실행되는 것일까요?
 
-<br/>
-<br/>
+<br />
+<br />
 
 ### 이벤트 룹
 
@@ -287,8 +300,8 @@ window.console.log("hello world");
 
 글로만 봐서는 이해가 잘 안되시죠?
 
-<br/>
-<br/>
+<br />
+<br />
 
 ##### 예시 3.
 
@@ -344,13 +357,20 @@ console.log("end");
     <p>
       Sorry, 알러지 때문에 선글라스 비디오 필터를 사용했습니다.
       <br />
-      <iframe src="https://player.vimeo.com/video/824318757?h=15a739b310" width="640" height="360" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+      <iframe
+        src="https://player.vimeo.com/video/824318757?h=15a739b310"
+        width="640"
+        height="360"
+        frameborder="0"
+        allow="autoplay; fullscreen; picture-in-picture"
+        allowfullscreen
+      ></iframe>
     </p>
   </Collapse.Panel>
 </Collapse>
 
-<br/>
-<br/>
+<br />
+<br />
 
 ##### 예시 2.
 
@@ -392,6 +412,7 @@ for (let i = 1; i <= 1000; i++) {
 
       이런 이벤트 룹의 비동기 처리 메커니즘을 이해하고 예시 코드를 본다면, 당연하게도 "비동기 결과: 4"라는 콘솔 출력이 가장 마지막에 출력될 수 밖에 없다는 것을 확실하게 알 수 있습니다.
     </p>
+
   </Collapse.Panel>
 </Collapse>
 
@@ -410,7 +431,7 @@ for (let i = 1; i <= 1000; i++) {
 
 하지만 이는 단순히 코드 몇줄 써보고 블로그 몇개 읽어보고 이해할 수 있는 내용이 결코 아닙니다. 예를 들어, 인터넷에 프로미스에 대해 검색해보면 콜백 지옥을 해결해주는 도우미로 묘사하는 사람들이 많습니다. 이는 완전히 잘못된 정보입니다. 동물원에 가서 동물 몇 마리 봤다고 자연을 이해하는 것은 아니듯 말이죠.
 
-우리는 앞으로 잠시 몇 주간은 우선 가장 원시적인 패턴인 1번, 콜백 패턴에 집중할 것입니다. 그리고 이 과정에서 제가 여러분께 부탁드리고 싶은 것은 2, 3번과 같은 현재 트렌드에 너무 연연하지 마시고, 우리의 진행 방향에 모든 것을 집중해주세요.
+우리는 앞으로 잠시 동안 우선 콜백 패턴과 프러미스에 집중할 것입니다. 그리고 이 과정에서 제가 여러분께 부탁드리고 싶은 것은 현재 인터넷에 난무하는 트렌드에 연연하지 마시고, 우리의 진행 방향에 모든 것을 집중해주세요.
 
 불편함을 진심으로 공감해본 사람 만이 신기술의 편리함에 대해 더욱 깊이있게 이해할 수 있는 것입니다. 단계적으로 차근 차근 배워가며, 우리는 한층 남다른 이해도를 가진 개발자가 될 것입니다.
 
@@ -422,14 +443,32 @@ for (let i = 1; i <= 1000; i++) {
 1. [Event Loop Visualizer Web](http://latentflip.com/loupe/)
 
 2. **"What the heck is the event loop anyway"** by _Philip Roberts at JSConf EU_
-<iframe width="560" height="315" src="https://www.youtube.com/embed/8aGhZQkoFbQ?start=1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+
+   <iframe
+     width="560"
+     height="315"
+     src="https://www.youtube.com/embed/8aGhZQkoFbQ?start=1"
+     title="YouTube video player"
+     frameborder="0"
+     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+     allowfullscreen
+   ></iframe>
 
 3. **"In the loop"** by _Jake Archibald at JSConf Asia_
 
 > 매우 중요한 내용이니, 취업 전에 시간 들여서 전체 영상 해석하시고 반드시 이해해보셔야 합니다.
-<br/>
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/cCOL7MC4Pl0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+<br />
+
+<iframe
+  width="560"
+  height="315"
+  src="https://www.youtube.com/embed/cCOL7MC4Pl0"
+  title="YouTube video player"
+  frameborder="0"
+  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+  allowfullscreen
+></iframe>
 
 > (자랑) 그리고 저도 이 컨퍼런스에 연사로 초청받았었습니다.<br/>
 > (켄무룩) 하지만 컨퍼런스 일정 직전에 중요한 바코 수업 일정 때문에 취소해야 했습니다.<br/>

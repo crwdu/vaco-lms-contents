@@ -1,18 +1,18 @@
 {
   "01-coffee-chat": {
     "title": "커피챗",
-    "display": ""
+    "display": "normal"
   },
   "02-dom-events": {
     "title": "DOM 이벤트",
-    "display": ""
+    "display": "normal"
   },
   "03-scope": {
     "title": "스코프",
-    "display": ""
+    "display": "normal"
   },
   "04-primitive-reference": {
     "title": "원시값과 참조값",
-    "display": ""
+    "display": "normal"
   }
 }
