@@ -1,0 +1,497 @@
+# Family oriented prototype
+
+## Definition
+
+> 원형(原型)(archetype); 견본, 전형; (후대 사물의) 선조, 원조(元祖)
+
+자바스크립트를 이해하는 데 있어 빠질 수 없는 개념이 프로토타입입니다. 이 언어의 근간이자 핵심이 되는 개념이기에 여러분도 반드시 숙지해야 합니다.
+
+## Constructor Function
+
+<callout>
+  <h3>🙏🏻생성자 함수를 기억하시나요?</h3>
+  ℹ️ <b>`new`</b> <b>키워드</b>와 함께 어떤 함수를 실행할 경우, 이 함수는 <b>
+    생성자 함수
+  </b>라고 일컫습니다. 생성자 함수는 일반적으로 <b>함수명을 "명사"</b>로 짓고, <b>
+    함수명의 첫 글자를 대문자로 표기
+  </b>합니다.
+</callout>
+
+```javascript
+function Person(name, age) {
+  this.name = name;
+  this.age = age;
+}
+
+const ken = new Person("ken", 37);
+
+console.log(ken); // ?
+```
+
+위의 예제에서 보시면, 놀라운 사건이 한 가지 발생합니다. 자바스크립트에서 함수의 `return` 값이 명시되지 않는다면 기본적으로 `undefined`가 반환됩니다. 하지만 위에서 `Person`이라는 함수는 `return` 값이 없음에도 불구하고, 특정 객체가 반환되어 `ken`이라는 변수에 담기게 됩니다.
+
+<callout>
+  ✅ <b>생성자 함수의 기본 반환 값은</b> <b>`this`</b>{" "}
+  <b>이며, 일반적으로 반환 값을 명시하지 않습니다.</b>
+</callout>
+
+## How do we create objects in JavaScript?
+
+자바스크립트의 객체들은 어떻게 만들어지는지 보겠습니다.
+
+```javascript
+const obj = {};
+const arr = [];
+const func = function () {};
+```
+
+우리는 흔히 자바스크립트에서 객체를 생성할 때 위와 같이 작성합니다. 위의 예제는 사실상 아래 예제와 동일합니다.
+
+```javascript
+const obj = new Object();
+const arr = new Array();
+const func = new Function();
+```
+
+`Object`, `Array`, `Function`은 자바스크립트에 내장된 생성자 함수입니다.
+
+**우리가 첫 번째 예제와 같이 간결하게 코드를 작성한다 해도, 자바스크립트는 사실상 내부적으로 생성자 함수를 이용해 만드는 것과 동일하게 객체를 생성합니다.**
+
+<callout>
+  ✅{" "}
+  <b>
+    즉, 모든 자바스크립트 객체는 생성자 함수를 이용하여 만들어진다고 해도 틀린
+    말이 아닙니다.
+  </b>
+</callout>
+
+## Every function has "prototype" property
+
+```javascript
+function add(a, b) {
+  return a + b;
+}
+
+add.title = "my title value";
+
+console.log(add.title); // "my title value"
+```
+
+모든 함수는 객체라는 것, 그 말은 key/value를 가질 수 있다는 말입니다.
+
+함수에 속성/값을 추가하여 사용하는 일은 굉장히 드문 일입니다. 특별한 경우가 아니라면, 권장하지 않습니다. 위 예제는 함수 또한 객체이고, 속성/값을 가질 수 있다는 것을 알려드리기 위한 데모 목적일 뿐입니다.
+
+```javascript
+function add(a, b) {
+  return a + b;
+}
+
+function multiply(a, b) {
+  return a * b;
+}
+
+function foo() {
+  console.log("hello, world");
+}
+
+const doSomething = function () {
+  console.log("do something");
+};
+
+// 아래 출력문은 모두 어떤 객체를 콘솔에 출력합니다.
+console.log(add.prototype);
+console.log(multiply.prototype);
+console.log(foo.prototype);
+console.log(doSomething.prototype);
+```
+
+위의 예제를 실행해보면 콘솔에 결과적으로 어떤 객체들이 출력되는 것을 볼 수 있습니다.
+
+함수를 어떤 방식으로 생성했는지는 중요하지 않습니다. 자바스크립트의 모든 함수는 `prototype` 속성이 내장되어 있습니다.
+
+<callout>
+  ℹ️ <b>자바스크립트의 모든 함수에는</b> <b>`prototype`</b> 이라는 속성이
+  있습니다.
+</callout>
+
+```javascript
+function add(a, b) {
+  return a + b;
+}
+
+function multiply(a, b) {
+  return a * b;
+}
+
+console.log(add.prototype === multiply.prototype); // ?
+```
+
+위의 예제를 실행할 경우, 콘솔에 어떤 값이 출력될지 생각해보시기를 바랍니다.
+
+힌트) 모든 함수는 각각 고유한 prototype 객체를 갖고 생성됩니다. 모든 자바스크립트 배열은 `.length`라는 속성을 갖고 생성되듯, 자바스크립트의 함수는 생성되는 단계에서 `prototype`이라는 속성이 주어지는 것입니다.
+
+```javascript
+function foo() {
+  console.log("hello!");
+}
+
+foo();
+```
+
+위와 같이 일반적인 상황에서 함수의 `prototype` 객체는 별다른 역할을 하지 않습니다.
+
+<callout>
+  ℹ️ <b>각 함수가 소유한</b> <b>`prototype`</b>{" "}
+  <b>
+    객체는 해당 함수가 생성자 함수로서 실행될 때 특별한 역할을 하도록 설계되어
+    있습니다.
+  </b>
+</callout>
+
+# Family oriented prototype
+
+## Definition
+
+> 원형(原型)(archetype); 견본, 전형; (후대 사물의) 선조, 원조(元祖)
+
+자바스크립트를 이해하는 데 있어 빠질 수 없는 개념이 프로토타입입니다. 이 언어의 근간이자 핵심이 되는 개념이기에 여러분도 반드시 숙지해야 합니다.
+
+## Constructor Function
+
+<callout>
+  <h3>🙏🏻생성자 함수를 기억하시나요?</h3>
+  ℹ️ <b>`new`</b> <b>키워드</b>와 함께 어떤 함수를 실행할 경우, 이 함수는 <b>
+    생성자 함수
+  </b>라고 일컫습니다. 생성자 함수는 일반적으로 <b>함수명을 "명사"</b>로 짓고, <b>
+    함수명의 첫 글자를 대문자로 표기
+  </b>합니다.
+</callout>
+
+```javascript
+function Person(name, age) {
+  this.name = name;
+  this.age = age;
+}
+
+const ken = new Person("ken", 37);
+
+console.log(ken); // ?
+```
+
+위의 예제에서 보시면, 놀라운 사건이 한 가지 발생합니다. 자바스크립트에서 함수의 `return` 값이 명시되지 않는다면 기본적으로 `undefined`가 반환됩니다. 하지만 위에서 `Person`이라는 함수는 `return` 값이 없음에도 불구하고, 특정 객체가 반환되어 `ken`이라는 변수에 담기게 됩니다.
+
+<callout>
+  ✅ <b>생성자 함수의 기본 반환 값은</b> <b>`this`</b>{" "}
+  <b>이며, 일반적으로 반환 값을 명시하지 않습니다.</b>
+</callout>
+
+## How do we create objects in JavaScript?
+
+자바스크립트의 객체들은 어떻게 만들어지는지 보겠습니다.
+
+```javascript
+const obj = {};
+const arr = [];
+const func = function () {};
+```
+
+우리는 흔히 자바스크립트에서 객체를 생성할 때 위와 같이 작성합니다. 위의 예제는 사실상 아래 예제와 동일합니다.
+
+```javascript
+const obj = new Object();
+const arr = new Array();
+const func = new Function();
+```
+
+`Object`, `Array`, `Function`은 자바스크립트에 내장된 생성자 함수입니다.
+
+**우리가 첫 번째 예제와 같이 간결하게 코드를 작성한다 해도, 자바스크립트는 사실상 내부적으로 생성자 함수를 이용해 만드는 것과 동일하게 객체를 생성합니다.**
+
+<callout>
+  ✅{" "}
+  <b>
+    즉, 모든 자바스크립트 객체는 생성자 함수를 이용하여 만들어진다고 해도 틀린
+    말이 아닙니다.
+  </b>
+</callout>
+
+## Every function has "prototype" property
+
+```javascript
+function add(a, b) {
+  return a + b;
+}
+
+add.title = "my title value";
+
+console.log(add.title); // "my title value"
+```
+
+모든 함수는 객체라는 것, 그 말은 key/value를 가질 수 있다는 말입니다.
+
+함수에 속성/값을 추가하여 사용하는 일은 굉장히 드문 일입니다. 특별한 경우가 아니라면, 권장하지 않습니다. 위 예제는 함수 또한 객체이고, 속성/값을 가질 수 있다는 것을 알려드리기 위한 데모 목적일 뿐입니다.
+
+```javascript
+function add(a, b) {
+  return a + b;
+}
+
+function multiply(a, b) {
+  return a * b;
+}
+
+function foo() {
+  console.log("hello, world");
+}
+
+const doSomething = function () {
+  console.log("do something");
+};
+
+// 아래 출력문은 모두 어떤 객체를 콘솔에 출력합니다.
+console.log(add.prototype);
+console.log(multiply.prototype);
+console.log(foo.prototype);
+console.log(doSomething.prototype);
+```
+
+위의 예제를 실행해보면 콘솔에 결과적으로 어떤 객체들이 출력되는 것을 볼 수 있습니다.
+
+함수를 어떤 방식으로 생성했는지는 중요하지 않습니다. 자바스크립트의 모든 함수는 `prototype` 속성이 내장되어 있습니다.
+
+<callout>
+  ℹ️ <b>자바스크립트의 모든 함수에는</b> <b>`prototype`</b> 이라는 속성이
+  있습니다.
+</callout>
+
+```javascript
+function add(a, b) {
+  return a + b;
+}
+
+function multiply(a, b) {
+  return a * b;
+}
+
+console.log(add.prototype === multiply.prototype); // ?
+```
+
+위의 예제를 실행할 경우, 콘솔에 어떤 값이 출력될지 생각해보시기를 바랍니다.
+
+힌트) 모든 함수는 각각 고유한 prototype 객체를 갖고 생성됩니다. 모든 자바스크립트 배열은 `.length`라는 속성을 갖고 생성되듯, 자바스크립트의 함수는 생성되는 단계에서 `prototype`이라는 속성이 주어지는 것입니다.
+
+```javascript
+function foo() {
+  console.log("hello!");
+}
+
+foo();
+```
+
+위와 같이 일반적인 상황에서 함수의 `prototype` 객체는 별다른 역할을 하지 않습니다.
+
+<callout>
+  ℹ️ <b>각 함수가 소유한</b> <b>`prototype`</b>{" "}
+  <b>
+    객체는 해당 함수가 생성자 함수로서 실행될 때 특별한 역할을 하도록 설계되어
+    있습니다.
+  </b>
+</callout>
+
+# Deep dive into prototype
+
+```javascript
+function foo() {
+  console.log("hello");
+}
+
+const something = new foo();
+```
+
+생성자 함수는 기본 반환 값이 `this`입니다. 생성자 함수 내에서 this 값은
+
+**"새로운 빈 객체"**
+
+즉 **생성자 함수는 새로운 빈 객체를 생성하여 반환합니다.**
+
+```javascript
+function foo() {
+  console.log("I am foo.");
+}
+
+const something = new foo();
+
+console.log(something.hello); // ?
+
+foo.prototype.hello = "Hello, World";
+
+console.log(something.hello); // ?
+```
+
+`something` 이라는 변수에 담긴 존재는 `foo` 함수를 생성자 함수로 실행한 반환 값, 즉 빈 객체입니다.
+
+그렇다면 첫 번째 콘솔 출력문에서는 존재하지 않는 속성에 접근하기 때문에 `undefined`가 출력됩니다. 그런데, 두 번째 콘솔 출력문에서는 `"Hello, World"`가 출력되었습니다.
+
+이런 현상이 일어나는 이유는 빈 객체라고 계속 부르던 생성자 함수의 반환 값 그리고 함수의 프로토타입과 굉장히 밀접한 관계가 있습니다.
+
+<callout>
+  ℹ️{" "}
+  <b>
+    생성자 함수가 반환해주는 빈 객체는 흔히 Instance(인스턴스)라고 부릅니다.
+  </b>
+</callout>
+
+```javascript
+function Person(name) {
+  this.name = name;
+}
+
+const ken = new Person("ken");
+```
+
+위와 같은 상황에서 `ken` 은 `Person`의 인스턴스입니다.
+
+## Instance and its prototype
+
+<callout>
+  ℹ️{" "}
+  <b>
+    자바스크립트의 모든 인스턴스 객체는 해당 객체의 프로토타입에 존재하는 속성
+    및 메소드에 접근하여 사용할 수 있습니다.
+  </b>
+</callout>
+
+말이 어려울 수 있으니, 예제를 한번 살펴보도록 하겠습니다.
+
+```javascript
+function Person(name) {
+  this.name = name;
+}
+
+Person.prototype.age = 30;
+
+const ken = new Person("ken");
+
+console.log(ken.age); // ?
+```
+
+위의 예제에서 생성자 함수는 `Person`입니다. `Person`은 함수이기 때문에 생성될 때 고유의 프로토타입 객체(`Person.prototype`)와 함께 생성됩니다.
+
+위의 예제에서 인스턴스는 `ken`입니다. `ken`은 `Person`이라는 생성자 함수를 이용해서 만들어졌기 때문에, `Person.prototype`에 존재하는 속성을 사용할 수 있습니다.
+
+즉, `ken.age`를 출력하게 되면 `Person.prototype.age`의 값을 출력하게 됩니다.
+
+```javascript
+function Person(name) {
+  this.name = name;
+}
+
+function Dog(breed) {
+  this.breed = breed;
+}
+
+Dog.prototype.age = 10;
+
+const ken = new Person("ken");
+
+console.log(ken.age); // ?
+```
+
+위 예제에서 `ken.age`의 값은 출력되지 않습니다. 왜냐하면 `ken`이라는 객체는 `Person`이라는 생성자 함수를 이용해 만들어진 인스턴스이기 때문에, `Person.prototype` 객체의 속성은 사용 가능하지만, `Dog.prototype`에 존재하는 속성은 사용 불가능한 관계입니다.
+
+<img src="/static/contents/prep/image-07.png" alt="image" width="100%" />
+
+‌
+
+## 🤔Metaphor
+
+모든 생성자 함수는 남편입니다. 모든 프로토타입 객체는 아내입니다. 남편과 아내는 1:1 매칭입니다.
+
+생성자 함수가 3개라면, 그에 대한 프로토타입 객체 또한 3개입니다.
+
+> constructor -> 남편
+>
+> prototype -> 아내
+
+```javascript
+function Person(name) {
+  this.name = name;
+}
+
+function Dog(name) {
+  this.name = name;
+}
+```
+
+함수가 두 개이므로, 각각에 대한 프로토타입 또한 두 개가 생성됩니다.
+
+```javascript
+function Person(name) {
+  this.name = name;
+}
+
+const ken = new Person("ken");
+```
+
+생성자 함수를 실행하여 만들어진 인스턴스는 **남편과 아내의 사랑의 결실**, 즉 자녀입니다.
+
+```javascript
+function Person(name) {
+  this.name = name;
+}
+
+Person.prototype.age = 30;
+
+const ken = new Person("ken");
+
+console.log(ken.age); // 30
+```
+
+모든 자녀는 본인의 엄마로부터 속성을 빌려 쓸 수 있습니다.
+
+```javascript
+function Person(name, age) {
+  this.name = name;
+  this.age = age;
+}
+
+Person.prototype.age = 30;
+
+const ken = new Person("ken", 20);
+
+console.log(ken.age); // ?
+```
+
+무조건 엄마의 속성을 사용하는 것은 아닙니다. 본인에게 없을 경우에만 엄마의 속성을 사용합니다.
+
+<callout>
+  ✅{" "}
+  <b>
+    생성자 함수는 남편, 프로토타입은 아내, 인스턴스는 자식이라 생각하고 모든
+    엄마는 자식이 어려움에 처한다면 늘 도움을 주려고 합니다.
+  </b>
+</callout>
+
+# Inheritance in JavaScript
+
+```
+function Animal () {
+  this.eat = function () { console.log("EAT!"); };
+}
+
+Animal.prototype.sleep = function () { console.log("sleep"); };
+
+function Human (name) {
+  Animal.call(this);
+  this.name = name;
+}
+
+Human.prototype = Object.create(Animal.prototype);
+Human.prototype.constructor = Human;
+
+var ken = new Human("ken");
+var dog = new Animal();
+
+dog.sleep();
+ken.sleep();
+```

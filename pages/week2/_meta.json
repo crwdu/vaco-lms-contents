@@ -14,5 +14,9 @@
   "04-asynchronous-programming": {
     "title": "비동기 프로그래밍",
     "display": "hidden"
+  },
+  "05-promises": {
+    "title": "프러미스",
+    "display": "hidden"
   }
 }
