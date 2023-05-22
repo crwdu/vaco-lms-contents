@@ -7,8 +7,8 @@ import { red, green } from "@ant-design/colors";
 ## 정의
 
 <Rate disabled={true} value={3} />
-<br/>
-<br/>
+<br />
+<br />
 
 > A <b>higher order function</b> is a function that takes a function as an argument, or returns a function.
 
@@ -43,18 +43,18 @@ foo(1, 2);
 ## 적용 사례
 
 <Rate disabled={true} value={3} />
-<br/>
-<br/>
+<br />
+<br />
 
 고차 함수는 어떤 경우에 유용할까요? 한번 예시 코드를 보며 실제 사례들을 살펴보도록 하겠습니다.
 
-<br/>
-<br/>
+<br />
+<br />
 
 ##### 예시 2-1.
 
 ```js showLineNumbers copy
-const list = [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ];
+const list = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 const evenNumbers = [];
 
 for (let i = 0; i < list.length; i++) {
@@ -73,15 +73,15 @@ console.log(evenNumbers); // [ 2, 4, 6, 8, 10 ]
 
 다시 한번 정리하자면, 주어진 배열에서 우리가 원하는 조건(짝수)에 해당하는 요소들을 거르는 작업을 하고 있습니다.
 
-<br/>
-<br/>
+<br />
+<br />
 
 ##### 예시 2-2.
 
 어느 날, 제 동료가 기존 코드에 아래와 같은 로직을 추가했습니다. 한번 보실까요?
 
 ```js showLineNumbers copy
-const list = [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ];
+const list = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 const evenNumbers = [];
 
 for (let i = 0; i < list.length; i++) {
@@ -122,8 +122,8 @@ console.log(oddNumbers); // [ 1, 3, 5, 7, 9 ]
   type="warning"
 />
 
-<br/>
-<br/>
+<br />
+<br />
 
 ##### 예시 2-3.
 
@@ -139,15 +139,15 @@ function filter(arr, callback) {
     }
   }
 
-  return arr;
+  return result;
 }
 
-const list = [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ];
+const list = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
-const evenNumbers = filter(list, function(value) {
+const evenNumbers = filter(list, function (value) {
   return value % 2 === 0;
 });
-const oddNumbers = filter(list, function(value) {
+const oddNumbers = filter(list, function (value) {
   return value % 2 !== 0;
 });
 
@@ -173,14 +173,14 @@ console.log(oddNumbers); // [ 1, 3, 5, 7, 9 ]
   type="warning"
 />
 
-<br/>
-<br/>
+<br />
+<br />
 
 ## 일급 객체
 
 <Rate disabled={true} value={3} />
-<br/>
-<br/>
+<br />
+<br />
 
 > In computer science, a programming language is said to have <b>first-class functions</b> if it treats functions as first-class citizens.
 >
@@ -194,8 +194,8 @@ console.log(oddNumbers); // [ 1, 3, 5, 7, 9 ]
   type="info"
 />
 
-<br/>
-<br/>
+<br />
+<br />
 
 ### 일급 객체의 조건
 
@@ -207,8 +207,8 @@ console.log(oddNumbers); // [ 1, 3, 5, 7, 9 ]
 
 각 조건들에 대해 자바스크립트 함수가 충족하는지 하나씩 확인해볼까요?
 
-<br/>
-<br/>
+<br />
+<br />
 
 #### 1. 인자로 다른 함수에 전달할 수 있다.
 
@@ -217,15 +217,15 @@ console.log(oddNumbers); // [ 1, 3, 5, 7, 9 ]
 ##### 예시 3.
 
 ```js showLineNumbers copy
-[ 1, 2, 3, 4, 5 ].forEach(function (value) {
+[1, 2, 3, 4, 5].forEach(function (value) {
   console.log(value);
 });
 ```
 
 여러분이 아마 한번쯤 사용해보셨을만한 배열의 `forEach` 메소드의 경우 함수를 인자로 받습니다. 그러므로 고차 함수라고 할 수 있습니다. 많은 메소드들이 함수를 인자로 받는 형태로 우리에게 주어지기도 합니다.
 
-<br/>
-<br/>
+<br />
+<br />
 
 #### 2. 반환 값으로 사용될 수 있다.
 
@@ -254,8 +254,8 @@ for (let i = 0; i < 100; i++) {
 
 자바스크립트에서는 이와 같이, 함수에서 또 다른 함수를 반환값으로 반환할 수 있습니다.
 
-<br/>
-<br/>
+<br />
+<br />
 
 #### 3. 변수에 할당될 수 있거나 자료구조(배열, 객체 등)에 저장될 수 있다.
 
@@ -268,7 +268,7 @@ const person = {
   name: "ken",
   printName: function () {
     console.log(this.name);
-  }
+  },
 };
 
 person.printName();
@@ -276,7 +276,7 @@ person.printName();
 
 위의 예시 코드에서 `person` 객체의 `printName`이라는 속성에 대한 값으로 우리는 함수를 저장했습니다. 아마 이런 내용은 여러분께도 크게 새롭지 않을거라고 생각합니다만, 함수를 객체라는 자료구조에 저장한 것입니다.
 
-<br/>
+<br />
 
 <Collapse>
   <Collapse.Panel header="혹시 자바스크립트 `this`에 대해 잘 모르시나요?">
@@ -298,11 +298,12 @@ person.printName();
       **Part 5.**
       <iframe width="560" height="315" src="https://www.youtube.com/embed/0Khg5HF_AXA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
     </p>
+
   </Collapse.Panel>
 </Collapse>
 
-<br/>
-<br/>
+<br />
+<br />
 
 ##### 예시 6.
 
@@ -327,9 +328,15 @@ function goHome() {
   console.log("퇴근하고 집에 가기");
 }
 
-const dailyRoutine = [ solveAlgorithm, eatLunch, drinkCoffee, focusOnWork, goHome ];
+const dailyRoutine = [
+  solveAlgorithm,
+  eatLunch,
+  drinkCoffee,
+  focusOnWork,
+  goHome,
+];
 
-dailyRoutine.forEach(function(fn) {
+dailyRoutine.forEach(function (fn) {
   fn();
 });
 ```
