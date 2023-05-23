@@ -35,7 +35,9 @@ export default function useUser() {
       }
     }
 
-    getAuth();
+    if (process.env.NODE_ENV === "production") {
+      getAuth();
+    }
   }, []);
 
   return { isLoggedIn };

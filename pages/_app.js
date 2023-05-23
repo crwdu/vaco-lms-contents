@@ -15,6 +15,8 @@ import answerAnimation from "../public/animation/loding.json";
 import useUser from "../hooks/useUser";
 
 export default function Nextra({ Component, pageProps }) {
+  const { isLoggedIn } = useUser();
+
   const [isStartingQna, setQnaStatus] = useState(false);
   const [isQuestionProgressing, setQuestionProgress] = useState(false);
   const [qnaList, setQnaList] = useState([]);
@@ -24,8 +26,6 @@ export default function Nextra({ Component, pageProps }) {
   const containerRef = useRef(null);
   const formContainerRef = useRef(null);
   const textareaRef = useRef(null);
-
-  const { isLoggedIn } = useUser();
 
   let monthDay = null;
 
@@ -48,10 +48,6 @@ export default function Nextra({ Component, pageProps }) {
       qnacontainerRef.current.scrollTop = qnacontainerRef.current.scrollHeight;
     }
   }, [isQuestionProgressing, qnaList.length]);
-
-  if (!isLoggedIn) {
-    return <></>;
-  }
 
   async function handleSubmit(values, { resetForm }) {
     const { qna } = values;
@@ -132,6 +128,10 @@ export default function Nextra({ Component, pageProps }) {
       setQnaList(copiedQnaList);
       setQuestionProgress(false);
     }
+  }
+
+  if (!isLoggedIn) {
+    return <></>;
   }
 
   return (
