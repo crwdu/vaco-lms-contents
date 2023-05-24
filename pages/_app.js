@@ -324,12 +324,16 @@ export default function Nextra({ Component, pageProps }) {
                   return errors;
                 }}
               >
-                {({ values, handleChange }) => (
+                {({ values, handleChange, handleSubmit }) => (
                   <Form className="flex">
                     <Field
+                      onKeyDown={(e) => {
+                        if ((e.keyCode === 13) && !e.shiftKey) {
+                          handleSubmit();
+                        }
+                      }}
                       onChange={(e) => {
                         if (e.target.value.length > 100) return;
-
                         handleChange(e);
 
                         const DEFAULT_CONTAINER_HEIGHT = "72px";
