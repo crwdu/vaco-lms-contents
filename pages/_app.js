@@ -14,6 +14,13 @@ import answerAnimation from "../public/animation/loding.json";
 
 import useUser from "../hooks/useUser";
 
+const DEFAULT_CONTAINER_HEIGHT = "72px";
+const DEFAULT_FORMCONTAINER_HEIGHT = "48px";
+const DEFAULT_TEXTAREA_HEIGHT = "24px";
+const MAX_CONTAINER_HEIGHT = "120px";
+const MAX_FROMCONTAINER_HEIGHT = "96px";
+const MAX_TEXTAREA_HEIGHT = "72px";
+
 export default function Nextra({ Component, pageProps }) {
   const { isLoggedIn } = useUser();
 
@@ -62,6 +69,10 @@ export default function Nextra({ Component, pageProps }) {
       answer: null,
       time: new Date(),
     });
+
+    containerRef.current.style.minHeight = DEFAULT_CONTAINER_HEIGHT;
+    formContainerRef.current.style.minHeight = DEFAULT_FORMCONTAINER_HEIGHT;
+    textareaRef.current.style.minHeight = DEFAULT_TEXTAREA_HEIGHT;
 
     resetForm();
     setQuestionProgress(true);
@@ -329,19 +340,13 @@ export default function Nextra({ Component, pageProps }) {
                     <Field
                       onKeyDown={(e) => {
                         if ((e.keyCode === 13) && !e.shiftKey) {
+                          e.preventDefault();
                           handleSubmit();
                         }
                       }}
                       onChange={(e) => {
                         if (e.target.value.length > 100) return;
                         handleChange(e);
-
-                        const DEFAULT_CONTAINER_HEIGHT = "72px";
-                        const DEFAULT_FORMCONTAINER_HEIGHT = "48px";
-                        const DEFAULT_TEXTAREA_HEIGHT = "24px";
-                        const MAX_CONTAINER_HEIGHT = "120px";
-                        const MAX_FROMCONTAINER_HEIGHT = "96px";
-                        const MAX_TEXTAREA_HEIGHT = "72px";
 
                         const newLineCount =
                           textareaRef.current.value.match(/\n/g)?.length;
