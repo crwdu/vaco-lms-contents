@@ -130,7 +130,7 @@ export default function Nextra({ Component, pageProps }) {
     }
   }
 
-  if (!isLoggedIn) {
+  if (!isLoggedIn && (process.env.NODE_ENV === "production")) {
     return <></>;
   }
 
