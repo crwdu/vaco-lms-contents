@@ -7,16 +7,16 @@
     "title": "Lifting states up",
     "display": "hidden"
   },
-  "03-state-update-is-async": {
-    "title": "State update is async",
-    "display": "hidden"
-  },
-  "04-optimization": {
+  "03-optimization": {
     "title": "Optimization",
     "display": "hidden"
   },
-  "05-virtual-dom": {
-    "title": "Virtual DOM",
+  "04-react-router": {
+    "title": "React Router",
+    "display": "hidden"
+  },
+  "05-test-driven-development": {
+    "title": "Test Driven Development",
     "display": "hidden"
   }
 }

@@ -1,0 +1,57 @@
+# 7. React Router
+
+## What is React Router for?
+
+Browser 환경에서 우리는 `window.location` 혹은 `window.history` 를 이용하여 페이지 전환이나 페이지 방문 기록 등을 제어할 수 있습니다. 하지만 리액트 작업 환경에서 더욱 손쉽게 페이지 전환 작업을 할 수 있게 하기 위해 `window.location` 이나 `window.history` 등의 기능을 리액트 컴포넌트화하여 우리에게 제공하는 역할을 React Router가 하고 있습니다.
+
+그렇기에 리액트와 가장 궁합이 잘 맞는 Router는 React Router입니다. React Router는 페이지 전환 관련 작업을 React Component하여 사용할 수 있도록 합니다.
+
+일반적으로 Router란, Single Page Application 작업에서 빠질 수 없는 중추적인 부분입니다. 기본적으로 URL에 따른 페이지 변환 또는 관련 작업이 수월하도록 돕는 역할을 합니다.
+
+## **Core Components**
+
+모든 컴포넌트 목록과 Props에 대한 정보는 아래 문서 좌측 메뉴를 이용해 살펴볼 수 있습니다.
+
+**📖 _React Router DOM_**
+
+React Router가 제공하는 핵심 컴포넌트들은 아래와 같습니다.
+
+[Home v6.6.1](https://reactrouter.com/en/6.6.1)
+
+### **`<BrowserRouter />`**
+
+React Router의 최상위 컴포넌트 입니다. `BrowserRouter` 하위에서만 React Router 관련 컴포넌트들을 사용할 수 있습니다.
+
+[BrowserRouter v6.6.1](https://reactrouter.com/en/6.6.1/router-components/browser-router)
+
+### **`<Routes />` and `<Route />`**
+
+Route Mapping 설정을 할 수 있도록 도와주는 컴포넌트입니다.
+
+[Route v6.6.1](https://reactrouter.com/en/6.6.1/route/route)
+
+### **`<Link />`**
+
+`<a />` 태그처럼 페이지를 이동할 수 있도록 도와주는 컴포넌트입니다. `<Route />` 컴포넌트의 Mapping 설정에 따라 페이지를 이동합니다.
+
+> `<Link />` 컴포넌트는 `<a />` 태그로 변경되어 DOM에 렌더링 됩니다.
+
+[Link v6.6.1](https://reactrouter.com/en/6.6.1/components/link)
+
+## Basic Usage
+
+[https://codesandbox.io/s/react-router-intro-forked-kxi18l](https://codesandbox.io/s/react-router-intro-forked-kxi18l)
+
+## **Nested Routes**
+
+Route 설정은 아래와 같이 중첩시켜 설정할 수 있습니다. `if..else` 조건문 혹은 `for..loop` 을 중첩시켜 사용하는 것과 유사하게 우리가 원하는 만큼 중첩시켜 사용할 수 있습니다.
+
+> `useRouteMatch` Hook이 제공하는 `match` 정보를 잘 살펴보세요.
+
+[https://codesandbox.io/s/react-router-nested-n7fccn](https://codesandbox.io/s/react-router-nested-n7fccn)
+
+## **Route Parameters**
+
+Route 설정에서 `:`을 이용하여 동적으로 변경되는 Route Parameter에 대한 설정 또한 할 수 있습니다. Route Parameter 값은 `useParams` Hook을 이용하여 접근 가능합니다.
+
+[https://codesandbox.io/s/react-router-parameters-xtzljc](https://codesandbox.io/s/react-router-parameters-xtzljc)

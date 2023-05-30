@@ -1,36 +1,84 @@
-# 🖋  First Day
+# 10. React Redux
 
-### Quiz #1
+[**React Redux**](https://react-redux.js.org)는 Redux와 React를 조합하여 사용하는 과정을 더욱 간단하고 쉽게 도와주는 라이브러리입니다. Redux 업계에서는 가장 공신력 있고 많이 사용되는 라이브러리입니다.
 
-```javascript
-/*
+아래 자료는 React Redux의 공식 문서를 참고하여 작성된 글입니다. 공식 문서를 읽어보셔도 무방합니다.
 
-  다음과 같은 조건을 만족하는 주간 달력을 만들어 주세요!
+## **Why use React Redux?**
 
-  📌 현재 날짜를 기준으로, 이번 달의 1일이 보여져야 합니다.
-  📌 1일을 기준으로 하는 요일의, 이후 날짜가 보여져야 합니다.
-  📌 아래 예시를 참고해 주세요.
+Redux는 사실 React와 무관합니다. 물론 React와 가장 흔하게 사용되기는 하지만, React를 위해 존재하는 라이브러리는 아닙니다. 상태 관리를 해야 하는 경우라면 언제든지 사용할 수 있습니다. 예를 들어, Angular, Vue, Ember, 혹은 Vanilla JS를 이용한 프로젝트에서도 사용할 수 있습니다. 여러분이 만약 Redux를 도입하여 사용한다면, UI를 관리하는 React와 상태를 관리하는 Redux를 스스로 연결해야 합니다. Redux의 상태가 업데이트될때마다 React가 re-rendering되도록 연결해주어야 우리의 어플리케이션이 잘 동작할 것입니다. 하지만 이런 연결과정은 규모가 커질수록 관리가 힘들어집니다.
 
-  🚨 HTML, CSS는 수정하지 않고 JS만 수정해주세요.
+React Redux는 이런 불편한 점들을 해결해주기 위한 라이브러리입니다. 여러분이 만약 React와 Redux를 함께 사용한다면 필수적으로 필요한 라이브러리입니다.
 
+## **Basic Usage & Exercise**
 
-                예시1) -  2022년 1월
-  +---------------------------------------------+
-  |  일   |  월  |  화  |  수  |  목  |  금  |  토  |
-  +---------------------------------------------+
-  |      |      |     |     |      |      |  1  |
-  +---------------------------------------------+
+자세한 설명을 읽기 전에 아래 예제 링크에 들어가서 예제 코드를 간략하게 살펴보시기 바랍니다.
 
-                예시2) -  2022년 2월
-  +---------------------------------------------+
-  |  일   |  월  |  화  |  수  |  목  |  금  |  토  |
-  +---------------------------------------------+
-  |      |      |  1  |   2  |  3  |   4  |  5  |
-  +---------------------------------------------+
+**React Redux를 사용하지 않고** React와 Redux를 연결한 결과물입니다.
 
-*/
+_(아래 예제 코드에는 한 가지 미션도 포함되어 있습니다. 미션을 완료한 후에 아래 내용들을 진행하세요.)_
 
-const date = new Date();
+**🖥 _Example Link_**
+
+[Todo App (UI + Unconnected Redux)](https://codesandbox.io/s/todo-app-ui-unconnected-redux-kq9wl)
+
+위 샘플 프로젝트의 `index.js`를 보시면 `store.subscribe`를 이용해 상태 변화 정보를 구독하고 있습니다. 또한 `TodoApp.js`를 보시면 `store.getState`를 이용해 상태 정보를 읽어와 하위 컴포넌트에게 필요한 정보를 `props`로 내려주고 있습니다.
+
+현재 샘플 프로젝트의 경우, 규모가 워낙 작기 때문에 큰 작업이 아닐 수 있습니다. 하지만, 작업 규모가 커지고 어플리케이션의 성능을 고려하다보면 최상단 `App`에서만 위 작업을 하는 것이 아니라 여러 곳에서 `store.subscribe`와 `store.getState`를 반복적으로 사용해야 합니다. **React Redux는 우리의 이런 반복적인 작업을 더욱 쉽고 간편하게 만들어주는 역할을 합니다.**
+
+# React Redux의 주요 요소
+
+## 1. **Providing the store**
+
+우선 우리 어플리케이션을 Redux Store와 연결해야 합니다. React Redux에서 제공하는 `Provider` 컴포넌트를 이용하여 아래처럼 쉽게 설정할 수 있습니다.
+
+```jsx
+import React from "react";
+import ReactDOM from "react-dom";
+import MyApp from "./MyApp";
+import { Provider } from "react-redux";
+import store from "./store"; // your redux store
+
+const rootElement = document.getElementById("root");
+
+ReactDOM.render(
+  <Provider store={store}>
+    <MyApp />
+  </Provider>,
+  rootElement
+);
 ```
 
-[Codepen에서 직접 해보기](https://codepen.io/vanillacoding/pen/ZEazZwz?editors=1010)
+위와 같이 연결하게 되면, Provider는 React Component와 Redux Store의 연결이 조금 더 간편하도록 돕는 역할을 수행할 수 있습니다.
+
+## 2. useSelector
+
+```jsx
+const result: any = useSelector(selector: Function, equalityFn?: Function)
+```
+
+`useSelector` Hook을 이용하면 리덕스 스토어에서 State 데이터를 추출하여 사용할 수 있습니다.
+
+`useSelector` 함수의 첫 번째 인자는 Selector 함수라고 부릅니다. Selector 함수는 리덕스 스토어의 전체 상태를 인자로 받습니다.
+
+Selector 함수는 컴포넌트가 다시 렌더링 되는 과정에서 매번 실행됩니다. Selector 함수는 전체 리덕스 스토어 상태를 인자로 전달 받습니다. `useSelector` 함수는 리덕스 스토어를 구독하고, 액션이 발생하면 여러분의 Selector 함수를 실행합니다.
+
+액션이 발생되면, `useSelector` 는 Selector 함수의 이전 결과값과 현재 결과값의 레퍼런스를 비교하고, 레퍼런스가 다를 경우 컴포넌트를 다시 렌더링 시킵니다. 레퍼런스가 같을 경우, 다시 렌더링 되지 않습니다.
+
+여러분은 하나의 컴포넌트 내부에서 `useSelector` 를 여러번 호출해도 괜찮습니다. 각각의 `useSelector` 함수 호출문은 리덕스 스토어에 개별적으로 구독 정보를 생성합니다. React Redux v7 이상에서는 어떤 액션이 같은 컴포넌트 내부의 여러 `useSelector` 호출문을 실행시킬 경우, 한번만 렌더링 되도록 제어합니다.
+
+## 3. useDispatch
+
+```jsx
+const dispatch = useDispatch();
+```
+
+`useDispatch` 는 리덕스 스토어로부터 전달 받은 dispatch 함수를 참조하는 값을 반환합니다. 여러분은 이 함수를 이용하여 액션을 dispatch 할 수 있습니다.
+
+## 4. Exercise
+
+아래 예제 링크를 통해 간단한 실습을 완료해보세요!
+
+**🖥 _Example Link_**
+
+[React Redux](https://codesandbox.io/s/react-redux-ig7dv)

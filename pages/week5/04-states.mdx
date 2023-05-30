@@ -1,20 +1,276 @@
-import { Callout } from "nextra-theme-docs"
+import { Callout } from "nextra-theme-docs";
 
-# 🖋  가장 작은 수
+# States
 
-숫자 요소로 이루어진 배열이 인자로 주어졌을 때, 다음과 같은 조건을 만족하는 함수를 작성해 주세요!
+# Functions Review
 
-1. 인자로 주어 배열의 숫자 중 가장 작은 숫자를 반환해야 합니다.
-2. 배열 내의 숫자가 중복되는 경우는 없습니다.
+컴포넌트에 대해 더 깊이 이해하기 위해서는 함수에 대한 이해가 우선되어야 합니다.
 
-<Callout type="info" emoji="ℹ️">
-빈 배열이 주어질 경우는 고려하지 않아도 됩니다.
-</Callout>
+함수에 대해 다시 한번 생각해봅시다.
 
-|         인자         | 리턴 값 |
-| :----------------: | :--: |
-|  \[5, 4, 3, 2, 1]  |   1  |
-|  \[4, 5, 1, 2, 3]  |   1  |
-| \[10, 7, 13, 2, 6] |   2  |
+```jsx
+// size 메소드 외의 기능에 대한 자세한 코드는 생략합니다.
+class LinkedList {
+  add(value) {
+    let newNode = new Node(value);
 
-[Codepen에서 직접 해보기](https://codepen.io/vanillacoding/pen/ZEXNVQb)
+    if (!this.head) {
+      this.head = newNode;
+      return this.head;
+    }
+
+    let tail = this.head;
+
+    while (tail.next !== null) {
+      tail = tail.next;
+    }
+
+    tail.next = newNode;
+
+    return this.head;
+  }
+
+  size() {
+    let count = 0;
+    let node = this.head;
+
+    while (node) {
+      count++;
+      node = node.next;
+    }
+
+    return count;
+  }
+}
+
+const PEOPLE = ["Huh", "Kim", "Hwang", "Jung", "Min"];
+const linkedList = new LinkedList();
+
+PEOPLE.forEach((person) => linkedList.add(person));
+
+const result = linkedList.size();
+console.log(result);
+```
+
+## Local Variables
+
+지역 변수란 무엇이고, 어떤 경우에 사용하나요? 위 예제에서 구현된 `size` 함수를 살펴보세요.
+
+`node` 라는 변수를 만들어 사용하고 있습니다. 함수 연산과정에서 `node` 변수에 임시적으로 값을 저장하고 지속적으로 수정하며, 함수 로직의 상태를 관리하고 있습니다.
+
+## States
+
+_React의 State는 함수에서의 지역변수와 동일한 개념입니다._
+
+상황에 따라 가변적인 정보와 UI가 연관될 수 있습니다. 이런 가변적인 정보를 상태라 부르고, 이 상태를 관리할 수 있는 방법이 바로 `state` 입니다.
+
+**✅ *UI 렌더링 결과와 연관되는 데이터가 아니라면, state로 관리할 필요가 없습니다.***
+
+_Class를 이용한 React 사용법은 당장 주요하게 볼 필요는 없습니다. 나중에는 한번쯤 꼭 살펴보셔야 합니다._
+
+아래와 같은 컴포넌트가 있다고 생각해보세요.
+
+```jsx
+export default function ShoppingItem(props) {
+  const { name, price } = props.item;
+
+  return (
+    <div>
+      <h3>{name}</h3>
+      <h4>{price}원</h4>
+      <div>
+        <div>-</div>
+        <div>1</div>
+        <div>+</div>
+      </div>
+    </div>
+  );
+}
+```
+
+사용자가 더하기, 빼기 버튼을 클릭할때마다 우리는 수량의 값을 변경시켜 UI에 반영하고 싶습니다. 이와 같은 상황에서 우리는 React State를 이용하여 가변적인 수량을 관리할 수 있습니다. React State를 생성할때 사용되는 `useState`를 이용하여 수량 관리를 적용시켜 보겠습니다.
+
+**📖 _Component State_**
+
+[컴포넌트 State - React](https://ko.reactjs.org/docs/faq-state.html#what-is-the-difference-between-state-and-props)
+
+**📖 _Props vs State_**
+
+[uberVU/react-guide](https://github.com/uberVU/react-guide/blob/master/props-vs-state.md)
+
+```jsx
+export default function ShoppingItem(props) {
+  const { name, price } = props.item;
+  const [quantity, setQuantity] = useState(1);
+
+  return (
+    <div>
+      <h3>{name}</h3>
+      <h4>{price}원</h4>
+      <div>
+        <div>-</div>
+        <div>{quantity}</div>
+        <div>+</div>
+      </div>
+    </div>
+  );
+}
+```
+
+위 예제에 사용자가 더하기, 빼기 버튼을 클릭할때마다 해당 수량을 변경하는 코드를 추가해보면 아래와 같습니다.
+
+```jsx
+export default function ShoppingItem(props) {
+  const { name, price } = props.item;
+  const [quantity, setQuantity] = useState(1);
+
+  function changeQuantity(qty) {
+    setQuantity(quantity + qty);
+  }
+
+  return (
+    <div>
+      <h3>{name}</h3>
+      <h4>{price}원</h4>
+      <div>
+        <div onClick={() => changeQuantity(-1)}>-</div>
+        <div>{quantity}</div>
+        <div onClick={() => changeQuantity(1)}>+</div>
+      </div>
+    </div>
+  );
+}
+```
+
+**🖥 _Example Link_**
+
+[react-states](https://codesandbox.io/s/react-states-0imyk)
+
+**📖 _useState_**
+
+[Hooks API Reference - React](https://ko.reactjs.org/docs/hooks-reference.html#usestate)
+
+**📖 _Handling Events_**
+
+[이벤트 처리하기 - React](https://ko.reactjs.org/docs/handling-events.html)
+
+**📖  _Synthetic Event_**
+
+[합성 이벤트(SyntheticEvent) - React](https://ko.reactjs.org/docs/events.html#gatsby-focus-wrapper)
+
+수량을 조절하는 로직은 우리가 원하는대로 구성할 수 있습니다. 만약 0 이하의 수량은 허용하지 않고 싶다면 아래와 같이 작성할 수 있습니다.
+
+```jsx
+export default function ShoppingItem(props) {
+  const { name, price } = props.item;
+  const [quantity, setQuantity] = useState(1);
+
+  function changeQuantity(qty) {
+    const quantitySum = quantity + qty;
+
+    if (quantitySum < 0) return;
+
+    setQuantity(quantitySum);
+  }
+
+  return (
+    <div>
+      <h3>{name}</h3>
+      <h4>{price}원</h4>
+      <div>
+        <div onClick={() => changeQuantity(-1)}>-</div>
+        <div>{quantity}</div>
+        <div onClick={() => changeQuantity(1)}>+</div>
+      </div>
+    </div>
+  );
+}
+```
+
+우리는 우리가 원하는 만큼 다양한 `state` 값을 만들어 사용할 수 있습니다. 아래 코드에서는 && 연산자를 이용하여 조건에 따라 보여주거나 숨겨주는 로직을 작성했습니다.
+
+<aside>
+📌 상태(State)는 반드시 UI에 보여지는 내용과 연관된 데이터이어야 합니다.
+
+</aside>
+
+```jsx
+export default function ShoppingItem(props) {
+  const { name, price } = props.item;
+  const [quantity, setQuantity] = useState(1);
+  const [error, setError] = useState("");
+
+  function changeQuantity(qty) {
+    if (quantity <= 0 && qty === -1) {
+      setError("수량은 0 이상이어야 합니다.");
+      return;
+    }
+
+    setQuantity(quantity + qty);
+  }
+
+  return (
+    <div>
+      {error && <p>{error}</p>}
+      <h3>{name}</h3>
+      <h4>{price}원</h4>
+      <div>
+        <div onClick={() => changeQuantity(-1)}>-</div>
+        <div>{quantity}</div>
+        <div onClick={() => changeQuantity(1)}>+</div>
+      </div>
+    </div>
+  );
+}
+```
+
+**📖 _Conditional Rendering_**
+
+[조건부 렌더링 - React](https://ko.reactjs.org/docs/conditional-rendering.html)
+
+## ⚡️ setState 호출은 비동기로 동작합니다.
+
+_Calls to setState are asynchronous_
+
+[async-setState](https://codesandbox.io/s/async-setstate-yr9y2)
+
+[컴포넌트 State - React](https://ko.reactjs.org/docs/faq-state.html#why-is-setstate-giving-me-the-wrong-value)
+
+## ▶︎ 상태 변화에 대해 React는 어떻게 대응할까요?
+
+**_React re-renders the whole app on every update._**
+
+_The key design decision that makes React awesome._
+
+_When the data changes, React re-renders the entire component._
+
+_That is, React components are basically just **idempotent functions**._
+
+_They describe your UI at any point in time._
+
+"_Updating the whole app" when state changes seems **expensive** (not effective)?_
+
+# Virtual DOM
+
+### Goal
+
+_Makes re-rendering on every change **fast**._
+
+### What if we throw out the DOM and rebuild it on every update?
+
+_It's too slow and you will lose form state and scroll position._
+
+### So React team built a **virtual DOM** and **events system**.
+
+_Optimized for performance and memory footprint._
+
+### On every update,
+
+1. _React builds a new virtual DOM subtree._
+2. _Compare it with the old virtual DOM subtree._
+3. _Computes the minimal set of DOM mutations and puts them in a queue._
+4. _Batch executes all updates. → UI updates on browser._
+
+### Reconciliation
+
+[재조정 (Reconciliation) - React](https://ko.reactjs.org/docs/reconciliation.html)

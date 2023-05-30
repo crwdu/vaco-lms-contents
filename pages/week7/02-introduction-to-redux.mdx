@@ -1,31 +1,224 @@
-import { Callout } from "nextra-theme-docs"
+import { Callout } from "nextra-theme-docs";
 
----
-description: '기간: 최대 3일'
----
+# 9. Redux
 
-# 🖋  Carousel
+# **Motivation**
 
-### Quiz #1
+자바스크립트 SPA가 점점 복잡해짐에 따라, 우리의 코드는 이전보다 복잡하고 다양한 상태를 관리하게 되었습니다. 상태라 하면, 서버에서 받은 정보일수도 있고, 캐쉬된 데이터일수도 있고, 혹은 아직 서버쪽에 전송되지 않은 데이터일수도 있습니다. 이런 어플리케이션의 상태에 따라 프론트엔드에서 보여주고 관리해야하는 UI 상태 또한 매우 복잡해졌습니다.
 
-```javascript
-/*
+연속적으로 끊임없이 변하는 상태를 관리하는 것은 굉장히 어려운 일입니다. 만약 어떤 모델이 다른 모델을 업데이트시키고, 또 다른 뷰가 또 다른 모델을 업데이트시키고, 그리고 또 다시 다른 뷰가 업데이트되어야하고.. 이런 일련의 과정속에서 작업을 하다보면 우리는 도대체 어플리케이션의 상태가 언제 어디서 어떻게 발생했는지 디버깅 과정에서 큰 혼란이 올수 있습니다.
 
-  다음과 같은 조건을 만족하는 캐로우셀을 완성해주세요!
+**리덕스라는 패턴은 이런 일련의 혼란스러운 과정속에 묻혀있는 어플리케이션의 상태 관리를 조금 더 단순하고 "예측 가능하게" 다루기 위해서 시작된 것입니다.**
 
-  📌 좌측 화살표 클릭했을 때 이전 이미지를 보여주세요.
-  📌 우측 화살표 클릭했을 때 다음 이미지를 보여주세요.
-  📌 마지막 이미지에서 우측 화살표를 클릭했을 때, 첫번째 이미지를 보여주세요.
-  📌 첫번째 이미지에서 좌측 화살표를 클릭했을 때, 마지막 이미지를 보여주세요.
-  📌 이미지 하단의 점을 클릭했을 때, 해당 순번의 이미지를 보여주세요.
+# **When should we use Redux?**
 
-*/
+> "The need to use Redux should not be taken for granted."
+
+> "Redux의 사용을 당연시 여겨서는 안됩니다."
+
+As Pete Hunt, one of the early contributors to React, says:
+
+> React 초기 개발을 이끌었던 Pete Hunt가 말했듯이:
+
+> "You'll know when you need Flux. If you aren't sure if you need it, you don't need it."
+
+> "당신이 Flux가 필요할때가 오면 스스로 알게 될 것이다. 만약 필요성에 대해 확신이 서지 않는다면, 당신은 Flux가 필요하지 않은 것이다."
+
+\*\* _Flux란 페이스북에서 만든 Redux의 조상과 같은 라이브러리입니다._
+
+Similarly, Dan Abramov, one of the creators of Redux, says:
+
+> Redux를 만든 Dan Abramov 또한 유사한 발언을 했습니다:
+
+> "I would like to amend this: don't use Redux until you have problems with vanilla React."
+
+> "이 말을 더하고 싶습니다: Redux없이 React만으로 개발을 하는 것이 문제가 될 때까지 Redux를 사용하지 마세요."
+
+# **Who created Redux?**
+
+![https://overreacted.io/static/profile-pic-c715447ce38098828758e525a1128b87.jpg](https://overreacted.io/static/profile-pic-c715447ce38098828758e525a1128b87.jpg)
+
+_Dan Abramov_
+
+- [Twitter](https://twitter.com/dan_abramov)
+- [Github](https://github.com/gaearon)
+- [Blog - Overreacted.io](https://overreacted.io)
+
+Redux는 Dan Abramov라는 개발자가 [React Europe](https://www.react-europe.org)이라는 컨퍼런스 발표를 위해 준비하는 과정에서 만들어졌습니다. Dan Abramov는 Redux를 만들어 명성을 얻었고 현재 Facebook에서 React 개발을 맡고 있습니다.
+
+\** \*\*[*React Europe](https://www.react-europe.org)**은 매년 5월 프랑스 파리에서 개최되는 세계 최대 규모의 React 컨퍼런스입니다.\*
+
+# **Redux Flow**
+
+## **1. Action**
+
+Action이란, **우리 어플리케이션 상태에 영향을 미치는 사건**을 표현/묘사하는 객체입니다. 어떤 정보가 서버로부터 성공적으로 돌아왔다는 정보를 묘사할 수도 있고, 어플리케이션에서 발생한 에러에 대한 정보를 묘사할 수도 있습니다. 하지만 항상 하나의 Action은 **단일 사건**에 대해서만 묘사해야 합니다.
+
+Redux에서 Action이란 아래와 같이 단순 Javascript Object로 표현합니다. 아래 Action은 어떤 일에 대한 정보를 담고 있는걸까요?
+
+```jsx
+// 보통 Action 객체에는 `type`이라는 속성이 있습니다. Action에 대한 제목이라고 생각하시면 됩니다.
+
+// Action Example #1
+{
+  "type": "SET_VISIBILITY_FILTER"
+}
+
+// Action Example #2
+{
+  "type": "NEW_TODO",
+  "text": "Eat Food"
+}
+
+// Action Example #3
+{
+  "type": "UPDATE_TODO",
+  "todo": {
+    "id": 1,
+    "text": "Don't Eat Food",
+    "completed": false
+  }
+}
 ```
 
-[Codepen에서 직접 해보기](https://codepen.io/vanillacoding/pen/ZEaBwyO)
+### 그렇다면 Action을 발생시키기 위해서는 구체적으로 어떻게 해야할까요?
 
+Redux에는 Store라는 존재가 있습니다. Store에 대한 구체적인 설명은 잠시 후에 하겠습니다만, Store에는 `dispatch`라는 메소드가 존재합니다. Publish-Subscribe 패턴이 도입되어 있는 Store에서 `dispatch` 메소드는 `publish`와 같은 역할이라고 생각하시면 됩니다. 우리는 `dispatch` 메소드를 이용하여 Action을 발생시킬 수 있습니다.
 
+맨 아래 예제 링크에서 `index.js`의 14-15번 줄을 살펴보면 `store.dispatch` 실행문을 확인할 수 있습니다. 예제 링크에서는 Redux가 가변적인 `count` State 정보를 관리하고 있고, 해당 정보에 영향을 주는 일이 발생했을때 Action을 발생시키고 있습니다. Redux는 State를 관리하는 목적입니다. Redux가 관리하고 있는 State 정보가 수정되어야 한다면, 우리는 Action을 발생시킴으로서 Redux에게 State 수정이 되어야 한다는 시작 신호를 주는 것입니다.
 
-<Callout type="warning" emoji="⚠️">
-애니메이션 효과는 필요하지 않습니다.
-</Callout>
+## **2. Reducer**
+
+Reducer라는 개념을 설명하기 전에 우선적으로 `Array.prototype.reduce`에 대해 기억해보세요. 잘 기억이 안나신다면, 문서를 보시고 다시 한번 이해해보세요.
+
+Reducer라는 단어는 `Array.prototype.reduce`에서 인자로 넘겨주는 콜백 함수를 의미합니다. 단순히 함수일 뿐이며 순수 함수입니다. Redux 내에 Reducer가 핵심적인 역할을 하여 사용된다는 사실은 곧 Redux에 함수형 컨셉이 깊게 스며들어 있다는 의미입니다. 그래서 우리는 더욱 **"예측 가능한"** 코드를 작성할 수 있습니다.
+
+`Array.prototype.reduce`의 reducer 함수는 아래와 같이 4가지 매개변수를 받습니다.
+
+- Accumulator (누적값)
+- Current Value (현재 요소)
+- Current Index (현재 요소의 인덱스)
+- Source Array (출처 배열)
+
+우리는 reducer 함수 내에서 Accumulator(누적값)과 Current Value(현재 요소)를 이용하여 새로운 값을 반환합니다. 그리고 그 값이 우리의 새로운 Accumulator(누적값)이 됩니다.
+
+**Redux에서 사용되는 reducer 또한 이와 유사하게 매개변수를 받습니다.**
+
+- Accumulated State (누적된 State)
+- Current Action (현재 Action)
+
+우리는 reducer 함수 내에서 Accumulated State(누적된 State)와 Current Action(현재 Action)을 이용하여 새로운 값을 반환합니다. 우리가 연산하여 반환해주는 값이 새로운 Accumulated State(누적된 State)가 됩니다.
+
+우리가 해야 할 일은 reducer내에서 현재 발생한 Action의 내용에 따라 State가 어떤 식으로 변형되어야 하는지 연산하고 반환해주는 일입니다.
+
+Redux는 하나의 새로운 Action이 발생할때마다 reducer 함수를 실행시킵니다. 5개의 Action이 발생한다면 reducer는 5번 실행됩니다. reducer 함수의 실행 여부는 우리의 책임 소재가 아닙니다. Redux가 자체적으로 관리하고 Action이 발생할때마다 적절한 인자와 함께 실행시켜주도록 설계되어 있습니다.
+
+```jsx
+// Redux의 Reducer 함수 내에서는 보통 Action 객체의 `type` 속성을 기준으로 로직을 분리합니다.
+
+function visibilityFilterReducer(state = "SHOW_ALL", action) {
+  if (action.type === "SET_VISIBILITY_FILTER") {
+    return action.filter;
+  } else {
+    return state;
+  }
+}
+
+function todoListReducer(state = [], action) {
+  switch (action.type) {
+    case "NEW_TODO":
+      // 순수함수 형식으로 작성해야 하기 때문에, 기존 state를 복사(Deep Copy)하여 사용합니다.
+      const stateCopy = state.slice();
+
+      stateCopy.push({
+        text: action.text,
+        completed: false, // default to false
+      });
+
+      return stateCopy;
+    case "UPDATE_TODO":
+    // find and update existing todo..
+    case "DELETE_TODO":
+    // find and delete existing todo..
+    default:
+      return state;
+  }
+}
+```
+
+**Reducer 내에서 우리가 새로운 State 값을 반환하게되면, Redux는 해당 반환값을 이용해서 무엇을 할까요?**
+
+## **3. Store**
+
+Reducer에서 반환받은 새로운 State는 Store 내에 반영되고 저장됩니다. Store란, 어플리케이션의 State를 보관하는 곳입니다. 모든 State는 하나의 Store에서 관리되고 수정됩니다. 단일한 Store를 이용하여 Redux는 동작하며, 이 덕분에 우리는 **"Single Source of Truth"**라는 장점을 얻을 수 있습니다.
+
+```jsx
+{
+  todos: [
+    {
+      id: 1,
+      text: 'Eat food',
+      completed: false
+    }, {
+      id: 2,
+      text: 'Exercise',
+      completed: true
+    }
+  ],
+  visibilityFilter: 'SHOW_COMPLETED'
+}
+```
+
+이처럼 Store 내의 State가 성공적으로 수정되면, Store는 Subscribe하고 있는 부분에 새로운 정보를 전달합니다.
+
+## 4. Exercise
+
+아직 전반적인 Flow가 이해되지 않으신다구요? 두려워 마시고 우선 아래 링크에 주어진 미션을 해결해보세요.
+
+**🖥 _Example Link_**
+
+[Bare Redux](https://codesandbox.io/s/bare-redux-dexcd)
+
+# Pure **Redux Flow Summary**
+
+Redux의 흐름을 다시 한번 돌아보자면 아래와 같습니다.
+
+1. Action 발생
+
+2. Reducer 함수 실행: 누적된 State와 Action 정보를 이용하여 새로운 State 반환
+
+3. 새로운 State 데이터를 Store에 반영
+
+4. Store Subscriber에게 알림
+
+**5. 새로운 정보와 함께 컴포넌트 re-rendering**
+
+# **Practical Usage**
+
+실제로 위 예제처럼 Store의 PubSub을 우리가 직접적으로 이용하여 작업하는 경우는 흔치 않습니다. 일일히 PubSub을 연결시켜주는 것도 힘들고 유지보수가 쉽지 않습니다. 일반적으로 [**React Redux**](https://react-redux.js.org/)를 함께 사용합니다.
+
+자세한 내용은 다음 React Redux 파트를 읽어보세요.
+
+# **When to use component local state, not Redux state**
+
+1. 다른 컴포넌트와 공유하지 않아도 되는 State
+
+2. State를 소유한 컴포넌트가 Unmount 되는 시점 이후, 보관할 필요가 없는 State
+
+상황에 따라 다르지만, 일반적으로 위 두 가지 경우는 컴포넌트의 로컬 상태로, 나머지 경우는 모두 Redux에서 상태관리를 하는 것이 좋습니다.
+
+# **How to design your State**
+
+[Redux Fundamentals, Part 3: State, Actions, and Reducers | Redux](https://redux.js.org/tutorials/fundamentals/part-3-state-actions-reducers)
+
+[Normalizing State Shape | Redux](https://redux.js.org/usage/structuring-reducers/normalizing-state-shape#designing-a-normalized-state)
+
+# **Reference**
+
+**📖 다양한 Redux 샘플 프로젝트**
+
+[reduxjs/redux](https://github.com/reduxjs/redux/tree/master/examples)
+
+**📖 When should you learn Redux**
+
+[General | Redux](https://redux.js.org/faq/general#general-when-to-learn)

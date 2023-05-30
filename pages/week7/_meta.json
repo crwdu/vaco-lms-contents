@@ -11,7 +11,11 @@
     "title": "Using Redux with React",
     "display": "hidden"
   },
-  "04-redux-style-guide": {
+  "04-redux-toolkit": {
+    "title": "Redux toolkit",
+    "display": "hidden"
+  },
+  "05-redux-style-guide": {
     "title": "Redux style guide",
     "display": "hidden"
   }
