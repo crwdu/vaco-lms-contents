@@ -1,22 +1,22 @@
 {
-  "coffee-chat": {
+  "01-coffee-chat": {
     "title": "Coffee Chat",
     "display": "hidden"
   },
-  "lifting-states-up": {
+  "02-lifting-states-up": {
     "title": "Lifting states up",
     "display": "hidden"
   },
-  "state-update-is-async": {
+  "03-state-update-is-async": {
     "title": "State update is async",
     "display": "hidden"
   },
-  "what-is-side-effect": {
-    "title": "What is side effect?",
+  "04-optimization": {
+    "title": "Optimization",
     "display": "hidden"
   },
-  "custom-hooks": {
-    "title": "Custom Hooks",
+  "05-virtual-dom": {
+    "title": "Virtual DOM",
     "display": "hidden"
   }
 }

@@ -10,9 +10,5 @@
   "03-closure": {
     "title": "클로져",
     "display": "normal"
-  },
-  "04-prototypes": {
-    "title": "프로토타입",
-    "display": "hidden"
   }
 }

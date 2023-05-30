@@ -1,22 +1,22 @@
 {
-  "coffee-chat": {
+  "01-coffee-chat": {
     "title": "Coffee Chat",
     "display": "hidden"
   },
-  "react-introduction": {
-    "title": "React Introduction",
+  "02-introduction-to-react": {
+    "title": "Introduction to React",
     "display": "hidden"
   },
-  "props": {
-    "title": "props",
+  "03-props": {
+    "title": "Props",
     "display": "hidden"
   },
-  "states": {
+  "04-states": {
     "title": "States",
     "display": "hidden"
   },
-  "async-await": {
-    "title": "Async / Await",
+  "05-side-effect": {
+    "title": "What is side effect",
     "display": "hidden"
   }
 }
