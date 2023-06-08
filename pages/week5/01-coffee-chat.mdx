@@ -4,11 +4,65 @@ import { Alert } from "antd";
 
 # ☕️ Coffee Chat
 
-우리가 이번주에 무엇을 하게 될지 잠시 이야기 해볼까요?
-
 ## 자바스크립트 기초상식
 
-- 함수 파라미터 네이밍
+### 함수와 함수의 파라미터
+
+우리의 점심값을 계산하는 다음과 같은 코드가 있다고 생각해보세요.
+
+```js showLineNumbers
+function addLunchPrices(lunchPrice1, lunchPrice2) {
+  return lunchPrice1 + lunchPrice2;
+}
+
+const kenLunch = 5000;
+const wanLunch = 6000;
+const totalLunchPrice = addLunchPrices(kenLunch, wanLunch);
+```
+
+`totalLunchPrice` 변수에는 저와 제 동생이 함께 먹은 점심값의 총계가 담겨 있습니다.
+
+그런데, 불행히도 저는 제 동생과 저녁도 함께 먹게 되었습니다. 그리고 저녁값 또한 계산하려고 합니다.
+
+```js showLineNumbers
+function addLunchPrices(lunchPrice1, lunchPrice2) {
+  return lunchPrice1 + lunchPrice2;
+}
+
+const kenLunch = 5000;
+const wanLunch = 6000;
+const totalLunchPrice = addLunchPrices(kenLunch, wanLunch);
+
+function addDinnerPrices(dinnerPrice1, dinnerPrice2) {
+  return dinnerPrice1 + dinnerPrice2;
+}
+
+const kenDinner = 7000;
+const wanDinner = 6500;
+const totalDinnerPrice = addDinnerPrices(kenDinner, wanDinner);
+```
+
+우리가 현재 작성한 코드를 보면, `addLunchPrices` 함수와 `addDinnerPrices` 함수는 사실상 동일한 기능을 하는 함수입니다. 이 함수를 재사용한다면, 더욱 좋을것 같습니다.
+
+```js showLineNumbers
+function add(a, b) {
+  return a + b;
+}
+
+const kenLunch = 5000;
+const wanLunch = 6000;
+const totalLunchPrice = add(kenLunch, wanLunch);
+
+const kenDinner = 7000;
+const wanDinner = 6500;
+const totalDinnerPrice = add(kenDinner, wanDinner);
+```
+
+`add`라는 함수로 변경하는 과정에서 저는 함수명과 파라미터의 이름 또한 변경하였습니다. 왜 그랬을까요?
+
+> 해당 함수의 재사용성을 위해 변경한 것입니다.
+
+현재 사용되는 맥락에만 국한되지 않고, 어느 정도의 재사용성을 고려하여 작성한 것입니다. "더하기"라는 기능에 대해 생각해본다면, 점심값 뿐만 아니라, 나이, 점심값, 저녁값, 용돈, 저축액, 수학연산 등 모든 숫자 연산에 사용될 수 있는 여지가 있겠죠? 그렇기에 함수명과 파라미터 이름 또한 상황에 맞춰 신중하게 지어주는 것이 좋고, 이는 기능적 차이를 만들지는 않지만 함수의 재사용성과 밀접한 연관이 있을 수 있습니다.
 
 ### Async / Await
 
@@ -16,9 +70,7 @@ Async / Await 는 Promise에 대한 이해를 기반으로 이해할 수 있는 
 
 콜백패턴으로 구현된 비동기 코드는 가독성이나 유지보수 측면에서 많은 문제를 가지고 있었고, 이를 해결하기 위해 Promise, 그리고 더 나아가 Async/Await 이라는 기능이 생겨났습니다.
 
-```javascript
-// Async/Await Example #1
-
+```javascript showLineNumbers {13-16}
 const a = new Promise(function (resolve, reject) {
   setTimeout(function () {
     resolve(666);
@@ -31,7 +83,6 @@ const b = new Promise(function (resolve, reject) {
   }, 1000);
 });
 
-// a, b: promise
 async function process() {
   const result = (await a) + (await b);
   console.log(result);
@@ -42,17 +93,18 @@ process();
 
 위의 코드를 살펴보면 `a` 와`b` 라는 변수에 Promise 인스턴스를 할당한 상태입니다. Promise에는 함수를 넣어주어야 하고, 함수 안에 인자로는 `resolve` 와 `reject`가 있는데요. 비동기 로직이 성공하면 resolve, 로직이 실패하면 reject 값이 산출되는 함수입니다.
 
+그리고 우리는 `a`와 `b` 프러미스를 `process` 함수 내부에서 사용하고 있습니다. `process` 함수처럼 함수 앞에 `async` 라는 키워드를 붙힌 함수를 우리는 **Async function**이라고 부릅니다.
+
 async function은 최근 ES2017 스펙부터 사용이 가능하게 되었고,
 
 그 기능으로는 크게 2가지가 있습니다.
 
-1. 함수 내부에서 await 이라는 키워드를 사용할 수 있게 됩니다. 바꾸어 말하면 await 키워드를 사용하지 않을 것이라면 async function을 사용할 이유가 없습니다(앞으로는 async 키워드 없이도 함수 내부에서 await 키워드를 사용할 수 있도록 하는 자바스크립트와 관련된 작업이 진행 중이지만, 일반적으로 사용하기 위해서는 앞으로 조금 더 시간이 필요할 것 같습니다).
-2. 함수의 반환 값이 바뀝니다. 일반적인 함수와 달리 async 함수는 항상 Promise 객체를 반환합니다.
+1. **함수 내부에서 await 이라는 키워드를 사용할 수 있습니다.** 바꾸어 말하면 await 키워드를 사용하지 않을 것이라면 async function을 사용할 이유가 없습니다.
+2. async 함수는 **항상 Promise 객체를 반환**합니다.
 
 자바스크립트에서는 처음에 콜백패턴을 사용해오다가 Promise의 등장 이후 비동기 코드를 동기 패턴과 유사하게 작성하여 사용할 수 있게 되었습니다. 그런데 async await는 비동기 코드를 동기적으로 작동하는 코드와 더더욱 유사한 형태로 편리하게 작성할 수 있도록 도와줍니다. async await를 사용하여 비동기 코드의 복잡도도 줄어들고 가독성도 매우 좋아지면서 시각적으로도 동기적으로 작동하는 코드와 유사한 형태로 표현할 수 있게 되었습니다. 이는 자바스크립트 이외의 다른 언어를 사용하는 개발자들과의 협업도 매우 원활해지는 것을 의미합니다.
 
-```javascript
-// Async/Await Example #2
+```javascript showLineNumbers
 function resolveAfter2Seconds(x) {
   return new Promise((resolve) => {
     setTimeout(() => {
@@ -95,8 +147,7 @@ Await을 사용한다고 해서 작업이 끝날 때까지 기다리고 있는 �
 
 `a` 에 담기는 비동기 작업이 resolve될때까지 2초, 그 후에 `b` 에 담기는 비동기 작업이 resolve될때까지 2초가 소요됩니다.
 
-```javascript
-// Async/Await Example #3
+```javascript showLineNumbers
 function resolveAfter2Seconds(x) {
   return new Promise((resolve) => {
     setTimeout(() => {
@@ -114,15 +165,11 @@ async function add2(x) {
 add2(10);
 ```
 
-> Q. add2 함수는 실행까지 얼마나 걸릴까요?
+> Q. add2 함수는 실행 완료까지 얼마의 시간이 소요될까요?
 
-`2.0000001초`
+여러분께서 스스로 고민해보고 정답을 유추해보도록 하세요.
 
-Await을 어디에다가 어떻게 거는지에 따라 같은 결과라도 처리 완료까지 걸리는 시간이 달라질 수 있습니다.
-연속해서 처리해야 하는 상황이 아니라면, 예제 2와 비교할 때 처리 완료까지 약 2배가량 시간을 단축할 수 있습니다.
-
-```javascript
-// Async/Await Example #4
+```javascript showLineNumbers
 function foo() {
   return new Promise(function (resolve, reject) {
     setTimeout(function () {
@@ -149,7 +196,7 @@ try..catch 구문은 자바스크립트에 자체적으로 내장된 것이므�
 
 > Error Handling을 하는 이유
 
-사용자 경험과 개발자 경험을 위해서... 에러를 무서워하지 마세요. 에러는 어디를 수정하면 되는지, 어디를 고치면 되는지 알려주는 고마운 친구입니다!
+사용자 경험과 개발자 경험을 위해서... 에러를 무서워하지 마세요. 에러는 어디를 수정하면 되는지, 어디를 고치면 되는지 알려주는 고마운 친구입니다.
 
 ## 🥸 미리 준비하는 기술면접
 
@@ -162,6 +209,7 @@ try..catch 구문은 자바스크립트에 자체적으로 내장된 것이므�
 
 - 브라우저에 URL을 입력한 순간부터 화면에 웹 페이지가 나타나기까지의 모든 과정을 아는대로 최대한 자세히 설명해보세요.
 - `package.json`, `package-lock.json`, `node_modules`는 무엇인가요?
-- 마이크로 태스크 큐, 매크로 태스크 큐와 연관지어 이벤트 룹의 작동 원리에 대해 한층 더 깊이 있게 설명해보세요.
-- 번들링이란 무엇이며, 왜 필요한것인가요?
-- 리액트가 뷰나 앵귤러 등 다른 라이브러리에 비해 유행하게 된 계기는 무엇일까요?
+- Single Page Application이란 무엇인가요?
+- Client Side Rendering이란 무엇인가요?
+- 리액트의 Strict Mode는 어떤 역할을 하는 것인지 최대한 자세히 설명해보세요.
+- 리액트의 Diffing 알고리즘에 대해 아는대로 설명해보세요.

@@ -1,122 +1,123 @@
+import { Sandpack } from "@codesandbox/sandpack-react";
+import { githubLight } from "@codesandbox/sandpack-themes";
 import { Callout } from "nextra-theme-docs";
 
 # Props
-
-# Functions Review
-
-컴포넌트에 대해 더 깊이 이해하기 위해서는 함수에 대한 이해가 우선되어야 합니다.
-
-함수에 대해 다시 한번 생각해봅시다.
-
-```jsx
-// size 메소드 외의 기능에 대한 자세한 코드는 생략합니다.
-class LinkedList {
-  add(value) {
-    let newNode = new Node(value);
-
-    if (!this.head) {
-      this.head = newNode;
-      return this.head;
-    }
-
-    let tail = this.head;
-
-    while (tail.next !== null) {
-      tail = tail.next;
-    }
-
-    tail.next = newNode;
-
-    return this.head;
-  }
-
-  size() {
-    let count = 0;
-    let node = this.head;
-
-    while (node) {
-      count++;
-      node = node.next;
-    }
-
-    return count;
-  }
-}
-
-const PEOPLE = ["Huh", "Kim", "Hwang", "Jung", "Min"];
-const linkedList = new LinkedList();
-
-PEOPLE.forEach((person) => linkedList.add(person));
-
-const result = linkedList.size();
-console.log(result);
-```
-
-## Parameters
-
-위 예제에서 `add` 함수에 대해 살펴봅시다. `add` 함수는 `value` 하나의 매개변수를 받도록 되어 있습니다.
-
-### 왜 매개변수를 받도록 함수를 만들었을까요?
-
-- 상황에 따라 다양한 값을 받아서 추가할 수 있도록 하기 위함입니다. 즉, 함수 실행시 상황에 따라 동적으로 조절할 수 있도록 합니다.
-
-### 왜 매개변수의 이름을 `person` 이 아닌, `value` 라고 지었나요?
-
-- 매개변수의 이름은 함수 입장에서 어떤 데이터인지를 표현하는 이름을 짓습니다. 즉, **함수 실행시 상황보다는 함수 본연의 입장에서 어떤 데이터인지를 표현**합니다.
-- 현재 `add` 메소드가 사용되는 상황에서는 "사람들"의 이름을 저장하기는 하지만, 연결리스트 입장에서 추가되는 것은 단순히 데이터 값일 뿐입니다. `add` 함수는 연결리스트의 함수이기 때문에, 연결리스트 입장에서 파라미터가 네이밍 되어야 합니다.
-
-## Props
 
 _Props란, **함수의 매개변수**와 동일한 개념입니다. 함수의 매개변수를 선언하는 용도, 함수의 매개변수를 네이밍 하는 방법 등을 반드시 명심하세요._
 
 React Component에게 Attribute을 주게 되면, 해당 컴포넌트 내부에서는 `props`를 이용하여 해당 정보를 사용할 수 있습니다. 우리는 우리가 원하는 만큼 다양하게 `props`를 줄 수 있습니다.
 
-```jsx
-const SomeComponent = (props) => <p>I am {props.name}.</p>;
+<br/>
 
-const Article = (props) => (
-  <div className="something">
-    <p style={{ fontSize: "30px" }}>{props.text}</p>
-    <SomeComponent name="Ken" />
-  </div>
-);
+<Sandpack
+  template="react"
+  theme={githubLight}
+  files={{
+    "/index.js": {
+      code: `import React from "react";
+import { createRoot } from "react-dom/client";
 
-const root = document.getElementById("root");
+function SomeComponent (props) {
+  return (
+    <p>TODO: {props.text}.</p>
+  );
+}
 
-ReactDOM.render(<Article text="Who am I?" />, root);
-```
+function Article () {
+  return (
+    <div className="something">
+      <p style={{ fontSize: "30px" }}>Hello</p>
+      <SomeComponent text="나를 수정해보세요." />
+    </div>
+  );
+}
 
-**🖥 _Example Link_**
+const root = createRoot(document.getElementById("root"));
 
-[props-introduction](https://codesandbox.io/s/props-introduction-woudq?file=/src/index.js)
+root.render(<Article />);`,
+active: true
+}
+}}
+options={{
+    showLineNumbers: true,
+    editorHeight: "600px",
+    editorWidthPercentage: 60,
+    initMode: "lazy",
+    autoReload: false,
+    showConsoleButton: true,
+  }}
+customSetup={{
+    entry: "index.js",
+  }}
+/>
 
-**📖 _Components and Props_**
+<br />
 
-[Components and Props - React](https://ko.reactjs.org/docs/components-and-props.html)
+- 📘 [당신의 첫 번째 컴포넌트](https://react-ko.dev/learn/your-first-component) (도전 과제까지 반드시 해보세요.)
+- 📘 [컴포넌트에 Props 전달하기](https://react-ko.dev/learn/passing-props-to-a-component) (도전 과제까지 반드시 해보세요.)
 
-```jsx
+<br />
+<br/>
+
+<Sandpack
+  template="react"
+  theme={githubLight}
+  files={{
+    "/index.js": {
+      code: `import React from "react";
+import { createRoot } from "react-dom/client";
+
 // Object Destructuring을 이용해 코드를 더욱 단순화 할 수 있습니다.
+function SomeComponent ({ text }) {
+  return (
+    <p>TODO: {text}.</p>
+  );
+}
 
-const SomeComponent = ({ content }) => <p>{content}</p>;
+function Article ({ title, number }) {
+  return (
+    <div className="something">
+      <p style={{ fontSize: "30px" }}>#{number}. {title}.</p>
+      <SomeComponent text="나는 Props로 주어진 text입니다." />
+    </div>
+  );
+}
 
-const Article = ({ childText, text }) => (
-  <div className="something">
-    <SomeComponent content={childText} />
-    <p style={{ fontSize: "30px" }}>{text}</p>
-  </div>
-);
+const root = createRoot(document.getElementById("root"));
 
-const root = document.getElementById("root");
+root.render(<Article number="1" title="나는 Props로 주어진 title입니다." />);`,
+active: true
+}
+}}
+options={{
+    showLineNumbers: true,
+    editorHeight: "600px",
+    editorWidthPercentage: 60,
+    initMode: "lazy",
+    autoReload: false,
+    showConsoleButton: true,
+  }}
+customSetup={{
+    entry: "index.js",
+  }}
+/>
 
-ReactDOM.render(
-  <Article text="Who am I?" childText="I am something else." />,
-  root
-);
-```
+<br/>
+<br/>
 
 일반적으로는 최상단 Root Element 역할을 하는 `App` 컴포넌트를 만들고, 그 하위에 우리의 화면을 구성하는 Element들을 넣습니다. 또한 React에서 기본적으로 제공되는 `props.children`을 사용할 수도 있습니다.
 
-```jsx
+<br/>
+
+<Sandpack
+  template="react"
+  theme={githubLight}
+  files={{
+    "/index.js": {
+      code: `import React from "react";
+import { createRoot } from "react-dom/client";
+
 const SomeComponent = ({ content }) => <p>{content}</p>;
 
 const Article = ({ children, text }) => (
@@ -137,9 +138,25 @@ function App() {
   );
 }
 
-ReactDOM.render(<App />, document.getElementById("root"));
-```
+const root = createRoot(document.getElementById("root"));
 
-**🖥 _Example Link_**
+root.render(<App />);`,
+active: true
+}
+}}
+options={{
+    showLineNumbers: true,
+    editorHeight: "600px",
+    editorWidthPercentage: 60,
+    initMode: "lazy",
+    autoReload: false,
+    showConsoleButton: true,
+  }}
+customSetup={{
+    entry: "index.js",
+  }}
+/>
 
-[root-app-component](https://codesandbox.io/s/root-app-component-sxmr6)
+📘 [자식을 JSX로 전달하기](https://react-ko.dev/learn/passing-props-to-a-component#passing-jsx-as-children)
+
+> Props는 무한대로 만들어 전달할 수 있고, 여러분이 원하는대로 이름 지을 수 있습니다. 다만, 함수의 파라미터와 동일하게 너무 많이 Props를 전달할 경우 가독성을 해칠 수 있고, 적절하지 않은 이름은 코드 퀄리티를 저하시킬 수 있습니다.

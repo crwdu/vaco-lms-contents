@@ -1,78 +1,101 @@
+import { Sandpack } from "@codesandbox/sandpack-react";
+import { githubLight } from "@codesandbox/sandpack-themes";
 import { Callout } from "nextra-theme-docs";
 
-# React Introduction
+# 리액트 소개
 
-# Meet React.
-
-_A library for creating User Interfaces._
+_A library for creating **User Interfaces**._
 
 _Renders your UI and responds to events._
 
 _The **V** in **MVC**._
 
-[https://www.youtube.com/watch?v=x7cQ3mrcKaY](https://www.youtube.com/watch?v=x7cQ3mrcKaY)
+<br />
 
-# **React Rendering**
+<iframe
+  width="560"
+  height="315"
+  src="https://www.youtube.com/embed/x7cQ3mrcKaY?start=1"
+  title="YouTube video player"
+  frameBorder="0"
+  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+  allowFullScreen
+></iframe>
+
+<br />
+<br />
+
+## 리액트 맛보기
+
+<br />
 
 아래와 같이 간단하게 우리는 React를 시작할 수 있습니다.
 
-```jsx
-const element = <div>자, 여러분..</div>;
-const root = document.getElementById("root");
+<br />
 
-ReactDOM.render(element, root);
-```
+<Sandpack
+  template="react"
+  theme={githubLight}
+  files={{
+    "/index.js": {
+      code: `import React from "react";
+import { createRoot } from "react-dom/client";
 
-**🖥 _Example Link_**
+const root = createRoot(document.getElementById("root"));
 
-[Introduction to React - 1](https://codesandbox.io/s/introduction-to-react-1-jxbjt)
+root.render(<h1>안녕하세요</h1>);`,
+active: true
+}
+}}
+options={{
+    showLineNumbers: true,
+    editorHeight: "400px",
+    editorWidthPercentage: 60,
+    initMode: "lazy",
+    autoReload: false,
+    showConsoleButton: true,
+  }}
+customSetup={{
+    entry: "index.js",
+  }}
+/>
 
-**📖 _Rendering Elements_**
+위의 예시에서 HTML과 유사하게 생긴 코드는 HTML이 아닙니다. JSX라고 부르는 문법입니다.
 
-[엘리먼트 렌더링 - React](https://ko.reactjs.org/docs/rendering-elements.html)
+📘 [JSX로 마크업 작성하기](https://react-ko.dev/learn/writing-markup-with-jsx)
 
-**📖 _JSX_**
+## JSX란
 
-[JSX 소개 - React](https://ko.reactjs.org/docs/introducing-jsx.html)
+> _JSX is an **optional preprocessor** to let you use HTML-like syntax._
 
-## JSX
+JSX는 HTML처럼 생긴 문법을 사용 가능하게 해주는 전처리 장치입니다. JSX는 HTML과 같은 문법을 사용 가능하게 해주며, 자바스크립트를 함께 사용할 수 있도록 합니다.
 
-_JSX is an **optional preprocessor** to let you use HTML-like syntax._
+📘 [JSX에서 JavaScript 사용하기](https://react-ko.dev/learn/javascript-in-jsx-with-curly-braces)
 
-_The accessibility of templates and the power of JavaScript._
+### 트랜스파일
 
-```jsx
-// Not using JSX
+JSX는 (대략) 아래와 같은 순수 자바스크립트로 변환되어 브라우저에서 실행됩니다. 이런 변환 과정을 트랜스파일이라고 부릅니다.
+
+```js showLineNumbers
 const element = React.createElement("div", null, "자, 여러분..");
-const root = document.getElementById("root");
+const root = createRoot(document.getElementById("root"));
 
-ReactDOM.render(element, root);
+root.render(element);
 ```
 
 - `React.createElement` 함수의 첫 번째 인자는 DOM Element Type을 나타냅니다.
 - 두 번째 인자는 Attribute를 나타냅니다. (React에서는 Element의 Attribute를 **Props**라고 부릅니다.)
 - 나머지 인자는 Child Element입니다.
 
-<aside>
-🚀 `React.createElement`에 대해서는 간략히만 살펴보아도 충분합니다. 여러분은 주로 JSX를 이용해 React를 사용할 예정입니다.
+위에서 언급된 `React.createElement`에 대해서는 자세히 살펴볼 필요는 없습니다. 여러분은 대부분 JSX를 이용해 React를 사용하게 될 것입니다. 하지만 원리를 알고 사용하는 것이 좋기에 내부적으로 어떤 과정을 거쳐 브라우저에서 실행되는지 설명드리는것 뿐입니다.
 
-하지만 원리를 알고 사용하는 것이 좋겠죠? 주어진 시간 내에 최대한 깊이 있게 학습하는 습관을 들이세요.
-
-</aside>
-
-**🖥 _Example Link_**
-
-[React without JSX](https://codesandbox.io/s/react-without-jsx-evdj8)
-
-**📖 _JSX 없이 사용하는 React_**
-
-[JSX 없이 사용하는 React - React](https://ko.reactjs.org/docs/react-without-jsx.html)
+📘 [JSX 없이 사용하는 React](https://ko.reactjs.org/docs/react-without-jsx.html)
 
 ```jsx
 const element = React.createElement("div", { className: "something" }, "hello");
-const root = document.getElementById("root");
+const root = createRoot(document.getElementById("root"));
 
-ReactDOM.render(element, root);
+root.render(element);
 ```
 
 Child Element란, 단순 텍스트가 될 수도 있지만 또 다른 React Element가 될 수도 있습니다. 그리고 또한 여러 개의 Child를 가질 수도 있습니다.
@@ -86,14 +109,14 @@ const element = React.createElement(
   React.createElement("p", { style: { fontSize: "30px" } }, text)
 );
 
-const root = document.getElementById("root");
+const root = createRoot(document.getElementById("root"));
 
-ReactDOM.render(element, root);
+root.render(element);
 ```
 
 모든 것은 Javascript입니다. 그렇기에 우리는 변수(`text`)를 사용할 수도 있습니다.
 
-**위의 코드를 다시 JSX로 바꿔서 작성해보겠습니다. 몇가지 이해가지 않는 부분이 있겠지만, 위의 코드와 아래 코드를 비교했을때 어떤 차이가 느껴지시나요? 어느 쪽이 더 읽기 편하신가요?**
+위의 코드를 JSX로 바꿔서 작성해보겠습니다. 몇가지 이해가지 않는 부분이 있겠지만, 위의 코드와 아래 코드를 비교했을때 어떤 차이가 느껴지시나요? 어느 쪽이 더 읽기 편하신가요?
 
 ```jsx
 const getText = () => "I am a paragraph";
@@ -103,50 +126,61 @@ const element = (
   </div>
 );
 
-const root = document.getElementById("root");
+const root = createRoot(document.getElementById("root"));
 
-ReactDOM.render(element, root);
+root.render(element);
 ```
 
-JSX에서 우리는 `{}` (중괄호) 를 이용하여 `{}` (중괄호) 내부에 Javascript Expression을 삽입할 수 있습니다. 위 예제에서 보이는 `getText()` 와 같이 말입니다.
+위에 공유드린 리액트 문서에서 보셨겠지만, JSX에서 우리는 `{}` (중괄호) 를 이용하여 `{}` (중괄호) 내부에 Javascript Expression을 삽입할 수 있습니다. 위 예제에서 보이는 `getText()` 와 같이 말입니다.
 
-<aside>
-🚀 Javascript Expression이란, 결과값이 도출될 수 있는 코드 실행문을 의미합니다.
+> Javascript Expression이란, 어떤 특정 값으로 귀결되는 코드 단락을 의미합니다.
 
-</aside>
+<br />
+<br />
 
-**📖 _Javascript Expression_**
+## 컴포넌트
 
-[표현식과 연산자 - JavaScript | MDN](https://developer.mozilla.org/ko/docs/Web/JavaScript/Guide/Expressions_and_Operators#%ED%91%9C%ED%98%84%EC%8B%9D)
+<br />
 
-# Components
+> _Use **components** to separate your concerns._
 
-_Use **components** to separate your concerns._
+관심사를 분리하기 위해 컴포넌트를 사용해야 합니다.
 
-_Components are **composable**._
+> _Components are **composable**._
 
-_Components are **unit testable**._
+컴포넌트는 조합이 가능합니다.
 
-_Only put **display logic** in your components._
+> _Components are **unit testable**._
 
-_No explicit DOM operations. **Declarative**._
+컴포넌트는 단위 테스트가 가능합니다.
+
+> _Only put **display logic** in your components._
+
+컴포넌트는 화면을 그리는 로직만 담도록 해야 합니다.
+
+> _No explicit DOM operations. **Declarative**._
+
+컴포넌트는 직접적인 DOM 조작을 하지 않아야 합니다. 선언적으로 작업해야 합니다.
+
+<br />
+<br />
 
 지금까지 본 예제들에서 컴포넌트가 이미 사용되었습니다.
 
 ```jsx
 const getText = () => "I am a paragraph";
-const SomeComponent = () => <p>I am something else.</p>;
+const someText = <p>I am something else.</p>;
 
 const element = (
   <div className="something">
-    <SomeComponent />
+    {someText}
     <p style={{ fontSize: "30px" }}>{getText()}</p>
   </div>
 );
 
-const root = document.getElementById("root");
+const root = createRoot(document.getElementById("root"));
 
-ReactDOM.render(element, root);
+root.render(element);
 ```
 
 위의 `element` 또한 컴포넌트화 해본다면 아래와 같이 함수로 변경할 수 있습니다.
@@ -155,16 +189,18 @@ ReactDOM.render(element, root);
 const getText = () => "I am a paragraph";
 const SomeComponent = () => <p>I am something else.</p>;
 
-const Article = () => (
-  <div className="something">
-    <SomeComponent />
-    <p style={{ fontSize: "30px" }}>{getText()}</p>
-  </div>
-);
+function Article() {
+  return (
+    <div className="something">
+      <SomeComponent />
+      <p style={{ fontSize: "30px" }}>{getText()}</p>
+    </div>
+  );
+}
 
-const root = document.getElementById("root");
+const root = createRoot(document.getElementById("root"));
 
-ReactDOM.render(<Article />, root);
+root.render(<Article />);
 ```
 
 컴포넌트의 가장 큰 장점은 **재사용성**입니다. 앞으로 만들어 나갈 React Application의 중요한 초석이 되는 부분입니다. 현재 우리가 만든 `Article`이라는 컴포넌트는 항상 같은 UI를 보여주도록 되어있습니다만, React의 다양한 기능을 이용하여 우리는 상황에 따라 다른 내용을 보여주도록 사용할 수 있습니다.

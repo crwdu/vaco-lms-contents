@@ -1,10 +1,10 @@
 {
   "01-coffee-chat": {
-    "title": "Coffee Chat",
+    "title": "커피챗",
     "display": "normal"
   },
   "02-introduction-to-react": {
-    "title": "Introduction to React",
+    "title": "리액트 소개",
     "display": "normal"
   },
   "03-props": {
@@ -16,7 +16,7 @@
     "display": "normal"
   },
   "05-side-effect": {
-    "title": "What is side effect",
+    "title": "사이드 이펙트",
     "display": "normal"
   }
 }
