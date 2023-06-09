@@ -8,7 +8,7 @@ _Props란, **함수의 매개변수**와 동일한 개념입니다. 함수의 �
 
 React Component에게 Attribute을 주게 되면, 해당 컴포넌트 내부에서는 `props`를 이용하여 해당 정보를 사용할 수 있습니다. 우리는 우리가 원하는 만큼 다양하게 `props`를 줄 수 있습니다.
 
-<br/>
+<br />
 
 <Sandpack
   template="react"
@@ -35,30 +35,41 @@ function Article () {
 
 const root = createRoot(document.getElementById("root"));
 
-root.render(<Article />);`,
-active: true
-}
-}}
-options={{
+root.render(<Article />);
+`,
+      active: true
+    }
+  }}
+  options={{
     showLineNumbers: true,
-    editorHeight: "600px",
+    editorHeight: "500px",
     editorWidthPercentage: 60,
     initMode: "lazy",
     autoReload: false,
     showConsoleButton: true,
   }}
-customSetup={{
+  customSetup={{
     entry: "index.js",
   }}
 />
 
 <br />
+<br />
 
-- 📘 [당신의 첫 번째 컴포넌트](https://react-ko.dev/learn/your-first-component) (도전 과제까지 반드시 해보세요.)
-- 📘 [컴포넌트에 Props 전달하기](https://react-ko.dev/learn/passing-props-to-a-component) (도전 과제까지 반드시 해보세요.)
+### 📘 공식문서
+
+- [컴포넌트에 Props 전달하기](https://react-ko.dev/learn/passing-props-to-a-component)
+
+> 도전 과제까지 반드시 해보세요.
 
 <br />
-<br/>
+<br />
+
+## Props 전달하기
+
+아래 예시에서는 할일 목록이 제대로 화면에 표기되지 않고 있습니다. 어떤 부분을 수정해야 할지 한번 도전해보세요.
+
+<br />
 
 <Sandpack
   template="react"
@@ -69,28 +80,33 @@ customSetup={{
 import { createRoot } from "react-dom/client";
 
 // Object Destructuring을 이용해 코드를 더욱 단순화 할 수 있습니다.
-function SomeComponent ({ text }) {
+function SomeComponent ({ number, contents }) {
   return (
-    <p>TODO: {text}.</p>
+    <p>#{number}: {contents}.</p>
   );
 }
 
-function Article ({ title, number }) {
+function Article ({ title }) {
   return (
     <div className="something">
-      <p style={{ fontSize: "30px" }}>#{number}. {title}.</p>
-      <SomeComponent text="나는 Props로 주어진 text입니다." />
+      <p style={{ fontSize: "30px" }}>
+        {title}
+      </p>
+      <SomeComponent number="1" todo="돈까스 먹기" />
+      <SomeComponent number="2" todo="대청소 하기" />
+      <SomeComponent number="3" todo="넷플릭스 보기" />
     </div>
   );
 }
 
 const root = createRoot(document.getElementById("root"));
 
-root.render(<Article number="1" title="나는 Props로 주어진 title입니다." />);`,
-active: true
-}
-}}
-options={{
+root.render(<Article title="오늘의 할일" />);
+`,
+      active: true
+    }
+  }}
+  options={{
     showLineNumbers: true,
     editorHeight: "600px",
     editorWidthPercentage: 60,
@@ -98,17 +114,89 @@ options={{
     autoReload: false,
     showConsoleButton: true,
   }}
-customSetup={{
+  customSetup={{
     entry: "index.js",
   }}
 />
 
+<br />
+<br />
+
+> Props는 무한대로 만들어 전달할 수 있고, 여러분이 원하는대로 이름 지을 수 있습니다. 다만, 함수의 파라미터와 동일하게 너무 많이 Props를 전달할 경우 가독성을 해칠 수 있고, 적절하지 않은 이름은 코드 퀄리티를 저하시킬 수 있습니다.
+
+<br />
+<br />
+
+## 이벤트 등록하기
+
+리액트 컴포넌트에서는 `on` + 이벤트 이름(Camel case)로 이벤트 등록을 처리합니다.
+
+<br />
+
+<Sandpack
+  template="react"
+  theme={githubLight}
+  files={{
+    "/index.js": {
+      code: `import React from "react";
+import { createRoot } from "react-dom/client";
+
+function Article ({ title }) {
+  return (
+    <div className="something">
+      <p
+        onClick={() => alert("click!")}
+        style={{ fontSize: "30px" }}
+      >
+        {title}
+      </p>
+    </div>
+  );
+}
+
+const root = createRoot(document.getElementById("root"));
+
+root.render(<Article title="이 곳을 클릭하세요." />);
+`,
+      active: true
+    }
+  }}
+  options={{
+    showLineNumbers: true,
+    editorHeight: "440px",
+    editorWidthPercentage: 60,
+    initMode: "lazy",
+    autoReload: false,
+    showConsoleButton: true,
+  }}
+  customSetup={{
+    entry: "index.js",
+  }}
+/>
+
+### 이벤트 Props 네이밍 예시
+
+`onClick`, `onMouseOver`, `onKeyPress` 등.
+
+> `on` + 이벤트 이름 대문자로 시작 + 이벤트 이름 카멜 케이스
+
 <br/>
 <br/>
+
+### 📘 공식문서
+
+- [이벤트에 응답하기](https://react-ko.dev/learn/responding-to-events)
+
+> 도전 과제까지 반드시 해보세요.
+
+<br/>
+<br/>
+
+## 컴포넌트의 자식 컴포넌트 다루기
 
 일반적으로는 최상단 Root Element 역할을 하는 `App` 컴포넌트를 만들고, 그 하위에 우리의 화면을 구성하는 Element들을 넣습니다. 또한 React에서 기본적으로 제공되는 `props.children`을 사용할 수도 있습니다.
 
-<br/>
+<br />
 
 <Sandpack
   template="react"
@@ -140,11 +228,12 @@ function App() {
 
 const root = createRoot(document.getElementById("root"));
 
-root.render(<App />);`,
-active: true
-}
-}}
-options={{
+root.render(<App />);
+`,
+      active: true
+    }
+  }}
+  options={{
     showLineNumbers: true,
     editorHeight: "600px",
     editorWidthPercentage: 60,
@@ -152,11 +241,155 @@ options={{
     autoReload: false,
     showConsoleButton: true,
   }}
-customSetup={{
+  customSetup={{
     entry: "index.js",
   }}
 />
 
-📘 [자식을 JSX로 전달하기](https://react-ko.dev/learn/passing-props-to-a-component#passing-jsx-as-children)
+<br/>
+<br/>
 
-> Props는 무한대로 만들어 전달할 수 있고, 여러분이 원하는대로 이름 지을 수 있습니다. 다만, 함수의 파라미터와 동일하게 너무 많이 Props를 전달할 경우 가독성을 해칠 수 있고, 적절하지 않은 이름은 코드 퀄리티를 저하시킬 수 있습니다.
+### 📘 공식문서
+
+- [자식을 JSX로 전달하기](https://react-ko.dev/learn/passing-props-to-a-component#passing-jsx-as-children)
+
+> 도전 과제까지 반드시 해보세요.
+
+<br/>
+<br/>
+
+## 목록 렌더링
+
+리액트에서는 목록을 손쉽게 렌더링 할 수 있는 방법을 제공합니다.
+
+<br />
+
+<Sandpack
+  template="react"
+  theme={githubLight}
+  files={{
+    "/index.js": {
+      code: `import React from "react";
+import { createRoot } from "react-dom/client";
+
+function TodoItem ({ number, todo }) {
+  return (
+    <p>#{number}: {todo}.</p>
+  );
+}
+
+const list = [
+  <TodoItem number="1" todo="돈까스 먹기" />,
+  <TodoItem number="2" todo="대청소 하기" />,
+  <TodoItem number="3" todo="넷플릭스 보기" />,
+];
+
+function TodoList ({ title }) {
+  return (
+    <div className="something">
+      <p style={{ fontSize: "30px" }}>
+        {title}
+      </p>
+      {list}
+    </div>
+  );
+}
+
+const root = createRoot(document.getElementById("root"));
+
+root.render(<TodoList title="오늘의 할일" />);
+`,
+      active: true
+    }
+  }}
+  options={{
+    showLineNumbers: true,
+    editorHeight: "640px",
+    editorWidthPercentage: 60,
+    initMode: "lazy",
+    autoReload: false,
+    showConsoleButton: true,
+  }}
+  customSetup={{
+    entry: "index.js",
+  }}
+/>
+
+리액트는 React Element가 요소로 담긴 배열을 렌더링할 경우, 화면에 해당 요소들을 자동으로 렌더링 합니다. 방금 위 예시에서도, 배열 내에 있는 `TodoItem` 세개가 화면에 표기되었습니다.
+
+만약 Todo list 데이터가 서버에서 전달된다고 가정하고 리팩터링 해본다면, 다음과 유사할 수 있습니다.
+
+<br />
+
+<Sandpack
+  template="react"
+  theme={githubLight}
+  files={{
+    "/index.js": {
+      code: `import React from "react";
+import { createRoot } from "react-dom/client";
+
+const list = [
+  {
+    id: 1,
+    text: "돈까스 먹기"
+  },
+  {
+    id: 2,
+    text: "대청소 하기"
+  },
+  {
+    id: 3,
+    text: "넷플릭스 보기"
+  }
+];
+
+function TodoItem ({ number, todo }) {
+  return (
+    <p>#{number}: {todo}.</p>
+  );
+}
+
+function TodoList ({ title }) {
+  return (
+    <div className="something">
+      <p style={{ fontSize: "30px" }}>
+        {title}
+      </p>
+      {list.map(function (item) {
+        return (
+          <TodoItem key={item.id} number={item.id} todo={item.text} />
+        );
+      })}
+    </div>
+  );
+}
+
+const root = createRoot(document.getElementById("root"));
+
+root.render(<TodoList title="오늘의 할일" />);
+`,
+      active: true
+    }
+  }}
+  options={{
+    showLineNumbers: true,
+    editorHeight: "900px",
+    editorWidthPercentage: 60,
+    initMode: "lazy",
+    autoReload: false,
+    showConsoleButton: true,
+  }}
+  customSetup={{
+    entry: "index.js",
+  }}
+/>
+
+> 위 예시에서 `key`라는 prop은 무슨 용도일까요?
+
+<br/>
+<br/>
+
+### 📘 공식문서
+
+- [목록 렌더링](https://react-ko.dev/learn/rendering-lists)

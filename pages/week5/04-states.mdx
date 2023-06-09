@@ -1,14 +1,10 @@
 import { Callout } from "nextra-theme-docs";
 
-# States
+# 상태
 
-# Functions Review
+컴포넌트에 대해 더 깊이 이해하기 위해서는 함수에 대한 이해가 우선되어야 합니다. 함수에 대해 다시 한번 생각해봅시다.
 
-컴포넌트에 대해 더 깊이 이해하기 위해서는 함수에 대한 이해가 우선되어야 합니다.
-
-함수에 대해 다시 한번 생각해봅시다.
-
-```jsx
+```jsx showLineNumbers
 // size 메소드 외의 기능에 대한 자세한 코드는 생략합니다.
 class LinkedList {
   add(value) {
@@ -52,25 +48,40 @@ const result = linkedList.size();
 console.log(result);
 ```
 
-## Local Variables
+<br/>
+<br/>
+
+## 지역 변수
 
 지역 변수란 무엇이고, 어떤 경우에 사용하나요? 위 예제에서 구현된 `size` 함수를 살펴보세요.
 
 `node` 라는 변수를 만들어 사용하고 있습니다. 함수 연산과정에서 `node` 변수에 임시적으로 값을 저장하고 지속적으로 수정하며, 함수 로직의 상태를 관리하고 있습니다.
 
-## States
+<br/>
+<br/>
 
-_React의 State는 함수에서의 지역변수와 동일한 개념입니다._
+## 상태
 
-상황에 따라 가변적인 정보와 UI가 연관될 수 있습니다. 이런 가변적인 정보를 상태라 부르고, 이 상태를 관리할 수 있는 방법이 바로 `state` 입니다.
+_리액트의 상태는 함수에서의 지역변수와 동일한 개념입니다._
 
-**✅ *UI 렌더링 결과와 연관되는 데이터가 아니라면, state로 관리할 필요가 없습니다.***
+상황에 따라 가변적인 정보와 UI가 연관될 수 있습니다. 이런 가변적인 정보를 상태라 부르고, 이 상태를 관리할 수 있는 방법이 바로 상태(`state`) 입니다.
 
-_Class를 이용한 React 사용법은 당장 주요하게 볼 필요는 없습니다. 나중에는 한번쯤 꼭 살펴보셔야 합니다._
+<br/>
+<br/>
+
+### 상태의 조건
+
+1. 가변적인 데이터
+2. UI 렌더링과 연관된 데이터
+
+이 두가지를 모두 충족해야 "상태"라고 할 수 있습니다. 둘 중 하나라도 충족하지 않는다면, 그것은 상태가 아닙니다.
+
+<br/>
+<br/>
 
 아래와 같은 컴포넌트가 있다고 생각해보세요.
 
-```jsx
+```jsx showLineNumbers
 export default function ShoppingItem(props) {
   const { name, price } = props.item;
 
@@ -88,15 +99,23 @@ export default function ShoppingItem(props) {
 }
 ```
 
-사용자가 더하기, 빼기 버튼을 클릭할때마다 우리는 수량의 값을 변경시켜 UI에 반영하고 싶습니다. 이와 같은 상황에서 우리는 React State를 이용하여 가변적인 수량을 관리할 수 있습니다. React State를 생성할때 사용되는 `useState`를 이용하여 수량 관리를 적용시켜 보겠습니다.
+사용자가 더하기, 빼기 버튼을 클릭할때마다 우리는 수량의 값을 변경시켜 UI에 반영하고 싶습니다. 이와 같은 상황에서 우리는 상태를 이용하여 가변적인 수량을 관리할 수 있습니다. 상태를 생성할때 사용되는 `useState` 함수를 이용하여 수량 관리를 적용시켜 보겠습니다.
 
-**📖 _Component State_**
+<br/>
+<br/>
 
-[컴포넌트 State - React](https://ko.reactjs.org/docs/faq-state.html#what-is-the-difference-between-state-and-props)
+### 📘 공식문서
 
-**📖 _Props vs State_**
+- [상태 - 컴포넌트의 메모리](https://react-ko.dev/learn/state-a-components-memory)
 
-[uberVU/react-guide](https://github.com/uberVU/react-guide/blob/master/props-vs-state.md)
+<br/>
+<br/>
+
+### 상태와 Props는 어떻게 다른 것인가?
+
+Props는 외부에서 컴포넌트에게 전달되어 주어지는 데이터고, 상태는 컴포넌트 내부에서 생성되어 관리되는 가변적인 데이터입니다.
+
+> [props vs state](https://github.com/uberVU/react-guide/blob/master/props-vs-state.md)
 
 ```jsx
 export default function ShoppingItem(props) {
@@ -149,14 +168,6 @@ export default function ShoppingItem(props) {
 **📖 _useState_**
 
 [Hooks API Reference - React](https://ko.reactjs.org/docs/hooks-reference.html#usestate)
-
-**📖 _Handling Events_**
-
-[이벤트 처리하기 - React](https://ko.reactjs.org/docs/handling-events.html)
-
-**📖  _Synthetic Event_**
-
-[합성 이벤트(SyntheticEvent) - React](https://ko.reactjs.org/docs/events.html#gatsby-focus-wrapper)
 
 수량을 조절하는 로직은 우리가 원하는대로 구성할 수 있습니다. 만약 0 이하의 수량은 허용하지 않고 싶다면 아래와 같이 작성할 수 있습니다.
 
