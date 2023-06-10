@@ -1,0 +1,151 @@
+# 6. Optimization
+
+# useMemo Hook
+
+[_useMemo_](https://reactjs.org/docs/hooks-reference.html#usememo) Hook은 여러분이 이미 알고 있는 lodash의 memoize와 유사한 기능을 하는 React API 입니다. 어떤 함수의 연산값을 memoize 할 수 있습니다.
+
+```jsx
+const result = useMemo(() => computeExpensiveValue(a, b), [a, b]);
+```
+
+**📖 _useMemo_**
+
+[Hooks API Reference - React](https://reactjs.org/docs/hooks-reference.html#usememo)
+
+## 주요기능
+
+리액트 컴포넌트는 생명주기에 따라, 업데이트 된 정보가 존재할때마다 Re-rendering 됩니다. 자바스크립트의 내부적인 비교방식(i.e. Shallow comparison) 때문에, 리액트가 컴포넌트의 변경 사항을 확인하는 과정에서 의도치 않게 변화를 감지하는 경우들이 존재합니다. 그리고 이런 경우에 리액트는 불필요한 렌더링을 실행하기도 합니다. useMemo를 이용해 이런 불필요한 렌더링을 방지할 수 있습니다.
+
+추가적으로 만약 렌더링 과정에 복잡한 연산이 존재한다면, 우리는 useMemo를 이용해 연산을 조금 더 효율적으로 다룰 수 있습니다.
+
+<aside>
+📌 useMemo와 React.memo는 다릅니다.
+
+</aside>
+
+[React.memo() vs. useMemo(): Major differences and use cases - LogRocket Blog](https://blog.logrocket.com/react-memo-vs-usememo/)
+
+## 예제
+
+아래 예제를 살펴보시고, `useMemo`가 사용되지 않았을 경우와 비교하여 조사해보세요.
+
+```jsx
+function App() {
+  const [length, setLength] = useState(5);
+  const [name, setName] = useState("Ken Huh");
+
+  return (
+    <>
+      <input value={name} onChange={(e) => setName(e.target.value)} />
+      <Profile name={name} />
+      <hr />
+      <input
+        value={length}
+        onChange={(e) => setLength(Number(e.target.value))}
+      />
+      <FibDisplay length={length} />
+    </>
+  );
+}
+
+function FibDisplay({ length }) {
+  const numbers = useMemo(() => {
+    console.log("Calculating numbers...");
+
+    const result = [1, 1];
+
+    for (let i = 2; i < length; i++) {
+      result[i] = result[i - 1] + result[i - 2];
+    }
+
+    return result;
+  }, [length]);
+
+  return (
+    <p>
+      {length} numbers of the fibonacci sequence: {numbers.join(", ")}
+    </p>
+  );
+}
+
+const Profile = React.memo(function ({ name }) {
+  console.log("Rerendering profile...");
+  return <p>Your name is {name}</p>;
+});
+
+export default App;
+```
+
+**🖥 _Example Link_**
+
+[useMemo](https://codesandbox.io/s/usememo-hk9ek?file=/src/App.js)
+
+# useCallback Hook
+
+useCallback은 useMemo와 유사합니다. 다만, 함수를 memoize 한다는 점이 다를 뿐입니다.
+
+**📖 _useCallback_**
+
+[Hooks API Reference - React](https://reactjs.org/docs/hooks-reference.html#usecallback)
+
+위에서 사용했던 예제를 자세히 살펴보면, App 컴포넌트는 렌더링 될때마다 새로운 레퍼런스의 onChange 이벤트 핸들러를 생성하고 있습니다. 만약 이 핸들러가 하위 컴포넌트에 props로 전달된다면, 하위 컴포넌트는 새로운 레퍼런스이기 때문에 props 값이 변경된 것으로 인식하고 다시 렌더링을 하게 됩니다. 이런 과정을 효율적으로 다루기 위해서는 useCallback이 도움이 될 수 있습니다.
+
+```jsx
+function App() {
+  const [length, setLength] = useState(3);
+  const [name, setName] = useState("Ken Huh");
+
+  const handleNameChange = useCallback((e) => setName(e.target.value), []);
+  const handleLengthChange = useCallback(
+    (e) => setLength(Number(e.target.value)),
+    []
+  );
+
+  return (
+    <>
+      <input value={name} onChange={handleNameChange} />
+      <Profile name={name} />
+      <hr />
+      <input value={length} onChange={handleLengthChange} />
+      <FibDisplay length={length} />
+    </>
+  );
+}
+
+function FibDisplay({ length }) {
+  const numbers = useMemo(() => {
+    console.log("Calculating numbers...");
+
+    const result = [1, 1];
+
+    for (let i = 2; i < length; i++) {
+      result[i] = result[i - 1] + result[i - 2];
+    }
+
+    return result;
+  }, [length]);
+
+  return (
+    <p>
+      {length} numbers of the fibonacci sequence: {numbers.join(", ")}
+    </p>
+  );
+}
+
+const Profile = React.memo(function ({ name }) {
+  console.log("Rerendering Profile...");
+  return <p>Your name is {name}</p>;
+});
+
+export default App;
+```
+
+**🖥 _Example Link_**
+
+[useCallback](https://codesandbox.io/s/usecallback-czyb2)
+
+# Extra
+
+[memo()를 하기 전에](https://overreacted.io/ko/before-you-memo/)
+
+[Death by a thousand useCallbacks](https://royi-codes.vercel.app/thousand-usecallbacks/)

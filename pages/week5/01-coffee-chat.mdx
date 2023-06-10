@@ -1,0 +1,216 @@
+import { Alert } from "antd";
+
+과제는 냥이 경진대회..
+
+# ☕️ Coffee Chat
+
+## 자바스크립트 기초상식
+
+### 함수와 함수의 파라미터
+
+우리의 점심값을 계산하는 다음과 같은 코드가 있다고 생각해보세요.
+
+```js showLineNumbers
+function addLunchPrices(lunchPrice1, lunchPrice2) {
+  return lunchPrice1 + lunchPrice2;
+}
+
+const kenLunch = 5000;
+const wanLunch = 6000;
+const totalLunchPrice = addLunchPrices(kenLunch, wanLunch);
+```
+
+`totalLunchPrice` 변수에는 저와 제 동생이 함께 먹은 점심값의 총계가 담겨 있습니다.
+
+그런데, 불행히도 저는 제 동생과 저녁도 함께 먹게 되었습니다. 그리고 저녁값 또한 계산하려고 합니다.
+
+```js showLineNumbers
+function addLunchPrices(lunchPrice1, lunchPrice2) {
+  return lunchPrice1 + lunchPrice2;
+}
+
+const kenLunch = 5000;
+const wanLunch = 6000;
+const totalLunchPrice = addLunchPrices(kenLunch, wanLunch);
+
+function addDinnerPrices(dinnerPrice1, dinnerPrice2) {
+  return dinnerPrice1 + dinnerPrice2;
+}
+
+const kenDinner = 7000;
+const wanDinner = 6500;
+const totalDinnerPrice = addDinnerPrices(kenDinner, wanDinner);
+```
+
+우리가 현재 작성한 코드를 보면, `addLunchPrices` 함수와 `addDinnerPrices` 함수는 사실상 동일한 기능을 하는 함수입니다. 이 함수를 재사용한다면, 더욱 좋을것 같습니다.
+
+```js showLineNumbers
+function add(a, b) {
+  return a + b;
+}
+
+const kenLunch = 5000;
+const wanLunch = 6000;
+const totalLunchPrice = add(kenLunch, wanLunch);
+
+const kenDinner = 7000;
+const wanDinner = 6500;
+const totalDinnerPrice = add(kenDinner, wanDinner);
+```
+
+`add`라는 함수로 변경하는 과정에서 저는 함수명과 파라미터의 이름 또한 변경하였습니다. 왜 그랬을까요?
+
+> 해당 함수의 재사용성을 위해 변경한 것입니다.
+
+현재 사용되는 맥락에만 국한되지 않고, 어느 정도의 재사용성을 고려하여 작성한 것입니다. "더하기"라는 기능에 대해 생각해본다면, 점심값 뿐만 아니라, 나이, 점심값, 저녁값, 용돈, 저축액, 수학연산 등 모든 숫자 연산에 사용될 수 있는 여지가 있겠죠? 그렇기에 함수명과 파라미터 이름 또한 상황에 맞춰 신중하게 지어주는 것이 좋고, 이는 기능적 차이를 만들지는 않지만 함수의 재사용성과 밀접한 연관이 있을 수 있습니다.
+
+### Async / Await
+
+Async / Await 는 Promise에 대한 이해를 기반으로 이해할 수 있는 개념입니다. 또한 Promise는 비동기와 콜백패턴에 대한 이해를 기반으로 그 용도와 작동을 이해할 수 있습니다.
+
+콜백패턴으로 구현된 비동기 코드는 가독성이나 유지보수 측면에서 많은 문제를 가지고 있었고, 이를 해결하기 위해 Promise, 그리고 더 나아가 Async/Await 이라는 기능이 생겨났습니다.
+
+```javascript showLineNumbers {13-16}
+const a = new Promise(function (resolve, reject) {
+  setTimeout(function () {
+    resolve(666);
+  }, 1000);
+});
+
+const b = new Promise(function (resolve, reject) {
+  setTimeout(function () {
+    resolve(777);
+  }, 1000);
+});
+
+async function process() {
+  const result = (await a) + (await b);
+  console.log(result);
+}
+
+process();
+```
+
+위의 코드를 살펴보면 `a` 와`b` 라는 변수에 Promise 인스턴스를 할당한 상태입니다. Promise에는 함수를 넣어주어야 하고, 함수 안에 인자로는 `resolve` 와 `reject`가 있는데요. 비동기 로직이 성공하면 resolve, 로직이 실패하면 reject 값이 산출되는 함수입니다.
+
+그리고 우리는 `a`와 `b` 프러미스를 `process` 함수 내부에서 사용하고 있습니다. `process` 함수처럼 함수 앞에 `async` 라는 키워드를 붙힌 함수를 우리는 **Async function**이라고 부릅니다.
+
+async function은 최근 ES2017 스펙부터 사용이 가능하게 되었고,
+
+그 기능으로는 크게 2가지가 있습니다.
+
+1. **함수 내부에서 await 이라는 키워드를 사용할 수 있습니다.** 바꾸어 말하면 await 키워드를 사용하지 않을 것이라면 async function을 사용할 이유가 없습니다.
+2. async 함수는 **항상 Promise 객체를 반환**합니다.
+
+자바스크립트에서는 처음에 콜백패턴을 사용해오다가 Promise의 등장 이후 비동기 코드를 동기 패턴과 유사하게 작성하여 사용할 수 있게 되었습니다. 그런데 async await는 비동기 코드를 동기적으로 작동하는 코드와 더더욱 유사한 형태로 편리하게 작성할 수 있도록 도와줍니다. async await를 사용하여 비동기 코드의 복잡도도 줄어들고 가독성도 매우 좋아지면서 시각적으로도 동기적으로 작동하는 코드와 유사한 형태로 표현할 수 있게 되었습니다. 이는 자바스크립트 이외의 다른 언어를 사용하는 개발자들과의 협업도 매우 원활해지는 것을 의미합니다.
+
+```javascript showLineNumbers
+function resolveAfter2Seconds(x) {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve(x);
+    }, 2000);
+  });
+}
+
+async function add(x) {
+  console.log("start 2");
+  const a = await resolveAfter2Seconds(20);
+  console.log("a", a);
+  const b = await resolveAfter2Seconds(30);
+  console.log("b", b);
+  return x + a + b;
+}
+
+console.log("start 1");
+
+add(10);
+
+console.log("finish");
+```
+
+> Async function은 원래 Promise를 반환하는데, 구문 내부에 return 값이 있다면?
+
+Async 함수의 기본 리턴값은 Promise인데, Async 함수 내부에서 우리가 사용하는 `return` 구문은 해당 Promise에 대한 resolve 값으로 사용됩니다. 즉, 위 `add(10)` 함수 실행문이 반환하는 결과는 Promise이며, 그 Promise의 resolve 값은 60입니다.
+
+> Q. 맨 아래 3줄의 값이 찍히는 순서는?
+
+`start 1 -> start 2 -> finish -> a 20 -> b 30`
+
+Await을 사용한다 해도, 기본적인 비동기 작업의 흐름이 변경되지는 않습니다.
+
+> Q. 그렇다면 결과가 나오기까지 총 걸린 시간은?
+
+`4.0000001초`
+
+Await을 사용한다고 해서 작업이 끝날 때까지 기다리고 있는 것이 아니라, 기다리는 동안 다음에 할 수 있는 일을 하다가 돌아와서 다시 처리하는 방식으로 작동됩니다. 마치 맥도날드에 가서 주문하면 주문 하나 받고, 하나 만들어서 드리고 그다음 다시 주문받는 것이 아니라... 주문받으면서 동시에 음식도 만드는 방식과 비슷합니다.
+
+`a` 에 담기는 비동기 작업이 resolve될때까지 2초, 그 후에 `b` 에 담기는 비동기 작업이 resolve될때까지 2초가 소요됩니다.
+
+```javascript showLineNumbers
+function resolveAfter2Seconds(x) {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve(x);
+    }, 2000);
+  });
+}
+
+async function add2(x) {
+  const a = resolveAfter2Seconds(20);
+  const b = resolveAfter2Seconds(30);
+  return x + (await a) + (await b);
+}
+
+add2(10);
+```
+
+> Q. add2 함수는 실행 완료까지 얼마의 시간이 소요될까요?
+
+여러분께서 스스로 고민해보고 정답을 유추해보도록 하세요.
+
+```javascript showLineNumbers
+function foo() {
+  return new Promise(function (resolve, reject) {
+    setTimeout(function () {
+      console.log(2);
+      reject();
+    }, 1000);
+  });
+}
+
+async function bar() {
+  try {
+    const a = await foo();
+    const b = await foo();
+    return a;
+  } catch (err) {
+    console.error(err);
+  }
+}
+```
+
+동기 코드에서 에러 핸들링은 try..catch 구문을 활용합니다. 기존 Promise의 장점은 코드의 비동기 흐름을 동기스럽게 제어할 수 있는 것입니다. Async Await을 이용해 try..catch 구문을 사용할 수 있습니다.
+
+try..catch 구문은 자바스크립트에 자체적으로 내장된 것이므로 가장 native하기 때문에 좋습니다. try..catch 구문을 엄격하게 사용하고 싶다면 각 구문마다 걸어둘 수 있습니다.
+
+> Error Handling을 하는 이유
+
+사용자 경험과 개발자 경험을 위해서... 에러를 무서워하지 마세요. 에러는 어디를 수정하면 되는지, 어디를 고치면 되는지 알려주는 고마운 친구입니다.
+
+## 🥸 미리 준비하는 기술면접
+
+<br />
+<Alert
+  showIcon
+  message="이번주 학습 내용과 관련이 깊은 기술면접 질문 목록입니다. 평일에는 개념이해 후 과제작업에 집중하시고, 주말에는 추가적인 리서치와 본인만의 방식으로 노션이나 블로그 등의 공간에 정리하는 시간을 갖도록 하세요."
+  type="info"
+/>
+
+- 상태 변화에 대해 React는 어떻게 반응할까요?
+- 리액트 컴포넌트는 반드시 하나의 태그로 감싸서 반환해야 합니다. 왜 그럴까요?
+- 리액트의 Strict Mode는 어떤 역할을 하는 것인지 최대한 자세히 설명해보세요.
+- 브라우저에 URL을 입력한 순간부터 화면에 웹 페이지가 나타나기까지의 모든 과정을 아는대로 최대한 자세히 설명해보세요.
+- `package.json`, `package-lock.json`, `node_modules`는 무엇인가요?
+- Single Page Application이란 무엇인가요?
+- Client Side Rendering이란 무엇인가요?

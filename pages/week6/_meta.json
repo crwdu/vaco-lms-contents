@@ -1,22 +1,18 @@
 {
-  "coffee-chat": {
+  "01-coffee-chat": {
     "title": "Coffee Chat",
     "display": "hidden"
   },
-  "lifting-states-up": {
+  "02-lifting-states-up": {
     "title": "Lifting states up",
     "display": "hidden"
   },
-  "state-update-is-async": {
-    "title": "State update is async",
+  "03-optimization": {
+    "title": "Optimization",
     "display": "hidden"
   },
-  "what-is-side-effect": {
-    "title": "What is side effect?",
-    "display": "hidden"
-  },
-  "custom-hooks": {
-    "title": "Custom Hooks",
+  "04-react-router": {
+    "title": "React Router",
     "display": "hidden"
   }
 }

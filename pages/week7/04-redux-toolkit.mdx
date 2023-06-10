@@ -1,0 +1,59 @@
+# 11. Redux Style Guide
+
+<aside>
+💡 리덕스 관련 작업에 있어 매우 중요한 스타일 가이드입니다.
+
+</aside>
+
+**⭐️ Reference**
+
+[Style Guide | Redux](https://redux.js.org/style-guide/style-guide##structure-files-as-feature-folders-with-single-file-logic)
+
+_리덕스를 이용하여 어플리케이션 작업을 하는 사람들을 위한 권장 패턴, 모범 사례 등을 설명한 글입니다. 자세한 내용은 위 링크를 참고하세요._
+
+## 중요도 A.
+
+- [상태를 직접적으로 수정하지 마세요.](https://redux.js.org/style-guide/style-guide#do-not-mutate-state)
+- [리듀서 함수는 순수해야 합니다.](https://redux.js.org/style-guide/style-guide#reducers-must-not-have-side-effects)
+- [Serialize 할 수 없는 값을 상태나 액션에 넣지 마세요.](https://redux.js.org/style-guide/style-guide#do-not-put-non-serializable-values-in-state-or-actions)
+- [하나의 어플리케이션에는 단 하나의 리덕스 스토어를 사용해야 합니다.](https://redux.js.org/style-guide/style-guide#only-one-redux-store-per-app)
+
+## 중요도 B.
+
+- [Redux Toolkit을 사용하여 리덕스 로직을 작성하세요.](https://redux.js.org/style-guide/style-guide#use-redux-toolkit-for-writing-redux-logic)
+- [Immer를 이용하여 불변성이 보존되는 로직을 작성하세요.](https://redux.js.org/style-guide/style-guide#use-immer-for-writing-immutable-updates)
+- [기능 별 디렉토리 구조를 이용하여 파일 구조를 구성하세요.](https://redux.js.org/style-guide/style-guide#structure-files-as-feature-folders-with-single-file-logic)
+- [리듀서에 가능한 한 많은 로직을 넣으세요.](https://redux.js.org/style-guide/style-guide#put-as-much-logic-as-possible-in-reducers)
+- [리듀서들은 각 상태에 대한 구조를 소유해야 합니다.](https://redux.js.org/style-guide/style-guide#reducers-should-own-the-state-shape)
+- [Slice는 저장되는 데이터에 기반하여 이름을 지으세요.](https://redux.js.org/style-guide/style-guide#name-state-slices-based-on-the-stored-data)
+- [상태 구조는 컴포넌트가 아닌, 데이터 종류에 따라 구성하세요.](https://redux.js.org/style-guide/style-guide#organize-state-structure-based-on-data-types-not-components)
+- [중첩되고 복잡한 상태는 정규화 시키세요.](https://redux.js.org/style-guide/style-guide#normalize-complex-nestedrelational-state)
+- [액션은 이벤트처럼 다루세요.](https://redux.js.org/style-guide/style-guide#model-actions-as-events-not-setters)
+- [의미있는 액션 이름을 사용하세요.](https://redux.js.org/style-guide/style-guide#write-meaningful-action-names)
+- [하나의 액션에 여러 개의 리듀서가 반응할 수 있도록 허락하세요.](https://redux.js.org/style-guide/style-guide#allow-many-reducers-to-respond-to-the-same-action)
+- [여러 개의 액션을 연속적으로 발생시키지 마세요.](https://redux.js.org/style-guide/style-guide#avoid-dispatching-many-actions-sequentially)
+- [상태가 위치해야 하는 곳(리덕스 vs 로컬)에 대해 잘 판단하세요.](https://redux.js.org/style-guide/style-guide#evaluate-where-each-piece-of-state-should-live)
+- [React Redux Hooks를 활용하세요.](https://redux.js.org/style-guide/style-guide#use-the-react-redux-hooks-api)
+- [리덕스 스토어에서 데이터를 읽어서 사용하도록 더 많은 컴포넌트들을 연결하세요.](https://redux.js.org/style-guide/style-guide#connect-more-components-to-read-data-from-the-store)
+- [함수형 컴포넌트 내부에서 `useSelector` 를 여러번 호출하세요.](https://redux.js.org/style-guide/style-guide#call-useselector-multiple-times-in-function-components)
+- [정적 타입 체킹 도구들을 사용하세요.](https://redux.js.org/style-guide/style-guide#use-static-typing)
+- [디버깅을 위해 리덕스 개발 확장 프로그램을 사용하세요.](https://redux.js.org/style-guide/style-guide#use-the-redux-devtools-extension-for-debugging)
+- [상태 데이터는 Plain JS 객체를 활용하세요.](https://redux.js.org/style-guide/style-guide#use-the-redux-devtools-extension-for-debugging)
+
+## 중요도 C.
+
+- `[domain/eventName` 형식의 액션 이름을 사용하세요.](https://redux.js.org/style-guide/style-guide#write-action-types-as-domaineventname)
+- [비동기 로직은 Thunk를 이용하세요.](https://redux.js.org/style-guide/style-guide#use-thunks-for-async-logic)
+- [액션 생성 함수를 사용하세요.](https://redux.js.org/style-guide/style-guide#use-action-creators)
+- [복잡한 로직은 컴포넌트 외부로 분리하세요.](https://redux.js.org/style-guide/style-guide#move-complex-logic-outside-components)
+- [스토어의 상태를 읽기 위해 Selector 함수를 사용하세요.](https://redux.js.org/style-guide/style-guide#use-selector-functions-to-read-from-store-state)
+- [Selector 함수의 이름은 select로 시작하게끔 작성하세요.](https://redux.js.org/style-guide/style-guide#name-selector-functions-as-selectthing)
+- ["대부분의" Form 관련 상태는 리덕스에서 관리하지 마세요.](https://redux.js.org/style-guide/style-guide#avoid-putting-form-state-in-redux) (예외 경우도 있습니다.)
+
+## FAQ
+
+- [파일 구조는 어떻게 구성하는 것이 좋을까?](https://redux.js.org/faq/code-structure#what-should-my-file-structure-look-like-how-should-i-group-my-action-creators-and-reducers-in-my-project-where-should-my-selectors-go)
+- [리듀서와 액션 생성 함수의 로직은 어떻게 분리하는 것이 좋을까? 비지니스 로직은 어디에 위치해야 할까?](https://redux.js.org/faq/code-structure#how-should-i-split-my-logic-between-reducers-and-action-creators-where-should-my-business-logic-go)
+- [액션 생성 함수는 왜 사용해야 할까?](https://redux.js.org/faq/code-structure#why-should-i-use-action-creators)
+- [웹 소켓 관련 로직은 어떻게 처리해야 할까?](https://redux.js.org/faq/code-structure#where-should-websockets-and-other-persistent-connections-live)
+- [리액트 컴포넌트가 아닌 파일에서는 리덕스 스토어를 어떻게 사용할 수 있을까?](https://redux.js.org/faq/code-structure#how-can-i-use-the-redux-store-in-non-component-files)
