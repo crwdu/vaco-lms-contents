@@ -4,9 +4,41 @@ import { Callout } from "nextra-theme-docs";
 
 # Props
 
-_Props란, **함수의 매개변수**와 동일한 개념입니다. 함수의 매개변수를 선언하는 용도, 함수의 매개변수를 네이밍 하는 방법 등을 반드시 명심하세요._
+## 정의
 
-React Component에게 Attribute을 주게 되면, 해당 컴포넌트 내부에서는 `props`를 이용하여 해당 정보를 사용할 수 있습니다. 우리는 우리가 원하는 만큼 다양하게 `props`를 줄 수 있습니다.
+_Props란, **함수에서의 매개변수**와 동일한 개념입니다._ **즉, 외부에서 전달받는 인풋이라는 뜻입니다.**
+
+함수의 매개변수를 선언하는 용도, 함수의 매개변수를 네이밍 하는 방법 등을 반드시 명심하세요.
+
+React Component에게 Attribute을 주게 되면, 해당 컴포넌트 내부에서는 그것들을 `props`이라고 부릅니다. 그리고 우리는 우리가 원하는 만큼 다양하게 `props`를 줄 수 있습니다.
+
+```jsx showLineNumbers {2, 5, 13}
+function Article (props) {
+  const { prop1, prop2, prop3 } = props;
+
+  return (
+    <p>{prop1}, {prop2}, {prop3}</p>
+  );
+}
+
+function App () {
+  return (
+    <>
+      <h1>Vaco App</h1>
+      <Article prop1={1} prop2={2} prop3={3} />
+    </>
+  );
+}
+```
+
+<br/>
+<br/>
+
+##### Prop 맛보기 #1
+
+아래에 주어진 예시 코드에서 `"TODO: 나를 수정해보세요."`라고 표기될 수 있도록 수정해보세요.
+
+> 방법은 여러 가지가 있을 수 있습니다.
 
 <br />
 
@@ -14,35 +46,28 @@ React Component에게 Attribute을 주게 되면, 해당 컴포넌트 내부에�
   template="react"
   theme={githubLight}
   files={{
-    "/index.js": {
-      code: `import React from "react";
-import { createRoot } from "react-dom/client";
-
-function SomeComponent (props) {
+    "/App.js": {
+      code: `function SomeComponent (props) {
   return (
-    <p>TODO: {props.text}.</p>
+    <p>TODO: {props.contents}</p>
   );
 }
 
-function Article () {
+export default function Article () {
   return (
     <div className="something">
       <p style={{ fontSize: "30px" }}>Hello</p>
       <SomeComponent text="나를 수정해보세요." />
     </div>
   );
-}
-
-const root = createRoot(document.getElementById("root"));
-
-root.render(<Article />);
+};
 `,
       active: true
     }
   }}
   options={{
     showLineNumbers: true,
-    editorHeight: "500px",
+    editorHeight: "400px",
     editorWidthPercentage: 60,
     initMode: "lazy",
     autoReload: false,
@@ -65,7 +90,7 @@ root.render(<Article />);
 <br />
 <br />
 
-## Props 전달하기
+##### Prop 맛보기 #2
 
 아래 예시에서는 할일 목록이 제대로 화면에 표기되지 않고 있습니다. 어떤 부분을 수정해야 할지 한번 도전해보세요.
 
@@ -75,33 +100,26 @@ root.render(<Article />);
   template="react"
   theme={githubLight}
   files={{
-    "/index.js": {
-      code: `import React from "react";
-import { createRoot } from "react-dom/client";
-
-// Object Destructuring을 이용해 코드를 더욱 단순화 할 수 있습니다.
+    "/App.js": {
+      code: `// Object Destructuring을 이용해 코드를 더욱 단순화 할 수 있습니다.
 function SomeComponent ({ number, contents }) {
   return (
     <p>#{number}: {contents}.</p>
   );
 }
 
-function Article ({ title }) {
+export default function Article () {
   return (
     <div className="something">
       <p style={{ fontSize: "30px" }}>
-        {title}
+        오늘의 할일
       </p>
       <SomeComponent number="1" todo="돈까스 먹기" />
       <SomeComponent number="2" todo="대청소 하기" />
       <SomeComponent number="3" todo="넷플릭스 보기" />
     </div>
   );
-}
-
-const root = createRoot(document.getElementById("root"));
-
-root.render(<Article title="오늘의 할일" />);
+};
 `,
       active: true
     }
@@ -131,54 +149,67 @@ root.render(<Article title="오늘의 할일" />);
 
 리액트 컴포넌트에서는 `on` + 이벤트 이름(Camel case)로 이벤트 등록을 처리합니다.
 
+`onClick`, `onMouseOver`, `onKeyPress` 등.
+
+> `on` + 이벤트 이름 대문자로 시작 + 이벤트 이름 카멜 케이스
+
+```jsx showLineNumbers {9}
+function App () {
+  function handleListClick (ev) {
+    alert(ev.target.textContent);
+  }
+
+  return (
+    <div>
+      <h1>My list</h1>
+      <ul onClick={handleListClick}>
+        <li>List 1</li>
+        <li>List 2</li>
+        <li>List 3</li>
+      </ul>
+    </div>
+  );
+}
+```
+
+<br />
+<br />
+
+##### 이벤트 맛보기
+
+아래 예시 코드에서 사용자가 `input` 태그에 입력하는 텍스트를 콘솔에 출력해보도록 하세요.
+
 <br />
 
 <Sandpack
   template="react"
   theme={githubLight}
   files={{
-    "/index.js": {
-      code: `import React from "react";
-import { createRoot } from "react-dom/client";
-
-function Article ({ title }) {
+    "/App.js": {
+      code: `export default function App () {
   return (
-    <div className="something">
-      <p
-        onClick={() => alert("click!")}
-        style={{ fontSize: "30px" }}
-      >
-        {title}
-      </p>
+    <div>
+      <input />
     </div>
   );
-}
-
-const root = createRoot(document.getElementById("root"));
-
-root.render(<Article title="이 곳을 클릭하세요." />);
+};
 `,
       active: true
     }
   }}
   options={{
     showLineNumbers: true,
-    editorHeight: "440px",
+    editorHeight: "200px",
     editorWidthPercentage: 60,
     initMode: "lazy",
     autoReload: false,
     showConsoleButton: true,
+    showConsole: true
   }}
   customSetup={{
     entry: "index.js",
   }}
 />
-
-### 이벤트 Props 네이밍 예시
-
-`onClick`, `onMouseOver`, `onKeyPress` 등.
-
-> `on` + 이벤트 이름 대문자로 시작 + 이벤트 이름 카멜 케이스
 
 <br/>
 <br/>
@@ -194,7 +225,7 @@ root.render(<Article title="이 곳을 클릭하세요." />);
 
 ## 컴포넌트의 자식 컴포넌트 다루기
 
-일반적으로는 최상단 Root Element 역할을 하는 `App` 컴포넌트를 만들고, 그 하위에 우리의 화면을 구성하는 Element들을 넣습니다. 또한 React에서 기본적으로 제공되는 `props.children`을 사용할 수도 있습니다.
+일반적으로는 최상단 Root Element 역할을 하는 `App` 컴포넌트를 만들고, 그 하위에 우리의 화면을 구성하는 Element들을 넣습니다. 또한 React에서 **기본적으로 제공되는** `props.children`을 사용할 수도 있습니다.
 
 <br />
 
@@ -202,11 +233,8 @@ root.render(<Article title="이 곳을 클릭하세요." />);
   template="react"
   theme={githubLight}
   files={{
-    "/index.js": {
-      code: `import React from "react";
-import { createRoot } from "react-dom/client";
-
-const SomeComponent = ({ content }) => <p>{content}</p>;
+    "/App.js": {
+      code: `const SomeComponent = ({ content }) => <p>{content}</p>;
 
 const Article = ({ children, text }) => (
   <div className="something">
@@ -215,7 +243,7 @@ const Article = ({ children, text }) => (
   </div>
 );
 
-function App() {
+export default function App () {
   const articleText = "Who are you?";
   const childText = "I am something else";
 
@@ -224,18 +252,14 @@ function App() {
       <SomeComponent content={childText} />
     </Article>
   );
-}
-
-const root = createRoot(document.getElementById("root"));
-
-root.render(<App />);
+};
 `,
       active: true
     }
   }}
   options={{
     showLineNumbers: true,
-    editorHeight: "600px",
+    editorHeight: "440px",
     editorWidthPercentage: 60,
     initMode: "lazy",
     autoReload: false,
@@ -268,11 +292,8 @@ root.render(<App />);
   template="react"
   theme={githubLight}
   files={{
-    "/index.js": {
-      code: `import React from "react";
-import { createRoot } from "react-dom/client";
-
-function TodoItem ({ number, todo }) {
+    "/App.js": {
+      code: `function TodoItem ({ number, todo }) {
   return (
     <p>#{number}: {todo}.</p>
   );
@@ -284,27 +305,23 @@ const list = [
   <TodoItem number="3" todo="넷플릭스 보기" />,
 ];
 
-function TodoList ({ title }) {
+export default function TodoList ({ title }) {
   return (
     <div className="something">
       <p style={{ fontSize: "30px" }}>
-        {title}
+        오늘의 할일
       </p>
       {list}
     </div>
   );
-}
-
-const root = createRoot(document.getElementById("root"));
-
-root.render(<TodoList title="오늘의 할일" />);
+};
 `,
       active: true
     }
   }}
   options={{
     showLineNumbers: true,
-    editorHeight: "640px",
+    editorHeight: "500px",
     editorWidthPercentage: 60,
     initMode: "lazy",
     autoReload: false,
@@ -325,11 +342,8 @@ root.render(<TodoList title="오늘의 할일" />);
   template="react"
   theme={githubLight}
   files={{
-    "/index.js": {
-      code: `import React from "react";
-import { createRoot } from "react-dom/client";
-
-const list = [
+    "/App.js": {
+      code: `const list = [
   {
     id: 1,
     text: "돈까스 먹기"
@@ -350,11 +364,11 @@ function TodoItem ({ number, todo }) {
   );
 }
 
-function TodoList ({ title }) {
+export default function TodoList () {
   return (
     <div className="something">
       <p style={{ fontSize: "30px" }}>
-        {title}
+        오늘의 할일
       </p>
       {list.map(function (item) {
         return (
@@ -363,18 +377,14 @@ function TodoList ({ title }) {
       })}
     </div>
   );
-}
-
-const root = createRoot(document.getElementById("root"));
-
-root.render(<TodoList title="오늘의 할일" />);
+};
 `,
       active: true
     }
   }}
   options={{
     showLineNumbers: true,
-    editorHeight: "900px",
+    editorHeight: "760px",
     editorWidthPercentage: 60,
     initMode: "lazy",
     autoReload: false,
@@ -387,9 +397,13 @@ root.render(<TodoList title="오늘의 할일" />);
 
 > 위 예시에서 `key`라는 prop은 무슨 용도일까요?
 
+> `Array.prototype.map` 함수의 반환값은 무엇인지 잘 상기시키고 예시 코드를 이해하셔야 합니다.
+
 <br/>
 <br/>
 
 ### 📘 공식문서
 
 - [목록 렌더링](https://react-ko.dev/learn/rendering-lists)
+
+> 도전 과제까지 반드시 해보세요.

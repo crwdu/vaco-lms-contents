@@ -1,11 +1,14 @@
+import { Sandpack } from "@codesandbox/sandpack-react";
+import { githubLight } from "@codesandbox/sandpack-themes";
 import { Callout } from "nextra-theme-docs";
 
 # 상태
 
 컴포넌트에 대해 더 깊이 이해하기 위해서는 함수에 대한 이해가 우선되어야 합니다. 함수에 대해 다시 한번 생각해봅시다.
 
+> 아래 예시에서 size 메소드 외의 기능에 대한 자세한 코드는 생략합니다.
+
 ```jsx showLineNumbers
-// size 메소드 외의 기능에 대한 자세한 코드는 생략합니다.
 class LinkedList {
   add(value) {
     let newNode = new Node(value);
@@ -55,16 +58,20 @@ console.log(result);
 
 지역 변수란 무엇이고, 어떤 경우에 사용하나요? 위 예제에서 구현된 `size` 함수를 살펴보세요.
 
-`node` 라는 변수를 만들어 사용하고 있습니다. 함수 연산과정에서 `node` 변수에 임시적으로 값을 저장하고 지속적으로 수정하며, 함수 로직의 상태를 관리하고 있습니다.
+`node` 라는 변수를 만들어 사용하고 있습니다. 함수 연산과정에서 `node` 변수에 임시적으로 값을 저장하고 지속적으로 수정하며, 함수 내부 로직에서 **가변적인 데이터**를 관리하고 있습니다.
+
+
 
 <br/>
 <br/>
 
 ## 상태
 
-_리액트의 상태는 함수에서의 지역변수와 동일한 개념입니다._
+_리액트의 상태(`state`)는 함수에서의 지역변수와 동일한 개념입니다._
 
-상황에 따라 가변적인 정보와 UI가 연관될 수 있습니다. 이런 가변적인 정보를 상태라 부르고, 이 상태를 관리할 수 있는 방법이 바로 상태(`state`) 입니다.
+컴포넌트에서도 가변적인 데이터가 필요한 경우가 많습니다. 컴포넌트의 목적은 단 하나, 우리가 원하는 UI를 렌더링 하는 것이고, 이 목적을 달성하는 과정에서 가변적인 데이터를 다뤄야 하는 경우가 많이 있습니다.
+
+리액트에서, UI 렌더링과 직접적인 연관이 있는 가변적인 데이터를 **상태**(`state`)라고 부릅니다.
 
 <br/>
 <br/>
@@ -72,9 +79,9 @@ _리액트의 상태는 함수에서의 지역변수와 동일한 개념입니�
 ### 상태의 조건
 
 1. 가변적인 데이터
-2. UI 렌더링과 연관된 데이터
+2. 데이터 변동 시점에 맞춰 UI 렌더링이 필요한 경우
 
-이 두가지를 모두 충족해야 "상태"라고 할 수 있습니다. 둘 중 하나라도 충족하지 않는다면, 그것은 상태가 아닙니다.
+이 두가지를 모두 충족해야 "상태"라고 할 수 있습니다. 둘 중 하나라도 충족하지 않는다면, 그것은 상태로 처리해야 하는 경우가 아닙니다.
 
 <br/>
 <br/>
@@ -82,13 +89,12 @@ _리액트의 상태는 함수에서의 지역변수와 동일한 개념입니�
 아래와 같은 컴포넌트가 있다고 생각해보세요.
 
 ```jsx showLineNumbers
-export default function ShoppingItem(props) {
-  const { name, price } = props.item;
-
+export default function ShoppingItem () {
   return (
     <div>
-      <h3>{name}</h3>
-      <h4>{price}원</h4>
+      <h1>약과</h1>
+      <h2>1,000원</h2>
+      <h3>2개</h3>
       <div>
         <div>-</div>
         <div>1</div>
@@ -99,7 +105,73 @@ export default function ShoppingItem(props) {
 }
 ```
 
-사용자가 더하기, 빼기 버튼을 클릭할때마다 우리는 수량의 값을 변경시켜 UI에 반영하고 싶습니다. 이와 같은 상황에서 우리는 상태를 이용하여 가변적인 수량을 관리할 수 있습니다. 상태를 생성할때 사용되는 `useState` 함수를 이용하여 수량 관리를 적용시켜 보겠습니다.
+사용자가 더하기, 빼기 버튼을 클릭할때마다 우리는 수량의 값을 변경시키고 변경된 수량을 UI에 표기하고 싶습니다.
+
+이와 같은 상황에서 **수량이라는 값은 리액트의 상태를 이용하여 다뤄야 합니다.** 그 이유는,
+
+1. 수량은 가변적인 데이터입니다.
+2. 수량이 변할때마다 우리는 변한 수량값을 화면에 반영시켜야 합니다.
+
+<br/>
+<br/>
+
+### `useState` Hook
+
+리액트에서 상태는, `useState`라는 함수를 이용하여 적용할 수 있습니다.
+
+#### Parameter
+
+`useState`는 인자로 초기 상태값을 받습니다. 초기 상태값은 우리가 원하는 어떠한 자료형이건 관계없습니다.
+
+#### Return value
+
+`useState`는 배열을 반환합니다. 반환되는 배열의 첫 번째 요소는 해당 상태값이며, 반환되는 배열의 두 번째 요소는 해당 상태값을 변경할 수 있는 함수입니다.
+
+<br />
+
+<Sandpack
+  template="react"
+  theme={githubLight}
+  files={{
+    "/App.js": {
+      code: `import { useState } from "react";
+
+export default function ShoppingItem () {
+  const [count, setCount] = useState(0);
+
+  function handleIncreament () {
+    setCount(count + 1);
+  }
+
+  return (
+    <div>
+      <h1>약과</h1>
+      <h2>1,000원</h2>
+      <h3>{count}개</h3>
+      <p>더하기를 클릭해보세요.</p>
+      <div style={{ display: "flex" }}>
+        <div>-</div>
+        <div style={{ margin: "0 20px" }}>1</div>
+        <div onClick={handleIncreament}>+</div>
+      </div>
+    </div>
+  );
+}`,
+      active: true
+    }
+  }}
+  options={{
+    showLineNumbers: true,
+    editorHeight: "500px",
+    editorWidthPercentage: 60,
+    initMode: "lazy",
+    autoReload: false,
+    showConsoleButton: true,
+  }}
+  customSetup={{
+    entry: "index.js",
+  }}
+/>
 
 <br/>
 <br/>
@@ -113,175 +185,297 @@ export default function ShoppingItem(props) {
 
 ### 상태와 Props는 어떻게 다른 것인가?
 
-Props는 외부에서 컴포넌트에게 전달되어 주어지는 데이터고, 상태는 컴포넌트 내부에서 생성되어 관리되는 가변적인 데이터입니다.
+**Props는 외부**에서 컴포넌트에게 전달되어 주어지는 인풋과 같은 역할의 데이터고, **상태는 컴포넌트 내부**에서 생성되어 관리되는 가변적인 데이터입니다.
 
-> [props vs state](https://github.com/uberVU/react-guide/blob/master/props-vs-state.md)
+> [props vs state](https://ko.legacy.reactjs.org/docs/faq-state.html#what-is-the-difference-between-state-and-props)
 
-```jsx
-export default function ShoppingItem(props) {
-  const { name, price } = props.item;
-  const [quantity, setQuantity] = useState(1);
+<br />
+<br />
 
-  return (
-    <div>
-      <h3>{name}</h3>
-      <h4>{price}원</h4>
-      <div>
-        <div>-</div>
-        <div>{quantity}</div>
-        <div>+</div>
-      </div>
-    </div>
-  );
-}
-```
+위 예제에 사용자가 더하기, 빼기 버튼을 클릭할때마다 해당 수량을 변경하는 코드를 조금 더 추가해보면 아래와 같습니다.
 
-위 예제에 사용자가 더하기, 빼기 버튼을 클릭할때마다 해당 수량을 변경하는 코드를 추가해보면 아래와 같습니다.
+<br />
 
-```jsx
-export default function ShoppingItem(props) {
-  const { name, price } = props.item;
-  const [quantity, setQuantity] = useState(1);
+<Sandpack
+  template="react"
+  theme={githubLight}
+  files={{
+    "/App.js": {
+      code: `import { useState } from "react";
 
-  function changeQuantity(qty) {
-    setQuantity(quantity + qty);
+export default function ShoppingItem () {
+  const [count, setCount] = useState(0);
+
+  function handleDecreament () {
+    setCount(count - 1);
+  }
+
+  function handleIncreament () {
+    setCount(count + 1);
   }
 
   return (
     <div>
-      <h3>{name}</h3>
-      <h4>{price}원</h4>
-      <div>
-        <div onClick={() => changeQuantity(-1)}>-</div>
-        <div>{quantity}</div>
-        <div onClick={() => changeQuantity(1)}>+</div>
+      <h1>약과</h1>
+      <h2>1,000원</h2>
+      <h3>{count}개</h3>
+      <p>더하기를 클릭해보세요.</p>
+      <div style={{ display: "flex" }}>
+        <div onClick={handleDecreament}>-</div>
+        <div style={{ margin: "0 20px" }}>1</div>
+        <div onClick={handleIncreament}>+</div>
       </div>
     </div>
   );
-}
-```
+}`,
+      active: true
+    }
+  }}
+  options={{
+    showLineNumbers: true,
+    editorHeight: "600px",
+    editorWidthPercentage: 60,
+    initMode: "lazy",
+    autoReload: false,
+    showConsoleButton: true,
+  }}
+  customSetup={{
+    entry: "index.js",
+  }}
+/>
 
-**🖥 _Example Link_**
+수량을 조절하는 로직은 우리가 원하는대로 구성할 수 있습니다. 하지만 잘 사용해보시면, 현재 이상한 버그가 한 가지 있죠?
 
-[react-states](https://codesandbox.io/s/react-states-0imyk)
+빼기 버튼을 클릭하다보면, 마이너스 수량으로 변경된다는 부분입니다.
 
-**📖 _useState_**
+다음과 같이 변경해볼 수 있습니다.
 
-[Hooks API Reference - React](https://ko.reactjs.org/docs/hooks-reference.html#usestate)
+<br />
 
-수량을 조절하는 로직은 우리가 원하는대로 구성할 수 있습니다. 만약 0 이하의 수량은 허용하지 않고 싶다면 아래와 같이 작성할 수 있습니다.
+<Sandpack
+  template="react"
+  theme={githubLight}
+  files={{
+    "/App.js": {
+      code: `import { useState } from "react";
 
-```jsx
-export default function ShoppingItem(props) {
-  const { name, price } = props.item;
-  const [quantity, setQuantity] = useState(1);
+export default function ShoppingItem () {
+  const [count, setCount] = useState(0);
 
-  function changeQuantity(qty) {
-    const quantitySum = quantity + qty;
+  function handleDecreament () {
+    if (count === 0) return alert("0 이하로는 수량을 수정할 수 없습니다.");
 
-    if (quantitySum < 0) return;
+    setCount(count - 1);
+  }
 
-    setQuantity(quantitySum);
+  function handleIncreament () {
+    setCount(count + 1);
   }
 
   return (
     <div>
-      <h3>{name}</h3>
-      <h4>{price}원</h4>
-      <div>
-        <div onClick={() => changeQuantity(-1)}>-</div>
-        <div>{quantity}</div>
-        <div onClick={() => changeQuantity(1)}>+</div>
+      <h1>약과</h1>
+      <h2>1,000원</h2>
+      <h3>{count}개</h3>
+      <p>더하기를 클릭해보세요.</p>
+      <div style={{ display: "flex" }}>
+        <div onClick={handleDecreament}>-</div>
+        <div style={{ margin: "0 20px" }}>1</div>
+        <div onClick={handleIncreament}>+</div>
       </div>
     </div>
   );
-}
-```
+}`,
+      active: true
+    }
+  }}
+  options={{
+    showLineNumbers: true,
+    editorHeight: "620px",
+    editorWidthPercentage: 60,
+    initMode: "lazy",
+    autoReload: false,
+    showConsoleButton: true,
+  }}
+  customSetup={{
+    entry: "index.js",
+  }}
+/>
 
-우리는 우리가 원하는 만큼 다양한 `state` 값을 만들어 사용할 수 있습니다. 아래 코드에서는 && 연산자를 이용하여 조건에 따라 보여주거나 숨겨주는 로직을 작성했습니다.
+우리는 우리가 원하는 만큼 다양한 `state` 값을 만들어 사용할 수 있습니다. 위에서 보여주는 수량 오류에 대한 경고창을 화면에 표기해보도록 하겠습니다.
 
-<aside>
-📌 상태(State)는 반드시 UI에 보여지는 내용과 연관된 데이터이어야 합니다.
+아래 예시에서 빼기 버튼을 클릭해보세요.
 
-</aside>
+<br />
 
-```jsx
-export default function ShoppingItem(props) {
-  const { name, price } = props.item;
-  const [quantity, setQuantity] = useState(1);
+<Sandpack
+  template="react"
+  theme={githubLight}
+  files={{
+    "/App.js": {
+      code: `import { useState } from "react";
+
+export default function ShoppingItem () {
+  const [count, setCount] = useState(0);
   const [error, setError] = useState("");
 
-  function changeQuantity(qty) {
-    if (quantity <= 0 && qty === -1) {
-      setError("수량은 0 이상이어야 합니다.");
-      return;
-    }
+  function handleDecreament () {
+    if (count === 0) return setError("0 이하로는 수량을 수정할 수 없습니다.");
 
-    setQuantity(quantity + qty);
+    setCount(count - 1);
+  }
+
+  function handleIncreament () {
+    setCount(count + 1);
   }
 
   return (
     <div>
-      {error && <p>{error}</p>}
-      <h3>{name}</h3>
-      <h4>{price}원</h4>
-      <div>
-        <div onClick={() => changeQuantity(-1)}>-</div>
-        <div>{quantity}</div>
-        <div onClick={() => changeQuantity(1)}>+</div>
+      <h1>약과</h1>
+      <h2>1,000원</h2>
+      <h3>{count}개</h3>
+      <p style={{ color: "red" }}>{error ? error : null}</p>
+      <div style={{ display: "flex" }}>
+        <div onClick={handleDecreament}>-</div>
+        <div style={{ margin: "0 20px" }}>1</div>
+        <div onClick={handleIncreament}>+</div>
+      </div>
+    </div>
+  );
+}`,
+      active: true
+    }
+  }}
+  options={{
+    showLineNumbers: true,
+    editorHeight: "640px",
+    editorWidthPercentage: 60,
+    initMode: "lazy",
+    autoReload: false,
+    showConsoleButton: true,
+  }}
+  customSetup={{
+    entry: "index.js",
+  }}
+/>
+
+위의 예시 코드를 보면, `error`라는 상태가 추가되었습니다. `error`는 왜 상태로 추가되었을까요?
+
+1. `error`는 사용자의 인터렉션에 따라 가변적으로 변하는 데이터입니다.
+2. `error`가 변경됨에 따라 UI에 오류 사항을 렌더링해줘야 합니다.
+
+그렇기 때문에 `error`는 리액트의 상태로 관리되어야 합니다.
+
+<br />
+<br />
+
+##### 수량 오류 UX 개선하기
+
+지금까지 작업해온 수량 관련 작업물은 오류 메시지가 표기된 이후, 더하기 버튼을 클릭하여 정상적인 수량으로 변경되더라도 오류 메시지가 사라지지 않습니다.
+
+0개에서 빼기 버튼을 클릭할 경우에만 오류 메시지를 표기하고, 0개에서 더하기 버튼을 클릭할 경우에는 오류 메시지를 사라지게 하도록 기능을 추가해보세요.
+
+<br />
+
+<Sandpack
+  template="react"
+  theme={githubLight}
+  files={{
+    "/App.js": {
+      code: `import { useState } from "react";
+
+export default function ShoppingItem () {
+  const [count, setCount] = useState(0);
+  const [error, setError] = useState("");
+
+  function handleDecreament () {
+    if (count === 0) return setError("0 이하로는 수량을 수정할 수 없습니다.");
+
+    setCount(count - 1);
+  }
+
+  function handleIncreament () {
+    setCount(count + 1);
+  }
+
+  return (
+    <div>
+      <h1>약과</h1>
+      <h2>1,000원</h2>
+      <h3>{count}개</h3>
+      <p style={{ color: "red" }}>{error ? error : null}</p>
+      <div style={{ display: "flex" }}>
+        <div onClick={handleDecreament}>-</div>
+        <div style={{ margin: "0 20px" }}>1</div>
+        <div onClick={handleIncreament}>+</div>
+      </div>
+    </div>
+  );
+}`,
+      active: true
+    }
+  }}
+  options={{
+    showLineNumbers: true,
+    editorHeight: "640px",
+    editorWidthPercentage: 60,
+    initMode: "lazy",
+    autoReload: false,
+    showConsoleButton: true,
+  }}
+  customSetup={{
+    entry: "index.js",
+  }}
+/>
+
+<br />
+<br />
+
+### 상태를 다룰때 유의할 점
+
+리액트에서 상태를 변경할때 특별히 주의해야 할 부분이 있습니다. 상태 데이터의 원본을 수정해서는 안된다는 점입니다.
+
+이전에 다루었던 예시에서 `count` 상태를 변경하는 부분을 다시 한번 살펴봅시다.
+
+```jsx showLineNumbers {7, 11}
+import { useState } from "react";
+
+export default function ShoppingItem () {
+  const [count, setCount] = useState(0);
+
+  function handleDecreament () {
+    setCount(count - 1);
+  }
+
+  function handleIncreament () {
+    setCount(count + 1);
+  }
+
+  return (
+    <div>
+      <h1>약과</h1>
+      <h2>1,000원</h2>
+      <h3>{count}개</h3>
+      <p>더하기를 클릭해보세요.</p>
+      <div style={{ display: "flex" }}>
+        <div onClick={handleDecreament}>-</div>
+        <div style={{ margin: "0 20px" }}>1</div>
+        <div onClick={handleIncreament}>+</div>
       </div>
     </div>
   );
 }
 ```
 
-**📖 _Conditional Rendering_**
+`count - 1`, `count + 1`이라고 적힌 코드를 확인할 수 있습니다.
 
-[조건부 렌더링 - React](https://ko.reactjs.org/docs/conditional-rendering.html)
+`count++`, 혹은 `count--`이라고 코드를 작성했다면, 그것은 `count` 변수의 값을 직접적으로 수정하는 연산이 되는 것이고 이런 행위는 리액트에서 하지 말아야 하는 로직입니다.
 
-## ⚡️ setState 호출은 비동기로 동작합니다.
+이런 주의사항은 특히, 참조 형태의 상태를 다룰때는 더욱 조심해야 합니다.
 
-_Calls to setState are asynchronous_
+특별한 버그가 당장은 나타나지 않을수도 있지만, 리액트의 상태를 정상적으로 사용하는 방식이 아니기 때문에 언제든지 버그의 소지가 될 수 있습니다.
 
-[async-setState](https://codesandbox.io/s/async-setstate-yr9y2)
+### 📘 공식문서
 
-[컴포넌트 State - React](https://ko.reactjs.org/docs/faq-state.html#why-is-setstate-giving-me-the-wrong-value)
-
-## ▶︎ 상태 변화에 대해 React는 어떻게 대응할까요?
-
-**_React re-renders the whole app on every update._**
-
-_The key design decision that makes React awesome._
-
-_When the data changes, React re-renders the entire component._
-
-_That is, React components are basically just **idempotent functions**._
-
-_They describe your UI at any point in time._
-
-"_Updating the whole app" when state changes seems **expensive** (not effective)?_
-
-# Virtual DOM
-
-### Goal
-
-_Makes re-rendering on every change **fast**._
-
-### What if we throw out the DOM and rebuild it on every update?
-
-_It's too slow and you will lose form state and scroll position._
-
-### So React team built a **virtual DOM** and **events system**.
-
-_Optimized for performance and memory footprint._
-
-### On every update,
-
-1. _React builds a new virtual DOM subtree._
-2. _Compare it with the old virtual DOM subtree._
-3. _Computes the minimal set of DOM mutations and puts them in a queue._
-4. _Batch executes all updates. → UI updates on browser._
-
-### Reconciliation
-
-[재조정 (Reconciliation) - React](https://ko.reactjs.org/docs/reconciliation.html)
+- [객체 상태 업데이트](https://react-ko.dev/learn/updating-objects-in-state)
+- [배열 상태 업데이트](https://react-ko.dev/learn/updating-arrays-in-state)

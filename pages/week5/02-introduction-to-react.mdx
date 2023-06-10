@@ -85,6 +85,9 @@ JSX는 HTML처럼 생긴 문법을 사용 가능하게 해주는 전처리 장�
 JSX는 (대략) 아래와 같은 순수 자바스크립트로 변환되어 브라우저에서 실행됩니다. 이런 변환 과정을 트랜스파일이라고 부릅니다.
 
 ```js showLineNumbers {1}
+import React from "react";
+import { createRoot } from "react-dom/client";
+
 const element = React.createElement("div", null, "자, 여러분..");
 const root = createRoot(document.getElementById("root"));
 
@@ -97,16 +100,15 @@ root.render(element);
 
 위에서 언급된 `React.createElement`에 대해서는 자세히 살펴볼 필요는 없습니다. 여러분은 대부분 JSX를 이용해 React를 사용하게 될 것입니다. 하지만 원리를 알고 사용하는 것이 좋기에 내부적으로 어떤 과정을 거쳐 브라우저에서 실행되는지 설명드리는것 뿐입니다.
 
-```jsx showLineNumbers {1}
-const element = React.createElement("div", { className: "something" }, "hello");
-const root = createRoot(document.getElementById("root"));
-
-root.render(element);
-```
+<br/>
+<br/>
 
 Child Element란, 단순 텍스트가 될 수도 있지만 또 다른 React Element가 될 수도 있습니다. 그리고 또한 여러 개의 Child를 가질 수도 있습니다.
 
 ```jsx showLineNumbers {2-7}
+import React from "react";
+import { createRoot } from "react-dom/client";
+
 const text = "I am a paragraph";
 const element = React.createElement(
   "div",
@@ -122,9 +124,15 @@ root.render(element);
 
 모든 것은 Javascript입니다. 그렇기에 우리는 변수(`text`)를 사용할 수도 있습니다.
 
+<br/>
+<br/>
+
 위의 코드를 JSX로 바꿔서 작성해보겠습니다. 몇가지 이해가지 않는 부분이 있겠지만, 위의 코드와 아래 코드를 비교했을때 어떤 차이가 느껴지시나요? 어느 쪽이 더 읽기 편하신가요?
 
 ```jsx showLineNumbers {2-6}
+import React from "react";
+import { createRoot } from "react-dom/client";
+
 const text = "I am a paragraph";
 const element = (
   <div className="something">
@@ -179,10 +187,14 @@ root.render(element);
 컴포넌트는 직접적인 DOM 조작을 하지 않아야 합니다. 선언적으로 작업해야 합니다.
 
 <br />
+<br />
 
 ##### 일반 변수를 활용한 예시
 
 ```jsx showLineNumbers
+import React from "react";
+import { createRoot } from "react-dom/client";
+
 const text = "I am a paragraph";
 const someText = <p>I am something else.</p>;
 
@@ -200,6 +212,9 @@ root.render(element);
 
 위 예제에서 `someText`와 `element`는 현재 React Element를 담고 있는 일반 변수입니다. 이를 컴포넌트화 해본다면 아래와 같이 함수로 변경할 수 있습니다.
 
+<br/>
+<br/>
+
 ##### 컴포넌트가 적용된 예시
 
 컴포넌트는 일반적으로 함수를 이용해 작성합니다.
@@ -207,6 +222,9 @@ root.render(element);
 > 클래스 문법을 이용해 작성할 수도 있지만, 함수를 보통 많이 사용합니다.
 
 ```jsx showLineNumbers
+import React from "react";
+import { createRoot } from "react-dom/client";
+
 const text = "I am a paragraph";
 
 function SomeComponent () {
@@ -324,6 +342,9 @@ export default function App () {
 
 방금 위에서 보여드린 예시는 리액트에서 조건부 렌더링을 다루는 방법 중 하나입니다. 조건부 렌더링을 다루는 방법은 여러 가지가 있습니다.
 
+<br/>
+<br/>
+
 ### Early return
 
 <br/>
@@ -364,6 +385,9 @@ export default function App () {
   }}
 />
 
+<br/>
+<br/>
+
 ### `null` 활용하기
 
 `null`은 화면에 아무 값도 표시하지 않습니다.
@@ -403,6 +427,9 @@ export default function App () {
     entry: "index.js",
   }}
 />
+
+<br/>
+<br/>
 
 ### 삼항 연산자와 논리 연산자 활용하기
 
@@ -445,3 +472,43 @@ export default function App () {
 />
 
 > 위 예시에서 `<>`는 [`Fragment`](https://react-ko.dev/reference/react/Fragment)라고 부르는 리액트에서 제공되는 컴포넌트입니다. 왜 사용되었을까요?
+
+<br/>
+<br/>
+
+## 컴포넌트 만들어보기
+
+아래 예시에는 `Paragraph`라는 컴포넌트가 사용되고 있지만, 정의되어 있지는 않습니다. `Paragraph`라는 컴포넌트를 만들고, 여러분이 원하는 내용을 렌더링하도록 작성해보세요.
+
+<br/>
+
+<Sandpack
+  template="react"
+  theme={githubLight}
+  files={{
+    "/App.js": {
+      code: `export default function App () {
+  return (
+    <>
+      <h1>This is title.</h1>
+      <h2>This is subtitle.</h2>
+      <Paragraph />
+    </>
+  );
+}
+`,
+      active: true
+    }
+  }}
+  options={{
+    showLineNumbers: true,
+    editorHeight: "240px",
+    editorWidthPercentage: 60,
+    initMode: "lazy",
+    autoReload: false,
+    showConsoleButton: true,
+  }}
+  customSetup={{
+    entry: "index.js",
+  }}
+/>
