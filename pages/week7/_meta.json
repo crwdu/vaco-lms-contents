@@ -1,22 +1,18 @@
 {
   "01-coffee-chat": {
     "title": "Coffee Chat",
-    "display": "normal"
+    "display": "hidden"
   },
   "02-introduction-to-redux": {
     "title": "Introduction to Redux",
-    "display": "normal"
+    "display": "hidden"
   },
   "03-redux-with-react": {
     "title": "Using Redux with React",
-    "display": "normal"
+    "display": "hidden"
   },
   "04-redux-toolkit": {
     "title": "Redux toolkit",
-    "display": "normal"
-  },
-  "05-redux-style-guide": {
-    "title": "Redux style guide",
-    "display": "normal"
+    "display": "hidden"
   }
 }

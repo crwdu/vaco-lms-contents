@@ -1,22 +1,18 @@
 {
   "01-coffee-chat": {
     "title": "Coffee Chat",
-    "display": "normal"
+    "display": "hidden"
   },
   "02-lifting-states-up": {
     "title": "Lifting states up",
-    "display": "normal"
+    "display": "hidden"
   },
   "03-optimization": {
     "title": "Optimization",
-    "display": "normal"
+    "display": "hidden"
   },
   "04-react-router": {
     "title": "React Router",
-    "display": "normal"
-  },
-  "05-test-driven-development": {
-    "title": "Test Driven Development",
-    "display": "normal"
+    "display": "hidden"
   }
 }
