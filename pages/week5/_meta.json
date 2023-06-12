@@ -1,22 +1,22 @@
 {
   "01-coffee-chat": {
     "title": "커피챗",
-    "display": "hidden"
+    "display": "normal"
   },
   "02-introduction-to-react": {
     "title": "리액트 소개",
-    "display": "hidden"
+    "display": "normal"
   },
   "03-props": {
     "title": "Props",
-    "display": "hidden"
+    "display": "normal"
   },
   "04-states": {
     "title": "States",
-    "display": "hidden"
+    "display": "normal"
   },
   "05-side-effect": {
     "title": "사이드 이펙트",
-    "display": "hidden"
+    "display": "normal"
   }
 }
