@@ -1,17 +1,209 @@
+import { Sandpack } from "@codesandbox/sandpack-react";
+import { githubLight } from "@codesandbox/sandpack-themes";
 import { Alert } from "antd";
 
 # ☕️ Coffee Chat
 
-우리가 이번주에 무엇을 하게 될지 잠시 이야기 해볼까요?
+## 리액트 컴포넌트의 마운트와 언마운트
 
-## 다시 보는 자바스크립트 기초상식
+리액트 문서에서 컴포넌트가 **마운트** 된다, 혹은 **언마운트** 된다 라는 용어들을 보신 적이 있으신가요? 리액트 컴포넌트가 마운트 된다, 언마운트 된다는 것은 정확히 어떤 의미일까요? 코드적으로 한번 살펴보도록 하겠습니다.
 
-- 매개변수
-- 함수 리턴값
-- 화살표 함수
-- 함수 생성 vs 함수 실행
+<br />
 
-## 디버깅의 과정
+우선 아래 예시에서 `"클릭"` 버튼을 클릭하고 자식 컴포넌트가 렌더링 되는 과정에서 콘솔 출력문이 출력되는 순서를 한번 살펴보세요. 그리고 다시 한번 클릭하고 자식 컴포넌트가 사라지는 과정에서 콘솔 출력문이 출력되는 순서를 살펴보세요.
+
+<br />
+
+<Sandpack
+  template="react"
+  theme={githubLight}
+  files={{
+    "/index.js": {
+      code: `import React, { useState, useEffect } from "react";
+import { createRoot } from "react-dom/client";
+
+function Child () {
+  console.log("Child 렌더링");
+
+  useEffect(function sideEffect () {
+    console.log("Child 사이드 이펙트");
+
+    return function cleanup () {
+      console.log("Child 언마운트");
+    };
+  }, []);
+
+  return (
+    <p>저는 자식 컴포넌트입니다.</p>
+  );
+}
+
+function Parent () {
+  const [showChild, setShowChild] = useState(false);
+
+  function handleToggleClick () {
+    setShowChild(!showChild);
+  }
+
+  console.log("Parent 렌더링");
+
+  return (
+    <div>
+      <div>
+        <button onClick={handleToggleClick}>클릭</button>
+      </div>
+      { showChild && <Child /> }
+    </div>
+  );
+}
+
+const root = createRoot(document.getElementById("root"));
+
+root.render(<Parent />);
+`,
+      active: true
+    }
+  }}
+  options={{
+    showLineNumbers: true,
+    editorHeight: "900px",
+    editorWidthPercentage: 60,
+    initMode: "lazy",
+    autoReload: false,
+    showConsoleButton: true,
+    showConsole: true,
+  }}
+  customSetup={{
+    entry: "index.js",
+  }}
+/>
+
+위 예시에서 `showChild` 상태 변화에 따라 발생하는 현상을 설명하자면 아래와 같습니다.
+
+<br />
+
+### 자식 컴포넌트가 마운트 되는 과정
+
+`showChild`가 `true{:js}`가 되어 `Child` 컴포넌트가 화면에 나타나게 되는 과정을 의미합니다.
+
+1. `"클릭"` 버튼을 클릭합니다.
+2. `handleToggleClick` 함수가 실행되고, `showChild` 상태가 `true`로 변경됩니다.
+3. 상태가 변경되었기 때문에, 해당 상태를 소유하고 있는 `Parent` 컴포넌트가 다시 렌더링됩니다. (`Parent` 컴포넌트 함수가 다시 실행됩니다.)
+4. `Parent` 컴포넌트 함수가 다시 실행되는 상황에서 `showChild` 상태의 값은 `true`로 할당됩니다.
+5. <span style={{ color: "blue" }}>**`"Parent 렌더링"` 구문이 콘솔에 출력됩니다.**</span>
+6. `{ showChild && <Child /> }` 구문의 연산 결과가 `<Child />`가 되기 때문에, `Child` 컴포넌트가 렌더링 됩니다.
+7. <span style={{ color: "blue" }}>**`"Child 렌더링"` 구문이 콘솔에 출력됩니다.**</span>
+8. `<p>저는 자식 컴포넌트입니다.</p>`가 렌더링 됩니다.
+9. `sideEffect` 함수가 실행되고, <span style={{ color: "blue" }}>**`"Child 사이드 이펙트"`가 콘솔에 출력됩니다.**</span>
+
+<br />
+
+### 자식 컴포넌트가 언마운트 되는 과정
+
+`showChild`가 `false{:js}`가 되어 `Child` 컴포넌트가 화면에서 사라지게 되는 과정을 의미합니다.
+
+1. `"클릭"` 버튼을 클릭합니다.
+2. `handleToggleClick` 함수가 실행되고, `showChild` 상태가 `false`로 변경됩니다.
+3. 상태가 변경되었기 때문에, 해당 상태를 소유하고 있는 `Parent` 컴포넌트가 다시 렌더링됩니다. (`Parent` 컴포넌트 함수가 다시 실행됩니다.)
+4. `Parent` 컴포넌트 함수가 다시 실행되는 상황에서 `showChild` 상태의 값은 `false`로 할당됩니다.
+5. <span style={{ color: "blue" }}>**`"Parent 렌더링"` 구문이 콘솔에 출력됩니다.**</span>
+6. `{ showChild && <Child /> }` 구문의 연산 결과가 `false`가 되기 때문에, 해당 구문의 결과로 화면에 아무것도 그리지 않습니다.
+7. 리액트가 내부적으로 이전 DOM의 상태와 비교했을때, `Child` 컴포넌트가 더 이상 존재하지 않아야 한다는 것을 알게 됩니다. (Diffing Algorithm)
+8. `Child` 컴포넌트를 화면에서 삭제합니다. DOM에서 제거하기 전에 `cleanup` 함수를 실행하게 되고, <span style={{ color: "blue" }}>**`"Child 언마운트"`가 콘솔에 출력됩니다.**</span>
+
+<br />
+<br />
+
+이와 같이, 하나의 컴포넌트가 화면에 그려지고, 다시 사라지는 과정을 컴포넌트 입장에서 마운트/언마운트 된다고 표현합니다.
+
+<br />
+<br />
+
+그렇다면 아래와 같은 코드는 각 버튼을 클릭했을때 어떤 결과는 출력하게 될까요? 🧐 자세히 코드를 살펴보시고 출력 결과에 대한 이유를 정확하게 분석해보도록 하세요.
+
+<br />
+
+<Sandpack
+  template="react"
+  theme={githubLight}
+  files={{
+    "/Child.js": {
+      code: `import { useEffect } from "react";
+
+export default function Child ({ n }) {
+  console.log(n + "번째 Child 렌더링");
+
+  useEffect(function sideEffect () {
+    console.log(n + "번째 Child 사이드 이펙트");
+
+    return function cleanup () {
+      console.log(n + "번째 Child 언마운트");
+    };
+  }, []);
+
+  return (
+    <p>저는 {n}번째 자식 컴포넌트입니다.</p>
+  );
+}
+`
+    },
+    "/index.js": {
+      code: `import React, { useState } from "react";
+import { createRoot } from "react-dom/client";
+import Child from "./Child";
+
+function Parent () {
+  const [children, setChildren] = useState([false, false, false]);
+
+  function handleToggleClick (index) {
+    const state = children.slice();
+
+    state[index] = !state[index];
+
+    setChildren(state);
+  }
+
+  console.log("Parent 렌더링");
+
+  return (
+    <div>
+      <ul>
+        {
+          children.map((showChild, index) => (
+            <li key={index}>
+              <button onClick={() => handleToggleClick(index)}>클릭</button>
+              { showChild && <Child n={index + 1} /> }
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  );
+}
+
+const root = createRoot(document.getElementById("root"));
+
+root.render(<Parent />);
+`,
+      active: true
+    }
+  }}
+  options={{
+    showLineNumbers: true,
+    editorHeight: "900px",
+    editorWidthPercentage: 60,
+    initMode: "lazy",
+    autoReload: false,
+    showConsoleButton: true,
+    showConsole: true,
+  }}
+  customSetup={{
+    entry: "index.js",
+  }}
+/>
+
+<br />
+<br />
 
 ## 🥸 미리 준비하는 기술면접
 
@@ -22,8 +214,7 @@ import { Alert } from "antd";
   type="info"
 />
 
-- 리액트에서 상태 끌어올리기는 왜 하는건가요?
-- 가상돔이란 무엇인가요?
-- 리액트의 상태 업데이트는 비동기로 실행됩니다. 왜 그럴까요?
+- 리액트의 상태 끌어올리기는 어떤 단점이 있을까요?
+- 가상돔이라는 존재는 무엇이며, 과연 무조건 좋다고 할 수 있을까요?
 - 리액트의 Diffing Algorithm의 내부 로직에 대해서 최대한 자세히 설명해보세요.
-- 리액트의 Strict Mode는 개발 환경에서 왜 컴포넌트들을 Double rendering 시킬까요?
+- 리액트의 상태 업데이트는 비동기로 실행됩니다. 이 말은 무슨 뜻이며, 왜 그럴까요?
