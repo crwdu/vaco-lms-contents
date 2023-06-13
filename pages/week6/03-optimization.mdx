@@ -1,88 +1,195 @@
-# 6. Optimization
+import { Sandpack } from "@codesandbox/sandpack-react";
+import { githubLight } from "@codesandbox/sandpack-themes";
 
-# useMemo Hook
+# Optimization
 
-[_useMemo_](https://reactjs.org/docs/hooks-reference.html#usememo) Hook은 여러분이 이미 알고 있는 lodash의 memoize와 유사한 기능을 하는 React API 입니다. 어떤 함수의 연산값을 memoize 할 수 있습니다.
+현재 이 페이지의 내용은 `lodash` 라이브러리의 `memoize` 함수에 대한 사전지식이 있다는 전제하에 구성되어 있습니다. 아래에서 간단히 설명드리긴 하겠지만, `memoize` 함수를 직접 구현해보지 않은 분들은 구현해보고 돌아오시기를 강력하게 권장드립니다.
+
+> [memoize](https://lodash.com/docs/4.17.15#memoize)
+
+<br />
+<br />
+
+## `memoize`
+
+<br />
+
+잠시 `memoize`에 대해 상기해보도록 하겠습니다.
+
+<br />
+
+<Sandpack
+  template="vanilla"
+  theme={githubLight}
+  files={{
+    "/index.js": {
+      code: `import _ from "lodash";
+
+function add (a, b) {
+  console.log("adding..");
+  return a + b;
+}
+
+const memoAdd = _.memoize(add);
+
+const result1 = memoAdd(3, 3);
+const result2 = memoAdd(3, 3);
+const result3 = memoAdd(3, 3);
+
+// 콘솔을 clear하고 Run을 클릭해보세요.
+console.log([result1, result2, result3].join(", "));
+`,
+      active: true
+    }
+  }}
+  options={{
+    showLineNumbers: true,
+    editorHeight: "360px",
+    editorWidthPercentage: 60,
+    initMode: "lazy",
+    autoReload: false,
+    showConsoleButton: true,
+    showConsole: true,
+  }}
+  customSetup={{
+    entry: "index.js",
+    dependencies: { 
+      "lodash": "latest" 
+    }
+  }}
+/>
+
+위의 예시에서 `memoAdd`는 memoize 된 `add` 함수입니다. 즉, 한번 연산된 기록이 있는 연산은 새로운 연산을 하지 않고, 기존 연산 기록을 사용하도록 하는 효율성이 확보된 함수입니다.
+
+그렇기에, `memoAdd`는 현재 3회 실행되었지만 실제로 콘솔에 출력된 내용을 확인해보면 `"adding.."`은 1회만 출력된 것을 확인할 수 있습니다. 즉, 원본 `add` 함수는 1회만 실행되었다는 의미입니다.
+
+3과 3이라는 인수를 받아 최초 실행되는 시점을 제외하고, 이후에는 기존 기록을 이용해 6이라는 결과를 도출하는 것입니다.
+
+<br />
+<br />
+
+리액트에서도 `memoize`의 기능과 같이 효율적으로 연산을 최적화 할 수 있는 유사한 기능들이 존재합니다.
+
+<br />
+<br />
+
+## `useMemo`
+
+<br />
+
+리액트에서는 [useMemo](https://react-ko.dev/reference/react/useMemo)라는 Hook을 제공합니다. 이 Hook은 여러분이 이미 알고 있는 lodash의 memoize와 유사한 기능을 제공하는 React API 입니다. 함수의 연산 결과를 memoize 할 수 있습니다.
 
 ```jsx
-const result = useMemo(() => computeExpensiveValue(a, b), [a, b]);
+const cachedResult = useMemo(function () {
+  return someExpensiveValue(a, b);
+}, [a, b]);
 ```
 
-**📖 _useMemo_**
+위의 예시 코드를 예로 들자면, `a`와 `b`의 값이 동일하게 들어온다면 `someExpensiveValue` 함수의 연산이 생략될 수 있습니다.
 
-[Hooks API Reference - React](https://reactjs.org/docs/hooks-reference.html#usememo)
+<br />
+<br />
 
 ## 주요기능
 
-리액트 컴포넌트는 생명주기에 따라, 업데이트 된 정보가 존재할때마다 Re-rendering 됩니다. 자바스크립트의 내부적인 비교방식(i.e. Shallow comparison) 때문에, 리액트가 컴포넌트의 변경 사항을 확인하는 과정에서 의도치 않게 변화를 감지하는 경우들이 존재합니다. 그리고 이런 경우에 리액트는 불필요한 렌더링을 실행하기도 합니다. useMemo를 이용해 이런 불필요한 렌더링을 방지할 수 있습니다.
+리액트 컴포넌트는 상태가 변경되거나 Props가 변경될 경우, 리렌더링 됩니다.
 
-추가적으로 만약 렌더링 과정에 복잡한 연산이 존재한다면, 우리는 useMemo를 이용해 연산을 조금 더 효율적으로 다룰 수 있습니다.
+> 상태나 Props가 변경되었다는 판단은 `Object.is`를 통해 [Shallow comparison](https://ko.react.dev/reference/react/memo#minimizing-props-changes)을 기준으로 합니다.
+>
+> `Object.is(oldProp, newProp)`의 결과가 `true`일 경우, 변하지 않았다고 판단하여 리렌더링을 하지 않습니다.
+> `Object.is(oldProp, newProp)`의 결과가 `false`일 경우, 변했다고 판단하여 리렌더링을 합니다.
 
-<aside>
-📌 useMemo와 React.memo는 다릅니다.
+참조형 자료의 경우, 참조값이 변경되었을 경우 실질적인 데이터 내용의 변화가 없더라도 리렌더링이 진행될 수 있습니다. 즉, 리액트가 컴포넌트의 변경 사항을 확인하는 과정에서 의도치 않게 변화를 감지하는 경우들이 존재한다는 의미입니다. 그리고 이런 경우에 리액트는 불필요한 렌더링을 실행하기도 합니다.
 
-</aside>
+우리는 `useMemo`를 이용해 불필요한 렌더링을 최소화할 수 있습니다. 추가적으로 만약 렌더링 과정에 복잡한 연산이 존재한다면, 우리는 `useMemo`를 이용해 연산을 조금 더 효율적으로 다룰 수 있습니다.
 
-[React.memo() vs. useMemo(): Major differences and use cases - LogRocket Blog](https://blog.logrocket.com/react-memo-vs-usememo/)
+<br />
+<br />
 
 ## 예제
 
 아래 예제를 살펴보시고, `useMemo`가 사용되지 않았을 경우와 비교하여 조사해보세요.
 
-```jsx
-function App() {
-  const [length, setLength] = useState(5);
-  const [name, setName] = useState("Ken Huh");
+<br />
 
-  return (
-    <>
-      <input value={name} onChange={(e) => setName(e.target.value)} />
-      <Profile name={name} />
-      <hr />
-      <input
-        value={length}
-        onChange={(e) => setLength(Number(e.target.value))}
-      />
-      <FibDisplay length={length} />
-    </>
-  );
-}
-
-function FibDisplay({ length }) {
-  const numbers = useMemo(() => {
-    console.log("Calculating numbers...");
-
-    const result = [1, 1];
-
-    for (let i = 2; i < length; i++) {
-      result[i] = result[i - 1] + result[i - 2];
-    }
-
-    return result;
-  }, [length]);
-
+<Sandpack
+  template="react"
+  theme={githubLight}
+  files={{
+    "/FibDisplay.js": {
+      code: `export default function FibDisplay({ length, numbers }) {
   return (
     <p>
       {length} numbers of the fibonacci sequence: {numbers.join(", ")}
     </p>
   );
 }
+`
+    },
+    "/index.js": {
+      code: `import { useState, useMemo } from "react";
+import { createRoot } from "react-dom/client";
+import FibDisplay from "./FibDisplay";
 
-const Profile = React.memo(function ({ name }) {
-  console.log("Rerendering profile...");
-  return <p>Your name is {name}</p>;
-});
+function App() {
+  const [length, setLength] = useState(5);
 
-export default App;
-```
+  const fib = (n) => {
+    const result = [1, 1];
 
-**🖥 _Example Link_**
+    for (let i = 2; i < n; i++) {
+      result[i] = result[i - 1] + result[i - 2];
+    }
 
-[useMemo](https://codesandbox.io/s/usememo-hk9ek?file=/src/App.js)
+    return result;
+  };
 
-# useCallback Hook
+  const numbers = useMemo(() => {
+    console.log("Calculating numbers...");
 
-useCallback은 useMemo와 유사합니다. 다만, 함수를 memoize 한다는 점이 다를 뿐입니다.
+    return fib(length);
+  }, [length]);
+
+  return (
+    <>
+      <input
+        value={length}
+        onChange={(e) => setLength(Number(e.target.value))}
+      />
+      <FibDisplay numbers={numbers} length={length} />
+    </>
+  );
+}
+
+const root = createRoot(document.getElementById("root"));
+
+root.render(<App />);
+`,
+      active: true
+    }
+  }}
+  options={{
+    showLineNumbers: true,
+    editorHeight: "500px",
+    editorWidthPercentage: 60,
+    initMode: "lazy",
+    autoReload: false,
+    showConsoleButton: true,
+    showConsole: true,
+  }}
+  customSetup={{
+    entry: "index.js",
+  }}
+/>
+
+<br />
+<br />
+
+## `useCallback`
+
+<br />
+
+`useCallback`은 `useMemo`와 매우 유사합니다. 다만, 함수 자체를 memoize 한다는 점이 다를 뿐입니다.
 
 **📖 _useCallback_**
 
