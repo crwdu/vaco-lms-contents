@@ -90,7 +90,7 @@ const cachedResult = useMemo(function () {
 <br />
 <br />
 
-## 주요기능
+### 주요기능
 
 리액트 컴포넌트는 상태가 변경되거나 Props가 변경될 경우, 리렌더링 됩니다.
 
@@ -106,9 +106,9 @@ const cachedResult = useMemo(function () {
 <br />
 <br />
 
-## 예제
+### `useMemo`가 적용되지 않은 경우
 
-아래 예제를 살펴보시고, `useMemo`가 사용되지 않았을 경우와 비교하여 조사해보세요.
+아래 예제를 우선 한번 자세히 살펴보시고, 콘솔의 출력 횟수를 살펴보세요.
 
 <br />
 
@@ -116,25 +116,43 @@ const cachedResult = useMemo(function () {
   template="react"
   theme={githubLight}
   files={{
+    "/Form.js": {
+      code: `export default function Form({ number, onChange, onSubmit }) {
+  return (
+    <>
+      <input
+        value={number}
+        onChange={(e) => onChange(Number(e.target.value))}
+      />
+      <button onClick={() => onSubmit(number)}>Submit</button>
+    </>
+  );
+}
+`
+    },
     "/FibDisplay.js": {
-      code: `export default function FibDisplay({ length, numbers }) {
+      code: `export default function FibDisplay({ number, sequence }) {
   return (
     <p>
-      {length} numbers of the fibonacci sequence: {numbers.join(", ")}
+      {number} numbers of the fibonacci sequence: {sequence.join(", ")}
     </p>
   );
 }
 `
     },
     "/index.js": {
-      code: `import { useState, useMemo } from "react";
+      code: `import { useState } from "react";
 import { createRoot } from "react-dom/client";
 import FibDisplay from "./FibDisplay";
+import Form from "./Form";
 
 function App() {
-  const [length, setLength] = useState(5);
+  const [number, setNumber] = useState(2);
+  const [fibonacciNumber, setFibonacciNumber] = useState(0);
 
   const fib = (n) => {
+    console.log("calculating fibonacci..");
+
     const result = [1, 1];
 
     for (let i = 2; i < n; i++) {
@@ -144,19 +162,16 @@ function App() {
     return result;
   };
 
-  const numbers = useMemo(() => {
-    console.log("Calculating numbers...");
-
-    return fib(length);
-  }, [length]);
+  const numbers = fib(fibonacciNumber);
 
   return (
     <>
-      <input
-        value={length}
-        onChange={(e) => setLength(Number(e.target.value))}
+      <FibDisplay number={fibonacciNumber} sequence={numbers} />
+      <Form
+        number={number}
+        onChange={(value) => setNumber(value)}
+        onSubmit={(value) => setFibonacciNumber(value)}
       />
-      <FibDisplay numbers={numbers} length={length} />
     </>
   );
 }
@@ -170,7 +185,105 @@ root.render(<App />);
   }}
   options={{
     showLineNumbers: true,
-    editorHeight: "500px",
+    editorHeight: "900px",
+    editorWidthPercentage: 60,
+    initMode: "lazy",
+    autoReload: false,
+    showConsoleButton: true,
+    showConsole: true,
+  }}
+  customSetup={{
+    entry: "index.js",
+  }}
+/>
+
+입력창에 숫자를 입력하고 변경해보세요. 그리고 제출 버튼도 클릭해보세요. 콘솔에 어떤 메시지가 언제 출력되나요?
+
+> 현재 `App` 컴포넌트의 상태가 변경될때마다 `App` 컴포넌트는 리렌더링이 발생하고, 매번 리렌더링이 발생할때마다 `const numbers = fib(fibonacciNumber);` 구문이 실행되며 콘솔에 `"calculating fibonacci.."` 구문이 출력되고 있습니다.
+
+<br />
+<br />
+
+### `useMemo`가 적용된 경우
+
+아래 예시에서는 기존의 `const numbers = fib(fibonacciNumber);` 구문에 `useMemo`가 적용되었습니다. 이전 예시와 동일하게 한번 사용해보시며 콘솔의 출력문을 비교해보세요.
+
+<br />
+
+<Sandpack
+  template="react"
+  theme={githubLight}
+  files={{
+    "/Form.js": {
+      code: `export default function Form({ number, onChange, onSubmit }) {
+  return (
+    <>
+      <input
+        value={number}
+        onChange={(e) => onChange(Number(e.target.value))}
+      />
+      <button onClick={() => onSubmit(number)}>Submit</button>
+    </>
+  );
+}
+`
+    },
+    "/FibDisplay.js": {
+      code: `export default function FibDisplay({ number, sequence }) {
+  return (
+    <p>
+      {number} numbers of the fibonacci sequence: {sequence.join(", ")}
+    </p>
+  );
+}
+`
+    },
+    "/index.js": {
+      code: `import { useState, useMemo } from "react";
+import { createRoot } from "react-dom/client";
+import FibDisplay from "./FibDisplay";
+import Form from "./Form";
+
+function App() {
+  const [number, setNumber] = useState(2);
+  const [fibonacciNumber, setFibonacciNumber] = useState(0);
+
+  const fib = (n) => {
+    console.log("calculating fibonacci..");
+
+    const result = [1, 1];
+
+    for (let i = 2; i < n; i++) {
+      result[i] = result[i - 1] + result[i - 2];
+    }
+
+    return result;
+  };
+
+  const numbers = useMemo(() => fib(fibonacciNumber), [fibonacciNumber]);
+
+  return (
+    <>
+      <FibDisplay number={fibonacciNumber} sequence={numbers} />
+      <Form
+        number={number}
+        onChange={(value) => setNumber(value)}
+        onSubmit={(value) => setFibonacciNumber(value)}
+      />
+    </>
+  );
+}
+
+const root = createRoot(document.getElementById("root"));
+
+root.render(<App />);
+`,
+      active: true
+    }
+  }}
+  options={{
+    showLineNumbers: true,
+    editorHeight: "900px",
     editorWidthPercentage: 60,
     initMode: "lazy",
     autoReload: false,
@@ -183,76 +296,182 @@ root.render(<App />);
 />
 
 <br />
+
+해당 연산은 `fibonacciNumber`가 변경될때마다 재연산이 필요하므로, 의존성 배열에 `fibonacciNumber`를 추가해놓았습니다.
+
+```js showLineNumbers
+const numbers = useMemo(() => {
+  return fib(fibonacciNumber);
+}, [fibonacciNumber]);
+```
+
+`useMemo`는 `fibonacciNumber`가 변하지 않는한 기존 연산결과를 재사용하도록 연산의 최적화를 제공합니다.
+
+<br />
 <br />
 
 ## `useCallback`
 
 <br />
 
-`useCallback`은 `useMemo`와 매우 유사합니다. 다만, 함수 자체를 memoize 한다는 점이 다를 뿐입니다.
+### 주요기능
 
-**📖 _useCallback_**
+[`useCallback`](https://ko.react.dev/reference/react/useCallback)은 `useMemo`와 매우 유사합니다. 다만, 특정 결과값이 아닌 **함수 자체를 memoize 하는 기능**을 갖고 있습니다.
 
-[Hooks API Reference - React](https://reactjs.org/docs/hooks-reference.html#usecallback)
+<br />
+<br />
 
-위에서 사용했던 예제를 자세히 살펴보면, App 컴포넌트는 렌더링 될때마다 새로운 레퍼런스의 onChange 이벤트 핸들러를 생성하고 있습니다. 만약 이 핸들러가 하위 컴포넌트에 props로 전달된다면, 하위 컴포넌트는 새로운 레퍼런스이기 때문에 props 값이 변경된 것으로 인식하고 다시 렌더링을 하게 됩니다. 이런 과정을 효율적으로 다루기 위해서는 useCallback이 도움이 될 수 있습니다.
+### `useCallback`이 적용되지 않은 경우
 
-```jsx
-function App() {
-  const [length, setLength] = useState(3);
-  const [name, setName] = useState("Ken Huh");
+간단하게 숫자를 증가시키고 콘솔 출력하는 컴포넌트들을 한번 만들어보겠습니다.
 
-  const handleNameChange = useCallback((e) => setName(e.target.value), []);
-  const handleLengthChange = useCallback(
-    (e) => setLength(Number(e.target.value)),
-    []
+<br />
+
+<Sandpack
+  template="react"
+  theme={githubLight}
+  files={{
+    "/index.js": {
+      code: `import { useState } from "react";
+import { createRoot } from "react-dom/client";
+
+function Button({ onClick }) {
+  console.log("Button rendering..");
+
+  return (
+    <button onClick={onClick}>증가</button>
   );
+}
+
+function App() {
+  const [age, setAge] = useState(2);
+
+  console.log("App rendering..");
+
+  const increment = () => setAge(age => age + 1);
 
   return (
     <>
-      <input value={name} onChange={handleNameChange} />
-      <Profile name={name} />
-      <hr />
-      <input value={length} onChange={handleLengthChange} />
-      <FibDisplay length={length} />
+      <h1>저는 {age}살 입니다.</h1>
+      <Button onClick={increment} />
     </>
   );
 }
 
-function FibDisplay({ length }) {
-  const numbers = useMemo(() => {
-    console.log("Calculating numbers...");
+const root = createRoot(document.getElementById("root"));
 
-    const result = [1, 1];
-
-    for (let i = 2; i < length; i++) {
-      result[i] = result[i - 1] + result[i - 2];
+root.render(<App />);
+`,
+      active: true
     }
+  }}
+  options={{
+    showLineNumbers: true,
+    editorHeight: "700px",
+    editorWidthPercentage: 60,
+    initMode: "lazy",
+    autoReload: false,
+    showConsoleButton: true,
+    showConsole: true,
+  }}
+  customSetup={{
+    entry: "index.js",
+  }}
+/>
 
-    return result;
-  }, [length]);
+현재 사용자가 입력창의 숫자를 변경하면 `App` 컴포넌트의 `age` 상태값이 변화하게 되고, `App` 컴포넌트는 리렌더링을 하게 됩니다. 그리고 `App` 컴포넌트의 자식 컴포넌트 또한 리렌더링을 하게 됩니다.
+
+단, 자식 컴포넌트의 리렌더링은 자식 컴포넌트의 상태값이나 Props 값이 변했을때만 리렌더링이 발생합니다.
+
+`Button` 컴포넌트의 경우, 1가지 Props를 받게 되어 있습니다.
+
+- `onClick`: 참조형태의 함수입니다.
+
+`onClick` Props는 코드 내용을 자세히 보면, 매번 렌더링 할때마다 **새로운 화살표 함수를 생성**하여 자식 컴포넌트에게 전달하고 있습니다. **즉, 새로운 참조를 전달하고 있습니다.**
+
+우리가 보기에는 항상 동일한 함수지만, 함수의 새로운 참조는 `Object.js(old, new)`로 비교하였을때 `false`가 도출되기 때문에 리액트는 매번 리렌더링을 진행합니다.
+
+결론적으로 불필요한 렌더링이 발생할 수도 있는 것입니다. 이런 과정을 효율적으로 다루기 위해서는 useCallback이 도움이 될 수 있습니다.
+
+<br />
+<br />
+
+### `useCallback`이 적용된 경우
+
+아래 예시에서는 `useCallback`을 적용하여 렌더링 횟수를 최적화 시켜보았습니다. 버튼을 이용해 숫자를 증가시키며, 콘솔 출력 메시지를 이전과 비교해보세요.
+
+<br />
+
+<Sandpack
+  template="react"
+  theme={githubLight}
+  files={{
+    "/index.js": {
+      code: `import { useState, useCallback, memo } from "react";
+import { createRoot } from "react-dom/client";
+
+function Button({ onClick }) {
+  console.log("Button rendering..");
 
   return (
-    <p>
-      {length} numbers of the fibonacci sequence: {numbers.join(", ")}
-    </p>
+    <button onClick={onClick}>증가</button>
   );
 }
 
-const Profile = React.memo(function ({ name }) {
-  console.log("Rerendering Profile...");
-  return <p>Your name is {name}</p>;
-});
+const ButtonMemo = memo(Button);
 
-export default App;
-```
+function App() {
+  const [age, setAge] = useState(2);
 
-**🖥 _Example Link_**
+  console.log("App rendering..");
 
-[useCallback](https://codesandbox.io/s/usecallback-czyb2)
+  const increment = useCallback(() => setAge(age => age + 1), []);
 
-# Extra
+  return (
+    <>
+      <h1>저는 {age}살 입니다.</h1>
+      <ButtonMemo onClick={increment} />
+    </>
+  );
+}
 
-[memo()를 하기 전에](https://overreacted.io/ko/before-you-memo/)
+const root = createRoot(document.getElementById("root"));
 
-[Death by a thousand useCallbacks](https://royi-codes.vercel.app/thousand-usecallbacks/)
+root.render(<App />);
+`,
+      active: true
+    }
+  }}
+  options={{
+    showLineNumbers: true,
+    editorHeight: "700px",
+    editorWidthPercentage: 60,
+    initMode: "lazy",
+    autoReload: false,
+    showConsoleButton: true,
+    showConsole: true,
+  }}
+  customSetup={{
+    entry: "index.js",
+  }}
+/>
+
+간단하게 설명하자면, `useCallback`을 이용하여 상태를 업데이트하는 함수가 매번 새롭게 생성되는 것을 방지하였고, `Button` 컴포넌트는 리액트의 [`memo`](https://ko.react.dev/reference/react/memo)를 이용하여 기존 Props의 기록을 기억하고 렌더링을 최적화할 수 있게 설정하였습니다.
+
+`useCallback`이 렌더링 최적화를 성취하는 경우는 몇 가지가 있습니다.
+
+- `useCallback`으로 감싼 함수가 `memo`로 감싼 컴포넌트에게 Props로 전달되는 경우
+- `useCallback`으로 감싼 함수가 어떤 리액트 Hook의 의존성 배열에 주입되는 경우
+
+이 이외의 경우는 큰 의미가 없을 수 있습니다. 방금 보여드린 예시에서는, `memo`로 감싼 컴포넌트에게 전달한 경우였습니다.
+
+조금 이해하기 어렵나요? 지금 당장 100% 이해하지 못해도 괜찮지만, 여러가지 실험을 통해 본인의 것으로 만들도록 해보세요.
+
+> 호기심과 탐구력이 곧 개발자의 능력이고 질문을 잘 하는 것이 곧 개발자의 성장성입니다.
+
+<br />
+<br />
+
+### 📘 공식문서
+
+- [항상 `useCallback`을 사용해야 할까요?](https://ko.react.dev/reference/react/useCallback#should-you-add-usecallback-everywhere)
