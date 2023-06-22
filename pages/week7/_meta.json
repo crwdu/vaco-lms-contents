@@ -1,18 +1,18 @@
 {
   "01-coffee-chat": {
-    "title": "Coffee Chat",
-    "display": "hidden"
+    "title": "커피챗",
+    "display": "normal"
   },
   "02-introduction-to-redux": {
-    "title": "Introduction to Redux",
-    "display": "hidden"
+    "title": "리덕스",
+    "display": "normal"
   },
   "03-redux-with-react": {
-    "title": "Using Redux with React",
-    "display": "hidden"
+    "title": "리액트와 리덕스",
+    "display": "normal"
   },
-  "04-redux-toolkit": {
-    "title": "Redux toolkit",
-    "display": "hidden"
+  "04-redux-style-guide": {
+    "title": "리덕스 스타일 가이드",
+    "display": "normal"
   }
 }
