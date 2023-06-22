@@ -1,18 +1,18 @@
 {
   "01-coffee-chat": {
     "title": "커피챗",
-    "display": "normal"
+    "display": "hidden"
   },
   "02-introduction-to-redux": {
     "title": "리덕스 주요개념",
-    "display": "normal"
+    "display": "hidden"
   },
   "03-redux-with-react": {
     "title": "리액트와 리덕스",
-    "display": "normal"
+    "display": "hidden"
   },
   "04-redux-style-guide": {
     "title": "리덕스 스타일 가이드",
-    "display": "normal"
+    "display": "hidden"
   }
 }
