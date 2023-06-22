@@ -1,0 +1,22 @@
+import { Alert } from "antd";
+
+# 리덕스 스타일 가이드
+
+[Style Guide | Redux](https://redux.js.org/style-guide/style-guide##structure-files-as-feature-folders-with-single-file-logic)
+
+_리덕스를 이용하여 어플리케이션 작업을 하는 사람들을 위한 권장 패턴, 모범 사례 등을 설명한 글입니다. 자세한 내용은 위 링크를 참고하세요._
+
+아래 목록은 그 중에서도 가장 중요한 것들을 몇 가지 선별한 것입니다. 반드시 자세히 읽고 숙지할 수 있도록 하세요.
+
+<br />
+
+- [Serialize 할 수 없는 값을 상태나 액션에 넣지 마세요.](https://redux.js.org/style-guide/style-guide#do-not-put-non-serializable-values-in-state-or-actions)
+- [상태 구조는 컴포넌트가 아닌, 데이터 종류에 따라 구성하세요.](https://redux.js.org/style-guide/style-guide#organize-state-structure-based-on-data-types-not-components)
+- [중첩되고 복잡한 상태는 정규화 시키세요.](https://redux.js.org/style-guide/style-guide#normalize-complex-nestedrelational-state)
+- [하나의 액션에 여러 개의 리듀서가 반응할 수 있도록 허락하세요.](https://redux.js.org/style-guide/style-guide#allow-many-reducers-to-respond-to-the-same-action)
+- [여러 개의 액션을 연속적으로 발생시키지 마세요.](https://redux.js.org/style-guide/style-guide#avoid-dispatching-many-actions-sequentially)
+- [함수형 컴포넌트 내부에서 `useSelector` 를 여러번 호출하세요.](https://redux.js.org/style-guide/style-guide#call-useselector-multiple-times-in-function-components)
+- [기능 별 디렉토리 구조를 이용하여 파일 구조를 구성하세요.](https://redux.js.org/style-guide/style-guide#structure-files-as-feature-folders-with-single-file-logic)
+- [리듀서에 가능한 한 많은 로직을 넣으세요.](https://redux.js.org/style-guide/style-guide#put-as-much-logic-as-possible-in-reducers)
+- [리듀서들은 각 상태에 대한 구조를 소유해야 합니다.](https://redux.js.org/style-guide/style-guide#reducers-should-own-the-state-shape)
+- [Slice는 저장되는 데이터에 기반하여 이름을 지으세요.](https://redux.js.org/style-guide/style-guide#name-state-slices-based-on-the-stored-data)
