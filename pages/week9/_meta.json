@@ -15,8 +15,8 @@
     "title": "Express.js 웹서버",
     "display": "hidden"
   },
-  "05-mongodb": {
-    "title": "MongoDB 데이터베이스",
+  "05-database": {
+    "title": "데이터베이스",
     "display": "hidden"
   }
 }
