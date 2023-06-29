@@ -1,34 +1,22 @@
 {
-  "amazon-web-services": {
-    "title": "Amazon Web Services",
+  "01-coffee-chat": {
+    "title": "커피챗",
     "display": "hidden"
   },
-  "simple-storage-services": {
-    "title": "Simple Storage Services",
+  "02-authentication": {
+    "title": "사용자 인증의 흐름",
     "display": "hidden"
   },
-  "elastic-computer-cloud": {
-    "title": "Elastic Computer Cloud (EC2)",
+  "03-sql-nosql": {
+    "title": "SQL과 NoSQL",
     "display": "hidden"
   },
-  "elastic-beanstalk": {
-    "title": "Elastic Beanstalk",
+  "04-database-index": {
+    "title": "데이터베이스 인덱스",
     "display": "hidden"
   },
-  "deployment": {
-    "title": "Deployment",
-    "display": "hidden"
-  },
-  "debugging-deployed-environment": {
-    "title": "Debugging Deployed Environment",
-    "display": "hidden"
-  },
-  "continuous-deployment": {
-    "title": "Continuous Deployment / Continuous Intergration (CI/CD)",
-    "display": "hidden"
-  },
-  "zero-downtime-deployment": {
-    "title": "Zero Downtime Deployment",
+  "05-stream-and-buffer": {
+    "title": "스트림과 버퍼",
     "display": "hidden"
   }
 }
