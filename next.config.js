@@ -4,5 +4,5 @@ const withNextra = require("nextra")({
 });
 
 module.exports = withNextra({
-  basePath: "/camp-vanilla-202305",
+  basePath: "/camp-vanilla-202307",
 });
