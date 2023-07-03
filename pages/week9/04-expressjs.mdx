@@ -1,94 +1,261 @@
-# 🖋  Manipulating Elements Practice
+import { Alert } from "antd";
+import { Callout } from "nextra-theme-docs";
 
-### Quiz #1
+# Express
 
-```javascript
-/*
+<br/>
 
-  < Manipulating Elements basic 1 >
-  
-  화면에 "I am a paragraph"라는 텍스트가 나타날 수 있도록
-  
-  <p> 태그에 텍스트를 추가해주세요!
-  
-  🚨 HTML, CSS는 건드리지 않고 JS만 수정해주세요.
+이전 단계에서 살짝 맛보셨겠지만, Node.js만을 이용하여 서버를 구축하는 작업은 너무나도 번거롭고 비효율적인 측면이 많습니다. 요청/응답에 대한 처리 또한 분기처리가 매우 복잡하고, 에러 처리 또한 우리 스스로 구현하고 처리해야 하므로 큰 작업입니다. 그래서 우리는 Node.js를 이용해 백엔드 서버를 만들때, 보통 추가적인 프레임워크나 라이브러리를 사용합니다. 마치 브라우저에서 바닐라 자바스크립트로 작업하는 것과 리액트를 사용하는 것에 비유할 수 있을것 같습니다.
 
-*/
+가장 대표적인 서버쪽 프레임워크로는 [Express](https://expressjs.com/)가 있습니다. [Koa.js](https://koajs.com/)도 어느 정도 인지도가 있는 편이고, 요즘은 리액트와 결합하여 사용하는 하이브리드 방식의 [Next.js](https://nextjs.org/) 또한 많이 사용됩니다.
 
-const pElement = document.querySelector("p");
+<br/>
+<br/>
+
+## 샘플 코드
+
+<br/>
+
+이번 문서에서는 아래 링크의 코드 샌드박스 예시를 기반으로 설명합니다.
+
+[express-basics](https://codesandbox.io/s/express-basics-1gnpm)
+
+<br/>
+<br/>
+
+## Express 라우팅
+
+<br/>
+
+Express에서는 아래와 같이 굉장히 간단하게 Routing 설정을 할 수 있습니다.
+
+```js showLineNumbers copy {4, 9}
+const express = require("express");
+const app = express();
+
+app.get("/signup", (req, res) => {
+  console.log("/signup GET request");
+  res.send("Hello GET World");
+});
+
+app.post("/signup", (req, res) => {
+  console.log("/signup POST request");
+  res.send("Hello POST World");
+});
 ```
 
-[Codepen에서 직접 해보기](https://codepen.io/vanillacoding/pen/LYzKyJv?editors=1010)
+위의 예시 코드에서 우리는 크게 두 가지 설정을 했습니다.
 
+##### 1. GET `/signup`
 
+4번째 줄의 응답 핸들러 함수에서 `/signup` url로 GET 메소드의 요청이 들어왔을때, 실행되는 응답 로직에 대한 설정을 했습니다.
 
-### Quiz #2
+##### 2. POST `/signup`
 
-```javascript
-/*
+9번째 줄의 응답 핸들러 함수에서 `/signup` url로 POST 메소드의 요청이 들어왔을때, 실행되는 응답 로직에 대한 설정을 했습니다.
 
-  < Manipulating Elements basic 2 >
-  
-  "paragraph1"을 아래 "paragraph2"와 동일한 단어가 되도록
-  
-  폰트 사이즈는 100px, 색상은 #55ff00로 수정해주세요!
-  
-  🚨 HTML, CSS는 건드리지 않고 JS만 수정해주세요.
+[라우팅](https://expressjs.com/ko/guide/routing.html)
 
-*/
+<br/>
+<br/>
 
-const itemElement = document.querySelector(".item");
+## 정적 파일 다루기
+
+<br/>
+
+기존처럼 GET `/signup`으로 요청을 받았을때 HTML 템플릿을 보여주고 싶은 경우 아래와 같이 설정하여 손쉽게 처리할 수 있습니다.
+
+```js showLineNumbers copy {4-5, 9}
+const express = require("express");
+const app = express();
+
+app.set("view engine", "pug");
+app.set("views", path.join(__dirname, "./views"));
+
+app.get("/signup", (req, res) => {
+  console.log("/signup GET request");
+  res.render("signup");
+});
+
+app.post("/signup", (req, res) => {
+  console.log("/signup POST request");
+  res.send("Hello POST World");
+});
 ```
 
-[Codepen에서 직접 해보기](https://codepen.io/vanillacoding/pen/jOGjmga?editors=1010)
+> View Engine(Template Engine)이란, 템플릿을 동적으로 생성해주는 소프트웨어 패키지를 의미합니다.
+> 우리는 Pug라는 View Engine을 사용하지만, EJS, Handlebar, Mustache 등 굉장히 다양한 Template Engine들이 존재합니다. 취향에 따라, 한 두가지만 사용해보시면 충분하고 대부분 기능은 비슷하기에 큰 차이는 없습니다.
 
-###
+[Express와 함께 템플릿 엔진 사용](https://expressjs.com/ko/guide/using-template-engines.html)
 
-### Quiz #3
+위 문서에 설명된 것처럼 View Engine을 [Pug](https://pugjs.org/api/getting-started.html)로 설정하였고, 아래와 같은 내용의 `signup.pug` 파일을 만들어 `/views` 디렉토리에 넣어두었습니다.
 
-```javascript
-/*
+<br/>
 
-  < Manipulating Elements basic 3 >
-  
-  오른쪽 요소가 왼쪽 요소와 같이 "yellow" 색상을 가질 수 있도록
-  
-  배경색을 수정해주세요!
-  
-  🚨 HTML, CSS는 건드리지 않고 JS만 수정해주세요.
-
-*/
-
-const rightElement = document.querySelector(".right");
+```pug
+html
+  head
+    title= title
+    meta(charset='utf-8')
+    link(rel='stylesheet', href='/stylesheets/style.css')
+  body
+    h1 Welcome to My Form
+    form(
+      action='/signup'
+      method='POST'
+    )
+      input(
+        type='text'
+        name='username'
+      )
+      button(
+        type='submit'
+      ) Submit
 ```
 
-[Codepen에서 직접 해보기](https://codepen.io/vanillacoding/pen/mdBZwpW?editors=1010)
+<br/>
 
+현재 위와 같은 상황에서 브라우저를 이용해 `/signup` 페이지에 접속(즉, `/signup` url로 GET 요청을 보내게 되면)하게 되면, 브라우저는 해당 HTML 파일을 렌더링합니다. 그 과정에서 `head` 태그 내부에 있는 style.css 관련 `link` 태그를 인식하게 되고, 이와 관련하여 추가적으로 하나의 요청이 더 실행됩니다. 바로 `/stylesheets/style.css`에 대한 요청입니다. 정적인 파일에 대한 요청은 Express에서 별도의 설정을 통해 쉽게 구현 가능합니다.
 
+<br/>
 
-### Quiz #4
-
-```javascript
-/*
-
-  < Traffic Lights >
-  
-  왼쪽 신호등을 오른쪽 신호등과 같이
-  
-  Stop, Pause, Go라는 텍스트를 추가해주시고
-  
-  red, orange, green 클래스를 추가하여
-  
-  빨간색, 주황색, 초록색 배경색을 가질 수 있도록 수정해주세요!
-  
-  🚨 HTML, CSS는 건드리지 않고 JS만 수정해주세요.
-  
-*/
-
-const wrapperElement = document.querySelector(".lightWrapper");
-const redLightElement = wrapperElement.children[0];
-const orangeLightElement = wrapperElement.children[1];
-const greenLightElement = wrapperElement.children[2];
+```js
+// Static 파일에 대한 경로(마지막 문자열 옵션)는 상황에 따라 다르게 주어야 합니다.
+app.use(express.static(path.join(__dirname, "./public")));
 ```
 
-[Codepen에서 직접 해보기](https://codepen.io/vanillacoding/pen/jOGjYOJ)
+[Express에서 정적 파일 제공](https://expressjs.com/ko/starter/static-files.html)
+
+<br/>
+
+### 정적 파일이란 무엇인가요?
+
+> 서버 입장에서 정적 파일이란, 서버 내부에서 해당 파일의 로직이 실행되느냐 아니면 서버 외부로 단순히 전달만 되느냐에 대한 차이로 구분할 수 있습니다. 후자의 경우, 서버 입장에서 정적 파일이라고 할 수 있습니다.
+
+<br/>
+<br/>
+
+## 요청 데이터 파싱하기
+
+<br/>
+
+상황에 따라 우리는 클라이언트에서 어떤 데이터를 전달받아 서버 쪽에서 로직을 수행할 수 있습니다. 예를 들어, 회원가입/로그인 등 사용자로부터 어떤 정보를 받아야 하는 경우가 대표적입니다.
+
+```js showLineNumbers copy {1, 4}
+app.use(bodyParser.urlencoded());
+
+app.post("/signup", (req, res) => {
+  const username = decodeURIComponent(req.body.username);
+
+  fs.writeFileSync(path.join(__dirname, `/users/${username}.txt`), username, {
+    encoding: "utf-8"
+  });
+
+  res.end("created");
+});
+```
+
+위와 같이 [`body-parser`](https://expressjs.com/en/resources/middleware/body-parser.html)라는 모듈을 설치하게 되면, HTML Form 태그 내부에서 입력받은 정보들이 모두 `req.body`에 저장되어 우리에게 전달됩니다.
+
+<br/>
+<br/>
+
+## JSON 데이터 전달하기
+
+```js showLineNumbers copy {1, 4}
+app.use(bodyParser.json());
+
+app.get("/users", (req, res) => {
+  res.json([
+    { id: 1, name: "user 1" },
+    { id: 2, name: "user 2" },
+    { id: 3, name: "user 3" }
+  ]);
+});
+```
+
+위와 같이 [`body-parser`](https://expressjs.com/en/resources/middleware/body-parser.html)모듈은 `json` 데이터를 편리하게 주고 받을 수 있는 기능 또한 제공합니다.
+
+<br/>
+<br/>
+
+## Express 미들웨어
+
+미들웨어란, 말 그대로 중간에 끼워 넣을 수 있는 일련의 소프트웨어들을 일컫습니다.
+
+만약 위의 `/signup` POST 요청을 처리하는 함수를 아래와 같이 나누고 싶었다고 생각해보세요.
+
+```js showLineNumbers copy
+function createFile(dir, fileName, contents) {
+  fs.writeFileSync(path.join(__dirname, dir, fileName), contents, {
+    encoding: "utf-8"
+  });
+}
+
+app.post("/signup", (req, res) => {
+  const username = decodeURIComponent(req.body.username);
+
+  createFile("/users/", `${username}.txt`, username);
+
+  res.end("created");
+});
+```
+
+그리고 우리는 또 다른 요청을 처리할때 `createFile` 함수를 재사용하고 싶습니다.
+
+```js showLineNumbers copy
+function createFile(dir, fileName, contents) {
+  fs.writeFileSync(path.join(__dirname, dir, fileName), contents, {
+    encoding: "utf-8"
+  });
+}
+
+app.get("/something-else", (req, res) => {
+  createFile(/* args */);
+  // do something else..
+});
+
+app.post("/signup", (req, res) => {
+  const username = decodeURIComponent(req.body.username);
+
+  createFile("/users/", `${username}.txt`, username);
+
+  res.end("created");
+});
+```
+
+이와 같은 상황에 우리는 미들웨어를 사용하여 여러 가지 요청들에 대한 공통 로직을 설정할 수 있습니다. 아래 코드는 대략적인 내용입니다.
+
+```js showLineNumbers copy /createFileMiddleware/
+function createFile(dir, fileName, contents) {
+  fs.writeFileSync(path.join(__dirname, dir, fileName), contents, {
+    encoding: "utf-8"
+  });
+}
+
+function createFileMiddleware(req, res, next) {
+  createFile(/* args */);
+  // next는 다음 미들웨어를 호출합니다.
+  next();
+}
+
+app.get("/SOMETHING", createFileMiddleware, (req, res) => {
+  // do something else..
+});
+
+app.post("/signup", createFileMiddleware, (req, res) => {
+  res.end("created");
+});
+```
+
+- [Express 앱에서 사용하기 위한 미들웨어 작성](https://expressjs.com/ko/guide/writing-middleware.html)
+- [미들웨어 사용](https://expressjs.com/ko/guide/using-middleware.html)
+
+과제에서 Express 문서를 다시금 살펴보며 작업을 진행하게 될테니, 대략적인 내용만 살펴보도록 하세요.
+
+<br/>
+<br/>
+
+## Extra
+
+Express는 문서화가 가장 잘 되어 있는 프레임워크 중 하나입니다. 항상 신중히 공식 문서를 잘 참고하시기 바랍니다.

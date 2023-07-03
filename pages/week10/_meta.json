@@ -11,11 +11,7 @@
     "title": "SQL과 NoSQL",
     "display": "hidden"
   },
-  "04-database-index": {
-    "title": "데이터베이스 인덱스",
-    "display": "hidden"
-  },
-  "05-stream-and-buffer": {
+  "04-stream-and-buffer": {
     "title": "스트림과 버퍼",
     "display": "hidden"
   }
