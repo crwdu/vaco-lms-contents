@@ -1,22 +1,22 @@
 {
   "01-coffee-chat": {
     "title": "커피챗",
-    "display": "normal"
+    "display": "hidden"
   },
   "02-first-nodejs-program": {
     "title": "Node.js 맛보기",
-    "display": "normal"
+    "display": "hidden"
   },
   "03-nodejs-web-server": {
     "title": "Node.js로 웹서버 만들기",
-    "display": "normal"
+    "display": "hidden"
   },
   "04-expressjs": {
     "title": "Express.js 웹서버",
-    "display": "normal"
+    "display": "hidden"
   },
   "05-database": {
     "title": "데이터베이스",
-    "display": "normal"
+    "display": "hidden"
   }
 }
