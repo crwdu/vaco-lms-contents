@@ -54,7 +54,7 @@ app.post("/signup", (req, res) => {
 
 9번째 줄의 응답 핸들러 함수에서 `/signup` url로 POST 메소드의 요청이 들어왔을때, 실행되는 응답 로직에 대한 설정을 했습니다.
 
-[라우팅](https://expressjs.com/ko/guide/routing.html)
+[Express 라우팅 문서](https://expressjs.com/ko/guide/routing.html)
 
 <br/>
 <br/>
@@ -86,7 +86,7 @@ app.post("/signup", (req, res) => {
 > View Engine(Template Engine)이란, 템플릿을 동적으로 생성해주는 소프트웨어 패키지를 의미합니다.
 > 우리는 Pug라는 View Engine을 사용하지만, EJS, Handlebar, Mustache 등 굉장히 다양한 Template Engine들이 존재합니다. 취향에 따라, 한 두가지만 사용해보시면 충분하고 대부분 기능은 비슷하기에 큰 차이는 없습니다.
 
-[Express와 함께 템플릿 엔진 사용](https://expressjs.com/ko/guide/using-template-engines.html)
+[Express와 함께 템플릿 엔진 사용하기](https://expressjs.com/ko/guide/using-template-engines.html)
 
 위 문서에 설명된 것처럼 View Engine을 [Pug](https://pugjs.org/api/getting-started.html)로 설정하였고, 아래와 같은 내용의 `signup.pug` 파일을 만들어 `/views` 디렉토리에 넣어두었습니다.
 
@@ -124,7 +124,7 @@ html
 app.use(express.static(path.join(__dirname, "./public")));
 ```
 
-[Express에서 정적 파일 제공](https://expressjs.com/ko/starter/static-files.html)
+[Express에서 정적 파일 제공하기](https://expressjs.com/ko/starter/static-files.html)
 
 <br/>
 
@@ -248,8 +248,8 @@ app.post("/signup", createFileMiddleware, (req, res) => {
 });
 ```
 
-- [Express 앱에서 사용하기 위한 미들웨어 작성](https://expressjs.com/ko/guide/writing-middleware.html)
-- [미들웨어 사용](https://expressjs.com/ko/guide/using-middleware.html)
+- [Express 앱에서 사용하기 위한 미들웨어 작성하기](https://expressjs.com/ko/guide/writing-middleware.html)
+- [미들웨어 사용하기](https://expressjs.com/ko/guide/using-middleware.html)
 
 과제에서 Express 문서를 다시금 살펴보며 작업을 진행하게 될테니, 대략적인 내용만 살펴보도록 하세요.
 
