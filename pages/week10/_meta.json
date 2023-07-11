@@ -7,8 +7,8 @@
     "title": "사용자 인증의 흐름",
     "display": "hidden"
   },
-  "03-sql-nosql": {
-    "title": "SQL과 NoSQL",
+  "03-error-handling": {
+    "title": "에러 핸들링",
     "display": "hidden"
   },
   "04-stream-and-buffer": {
