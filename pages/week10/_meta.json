@@ -1,18 +1,18 @@
 {
   "01-coffee-chat": {
     "title": "커피챗",
-    "display": "hidden"
+    "display": "normal"
   },
   "02-authentication": {
     "title": "사용자 인증의 흐름",
-    "display": "hidden"
+    "display": "normal"
   },
   "03-error-handling": {
     "title": "에러 핸들링",
-    "display": "hidden"
+    "display": "normal"
   },
   "04-stream-and-buffer": {
     "title": "스트림과 버퍼",
-    "display": "hidden"
+    "display": "normal"
   }
 }
