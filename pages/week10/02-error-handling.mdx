@@ -5,6 +5,8 @@ import { Callout } from "nextra-theme-docs";
 
 백엔드 서버에서 최우선 순위는 우선 정확한 작업입니다. 정확한 작업이란, 항상 성공만을 의미하는 것은 아닙니다. 성공했을 때는 성공했다고 응답하고, 실패했을 때는 실패했다고 응답해야 합니다. 또한 실패했을 경우에는 왜 실패했는지 정확한 이유와 함께 응답해야 합니다.
 
+![Express 에러 핸들링](./assets/error-handling/message.jpeg)
+
 <br/>
 
 서버에서는 여러 가지 이유로 에러 핸들링이 필요할 수 있습니다. 클라이언트에서 잘못된 요청을 보냈을 경우, 그에 대한 핸들링이 필요할 수도 있고, 서버 자체적으로 예상치 못한 오류가 발생했을 경우 그에 대한 처리가 필요할 수도 있습니다.
@@ -57,6 +59,8 @@ app.post("/products", async (req, res) => {
 Express의 모든 라우팅 핸들러에서 발생하는 오류들을 아래와 같이 커스텀 에러 핸들러를 선언하여 한 곳에서 관리할 수 있습니다. 에러 핸들러 위에 위치한 모든 라우팅 핸들러의 에러는 우리가 선언한 에러 핸들러에서 처리가 가능합니다.
 
 > [Express 에러 핸들러](https://expressjs.com/en/guide/error-handling.html)
+
+![Express 에러 핸들링](./assets/error-handling/express.png)
 
 ```js showLineNumbers copy {8-11}
 const express = require("express");
@@ -134,7 +138,7 @@ class MyCustomError extends Error {
 
 위와 같은 클래스를 우리는 아래와 같이 사용할 수 있습니다.
 
-```js showLineNumbers copy
+```js showLineNumbers copy {10-13}
 app.post("/products", async (req, res, next) => {
   try {
     const {
@@ -144,7 +148,7 @@ app.post("/products", async (req, res, next) => {
     } = req.body.product;
 
     if (!name || !category || !quantity) {
-      throw new CustomHttpError(
+      throw new MyCustomError(
         400,
         "invalid product data"
       );
