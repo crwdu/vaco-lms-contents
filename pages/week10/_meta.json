@@ -8,7 +8,7 @@
     "display": "normal"
   },
   "03-stream-and-buffer": {
-    "title": "스트림과 버퍼",
+    "title": "버퍼와 스트림",
     "display": "normal"
   },
   "04-authentication": {
