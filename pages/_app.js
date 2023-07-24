@@ -149,13 +149,13 @@ export default function Nextra({ Component, pageProps }) {
     <>
       {!isStartingQna && !hasVisitedContentPage && (
         <>
-          <div className="fixed flex justify-center items-center w-[179px] h-[52px] bg-[#0040FF] right-[116px] bottom-[44px] rounded-lg">
+          <div className="z-10 fixed flex justify-center items-center w-[179px] h-[52px] bg-[#0040FF] right-[116px] bottom-[44px] rounded-lg">
             <span className="text-xs text-white">
               학습 도중 어려움이 생기면, <br />
               무엇이든 KEN에게 물어보세요.
             </span>
           </div>
-          <div className="fixed w-[12px] h-[12px] bg-[#0040FF] right-[112px] bottom-[63px] rotate-45" />
+          <div className="z-10 fixed w-[12px] h-[12px] bg-[#0040FF] right-[112px] bottom-[63px] rotate-45" />
         </>
       )}
 
