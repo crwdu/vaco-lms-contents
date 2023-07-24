@@ -1,14 +1,14 @@
 {
   "01-coffee-chat": {
     "title": "커피챗",
-    "display": "hidden"
+    "display": "normal"
   },
   "02-recursion": {
     "title": "재귀 함수",
-    "display": "hidden"
+    "display": "normal"
   },
   "03-closure": {
     "title": "클로져",
-    "display": "hidden"
+    "display": "normal"
   }
 }
