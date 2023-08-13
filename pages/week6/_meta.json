@@ -1,18 +1,18 @@
 {
   "01-coffee-chat": {
     "title": "커피챗",
-    "display": "hidden"
+    "display": "normal"
   },
   "02-lifting-states-up": {
     "title": "상태 끌어올리기",
-    "display": "hidden"
+    "display": "normal"
   },
   "03-optimization": {
     "title": "최적화 작업",
-    "display": "hidden"
+    "display": "normal"
   },
   "04-react-router": {
     "title": "리액트 라우터",
-    "display": "hidden"
+    "display": "normal"
   }
 }
