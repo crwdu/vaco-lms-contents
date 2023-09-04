@@ -1,34 +1,22 @@
 {
-  "monolith-structure": {
-    "title": "Monolith Structure",
-    "display": "hidden"
+  "01-coffee-chat": {
+    "title": "커피챗",
+    "display": "normal"
   },
-  "authentication": {
-    "title": "Authentication",
-    "display": "hidden"
+  "02-first-nodejs-program": {
+    "title": "Node.js 맛보기",
+    "display": "normal"
   },
-  "process-thread": {
-    "title": "Process vs Thread",
-    "display": "hidden"
+  "03-nodejs-web-server": {
+    "title": "Node.js로 웹서버 만들기",
+    "display": "normal"
   },
-  "sql-nosql": {
-    "title": "SQL vs NoSQL",
-    "display": "hidden"
+  "04-expressjs": {
+    "title": "Express.js 웹서버",
+    "display": "normal"
   },
-  "database-index": {
-    "title": "Database Index",
-    "display": "hidden"
-  },
-  "scaling-techniques": {
-    "title": "Scaling Techniques",
-    "display": "hidden"
-  },
-  "error-handling": {
-    "title": "Error Handling",
-    "display": "hidden"
-  },
-  "stream-and-buffer": {
-    "title": "Stream And Buffer",
-    "display": "hidden"
+  "05-database": {
+    "title": "데이터베이스",
+    "display": "normal"
   }
 }
