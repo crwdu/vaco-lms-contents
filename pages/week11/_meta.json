@@ -1,0 +1,18 @@
+{
+  "01-coffee-chat": {
+    "title": "커피챗",
+    "display": "hidden"
+  },
+  "02-backend-structure": {
+    "title": "백엔드의 구조",
+    "display": "hidden"
+  },
+  "03-restful-api": {
+    "title": "RESTful API",
+    "display": "hidden"
+  },
+  "04-cors": {
+    "title": "CORS 정책",
+    "display": "hidden"
+  }
+}
