@@ -1,0 +1,311 @@
+# 📗 객체
+
+배열이 순서에 맞게 저장할 수 있는 구조였던 반면, 객체라고 하는 것은 key/value 쌍을 저장할 수 있는 구조입니다.
+
+key/value가 무엇일까요? 어떤 사람의 프로필을 작성한다고 생각해봅시다. 아래와 같이 작성할 수 있습니다.
+
+**사람 1 🥸**
+
+- 이름: Ken Huh
+- 나이: 40
+- 주소: 서울특별시 강남구 테헤란로 522
+
+위에서,
+
+key에 해당하는 것은 "이름", "나이", "주소".
+
+value에 해당하는 것은 "Ken Huh", 40, "서울특별시 강남구 테헤란로 522"
+
+입니다.
+
+### 객체 만들기 Part 1
+
+자바스크립트에서 객체는 중괄호를 이용하여 만들고, 그 내부에 키(key)값과 그에 해당하는 값(value)를 콜론(`:`)으로 구분하여 추가할 수 있습니다.
+
+![objects-1](/images/posts/objects-1.svg)
+
+위에서 살펴봤던 예시를 자바스크립트 객체로 표현해보자면 아래와 같이 할 수 있습니다.
+
+```javascript
+const person = {
+  name: "Ken Huh",
+  age: 40,
+  address: "서울특별시 강남구 테헤란로 522",
+};
+```
+
+한 쌍 이상의 key/value 쌍을 추가할 경우에는 "쉼표"를 이용하여 그 뒤에 오는 key/value와 구분해주어야 합니다.
+
+### 식별자 규칙
+
+객체에 관한 문법을 정확히 이해하려면 식별자 규칙에 대해 알아야 합니다. 식별자 규칙이란, 자바스크립트에서 변수 이름을 지을때 지켜야 하는 규칙입니다.
+
+자바스크립트에서 변수 이름은,
+
+- 알파벳, `_`, `$` 으로만 시작할 수 있습니다.
+- 두번째 글자를 포함한 그 이후 자리에는 숫자 또한 포함될 수 있습니다.
+- 대소문자를 구분하여 사용해야 합니다.
+
+위 규칙에 따라 사용해야 합니다.
+
+#### 문법적으로 올바른 식별자(변수명) 예시 ✅
+
+```javascript
+const hello = 1;
+const $hello = 1;
+const _hello = 1;
+const he_llo = 1;
+const he$llo = 1;
+const hel123o = 1;
+const hel_10 = 1;
+const HelLo = 1;
+```
+
+#### 문법적으로 올바르지 못한 식별자(변수명) 예시 ❌
+
+```javascript
+const 3hello = 1;
+const !hello = 1;
+const hel!o = 1;
+const he-llo = 1;
+const hel l% = 1;
+```
+
+### 객체 만들기 Part 2
+
+#### 식별자 규칙에 어긋나는 이름으로 객체의 키값 설정하기 💁🏻‍♂️
+
+객체를 만들때, 만약 객체의 키값을 문법적으로 식별자 규칙에서 벗어난 이름으로 사용하고 싶다면 아래와 같이 **키값에 따옴표를 활용**하여 설정할 수 있습니다.
+
+```javascript
+const person = {
+  name: "Ken Huh",
+  age: 40,
+  address: "서울특별시 강남구 테헤란로 522",
+  "personal-color": "green",
+};
+```
+
+#### 동적으로 객체의 키값 설정하기 💁🏻‍♂️
+
+혹은 더 나아가 다른 변수에 담긴 문자열 값을 키값으로 사용하고 싶거나, 다른 함수의 반환값을 키값으로 사용하고 싶은 경우에는 아래처럼 대괄호를 활용하여 설정할 수 있습니다.
+
+```javascript
+const key = "address";
+
+const person = {
+  name: "Ken Huh",
+  age: 40,
+  [key]: "서울특별시 강남구 테헤란로 522",
+  "personal-color": "green",
+};
+
+console.log(person);
+```
+
+![objects-2](/images/posts/objects-2.png)
+
+```javascript
+function getKey() {
+  return "address";
+}
+
+const person = {
+  name: "Ken Huh",
+  age: 40,
+  [getKey()]: "서울특별시 강남구 테헤란로 522",
+  "personal-color": "green",
+};
+
+console.log(person);
+```
+
+![objects-3](/images/posts/objects-3.png)
+
+<Callout>
+  함수실행문은 함수실행문이 위치한 곳이 함수실행문의 반환값으로 대체되는 것을 꼭
+  기억하세요.
+</Callout>
+
+### 객체에 저장된 내용 가져오기
+
+객체에 저장된 정보는 아래와 같이 `객체이름.키값이름` 과 같은 방식으로 접근하여 가져올 수 있습니다.
+
+```javascript
+const person = {
+  name: "Ken Huh",
+  age: 40,
+  address: "서울특별시 강남구 테헤란로 522",
+  "personal-color": "green",
+};
+
+const myName = person.name;
+
+console.log(myName); // "Ken Huh"
+console.log(person.name); // "Ken Huh"
+```
+
+키값이 식별자 규칙에서 벗어난 경우, 혹은 동적으로 변경되는 key 값을 활용해야 하는 경우에는 아래와 같이 대괄호를 활용해 접근할 수 있습니다.
+
+```javascript
+const person = {
+  name: "Ken Huh",
+  age: 40,
+  address: "서울특별시 강남구 테헤란로 522",
+  "personal-color": "green",
+};
+
+const color = person["personal-color"];
+
+console.log(color); // "green"
+console.log(person["personal-color"]); // "green"
+
+const key = "age";
+console.log(person[key]); // 40
+```
+
+### 객체에 새로운 key/value 추가하기
+
+이미 만들어진 객체에 추가로 key/value를 더할 수도 있습니다.
+
+```javascript
+const person = {
+  name: "Ken Huh",
+  age: 40,
+  address: "서울특별시 강남구 테헤란로 522",
+  "personal-color": "green",
+};
+
+// 새로운 key/value 추가
+person.brother = "wan";
+
+console.log(person.brother); // "wan"
+```
+
+새로운 key/value를 추가할때도 만약 키값이 식별자 규칙에 어긋난다면 대괄호 문법을 사용해야 합니다.
+
+```javascript
+const person = {
+  name: "Ken Huh",
+  age: 40,
+  address: "서울특별시 강남구 테헤란로 522",
+  "personal-color": "green",
+};
+
+// 새로운 key/value 추가
+person["sister-in-law"] = "mariola";
+
+console.log(person["sister-in-law"]); // "mariola"
+```
+
+### 객체 key/value 수정하기
+
+데이터를 수정하는 것은 추가하는 것과 동일합니다. 동일하기 때문에 특히 주의해야 합니다. 기존에 존재하는 키값을 사용한다면, 덮어씌워지는 현상이 발생할 수 있으니까요. 🤓
+
+```javascript
+const person = {
+  name: "Ken Huh",
+  age: 40,
+};
+
+// 이미 존재하는 키값을 사용하기 때문에 "새로운 데이터 추가"가 아니라 "수정"하는 코드
+person.age = 45;
+
+console.log(person.age); // 45
+```
+
+### 객체 key/value 삭제하기
+
+객체에서 key/value를 삭제할 때는, `delete` 라는 명령어를 이용하여 삭제할 수 있습니다.
+
+객체에서는 존재하지 않는 키값에 접근할 경우, 그에 대한 결과값으로는 `undefined` 가 반환됩니다. 즉, 추가하지 않은 키값이나 이미 삭제한 키값의 경우에는 모두 `undefined` 로 판별됩니다.
+
+```javascript
+const person = {
+  name: "Ken Huh",
+  age: 13,
+};
+
+// "age" key/value 삭제
+delete person.age;
+
+console.log(person.age); // undefined (이미 삭제되었기에 더 이상 존재하지 않는 key/value)
+console.log(person.address); // undefined (존재하지 않는 key/value)
+```
+
+### 객체를 위한 반복문
+
+객체 내부의 정보를 순회하기 위한 반복문, `for..in` 반복문도 있습니다.
+
+`for..in` 문법은 프로그래밍에서 **객체를 대상으로 반복 작업을 수행할 때 사용**됩니다. 이를 이해하기 위해 우리가 특정한 작업을 객체에 있는 모든 데이터에 적용하려고 할 때 생각해보세요.
+
+예를 들어, 우리가 과일 상점을 운영하고 있고 과일들의 가격을 담아놓은 객체가 있습니다. 그리고 각 과일의 가격을 출력하려고 한다고 상상해 봅시다. 이때, 우리는 각 과일의 가격을 하나씩 출력해야 합니다.
+
+```javascript
+const prices = {
+  apple: 10,
+  orange: 20,
+  banana: 30,
+};
+
+console.log(`apple은 ${prices.apple}원입니다.`);
+console.log(`orange은 ${prices.orange}원입니다.`);
+console.log(`banana은 ${prices.banana}원입니다.`);
+```
+
+위의 예시 코드를 보면 출력문이 반복되고 있죠? 이렇게 반복되는 구문을 아래와 같이 작성할 수 있습니다.
+
+```javascript
+const prices = {
+  apple: 10,
+  orange: 20,
+  banana: 30,
+};
+
+for (const key in prices) {
+  console.log(`${key}은 ${prices[key]}원입니다.`);
+}
+```
+
+위와 같이 작성할 경우, `prices` 이라는 객체의 모든 키값이 `key` 이라는 변수에 할당되며 반복문이 key값의 갯수만큼 실행됩니다.
+
+현재는 key값이 3개이기 때문에, 총 3회 반복되겠죠? 예를 들어, 첫 순회에는 `key` 변수의 값은 `"apple"`, 두번째 순회 시에는 `"orange"`, 세번째 순회 시에는 `"banana"` 등 입니다.
+
+그리고 동적으로 변하는 key 값을 활용하는 상황이기 때문에 대괄호 문법으로 각 key 값에 해당하는 value를 접근하여 가격 정보를 사용하고 있습니다.
+
+`prop` 이라는 변수에 우리가 원하는 키값이 담겨있으므로, 우리는 대괄호 문법을 활용하여 그에 해당하는 value 또한 동적으로 접근이 가능합니다.
+
+![objects-4](/images/posts/objects-4.png)
+
+### Method
+
+객체의 value 값으로 배열, 객체, 문자열 등 우리가 원하는 무엇이든 지정할 수 있습니다.
+
+**함수**를 지정할 수도 있습니다. 프로그래밍에서 **어떤 객체의 속성으로 접근해서 사용하는 함수**를 **method**라고 부릅니다.
+
+```javascript
+const person = {
+  greet: function () {
+    return "hello";
+  },
+};
+
+person.greet(); // person 객체의 greet 메서드 호출
+```
+
+객체의 value에 접근하는 가장 대표적인 문법은 **Dot notation** (`객체이름.객체키값이름`의 형식)이고, 이런 방식으로 접근하여 함수를 호출하는 것은 모두 어떤 객체의 메서드라고 추측할 수 있습니다.
+
+예를 들어,
+
+```javascript
+console.log("Hello world"); // console 객체의 log 메서드 호출
+
+const list = [1, 2, 3];
+list.push(4); // list 객체의 push 메서드 호출
+```
+
+### 객체 자료형
+
+자바스크립트에서는 배열과 함수 또한 객체라는 범주에 포함됩니다. 앞으로 차차 더욱 자세히 알아가겠지만, 배열과 함수 또한 일반 객체와 동일한 성질을 갖고 있습니다.
+
+![objects-5](/images/posts/objects-5.svg)

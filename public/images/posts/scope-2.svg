@@ -1,0 +1,22 @@
+
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 454.203125 362.4" width="908.40625" height="724.8">
+  <!-- svg-source:excalidraw -->
+  <!-- payload-type:application/vnd.excalidraw+json --><!-- payload-version:2 --><!-- payload-start -->eyJ2ZXJzaW9uIjoiMSIsImVuY29kaW5nIjoiYnN0cmluZyIsImNvbXByZXNzZWQiOnRydWUsImVuY29kZWQiOiJ4nLVVW0/bMFx1MDAxOH3nV0TZXHUwMDBiSFx1MDAxMGI7V9BcdTAwMWVgXHUwMDAzrUJCk9h93YObuIlV145iXHUwMDE3WlD/+2y3xGlXNsE2VY2Uc767P5887Hmer1x1MDAxNlxy8U88n8xcdTAwMGLMaNniO//Q4LeklVRwTUH7LsWsLaxlrVQjT46PcdNcdTAwMDRcdTAwMTVVIyEmQSGmKzfCyJRwJbXhd/3ueVx1MDAwZvbZS6TIXFxZW4u6NHGyXHJeXHUwMDBibjOCMEJpXHUwMDE2gSzqLKh8qzMpUmp6jJkkjjGQ//7608fLo/r6bDqVXHUwMDBiNlCDb+HXXHUwMDBil3VMXHUwMDE5u1FcdTAwMGJmXHUwMDBikkL37TipWjEhn2mp6sfme/hTXq2YVTUn0jRcdTAwMGU6VDS4oGphe1xiO1x1MDAxNPPKxnDIXFy/pShcdGCM8jCBcUdY1zxcdTAwMGZgmlwiPYR4q5o3gonWVPNcblx1MDAxMPNz9YxwMal0UbzsbFSLuWxwq4/H2d2t+0RxXHUwMDE2xHk/Q01oVStDhTBwk5fEXHUwMDBlPUqTXGZmcezmY7I1g9Ke/Fx1MDAwZjfpXHUwMDE2T8nAePBcdTAwMTlj/XHxcj2uXHJiZIiL3lx1MDAxMrlQs6bEq1x1MDAxM1x1MDAwN2mYRClM8zTL3Vx1MDAxMFx1MDAxOeWT7XBMXHUwMDE0k1x1MDAxZEsyXHUwMDE2XFzd0HtzXGIo2UAv8ZQyM3XUwXZh9fzGM14ovZbeWFxib//Ae1x1MDAxOHLPXHUwMDFijlxuwaXysPfaXHUwMDAzp1x1MDAxNtF/g1x0Rlx1MDAwMiaqfXyg4eWQXHUwMDBmufbbPzj1N1x1MDAwMp8xWpnt91x1MDAxOVx1MDAxOW9eXHUwMDBiRfWF7GglXHUwMDFhx+rwXG5TTtpfXHUwMDA3K1paUY7Zh/9VtJ4yefe4XHUwMDFhIIC9jZPEkObS5JFFl4e7JaAlhVpdglx1MDAxZDpcdTAwMDDC7CkhgElcdTAwMTKBKH+GXHUwMDBlfGnu57NYTpPJUYqTc5VcXNVIvURcdTAwMDeiLbzzKrGsyVx1MDAxM0LgdvNZQlx1MDAwMGGQbVxcduNcdTAwMDejJNhWh21cdTAwMTEgIVx1MDAwMlxi/IVcYuRRXHUwMDAwdVxmuENcdTAwMDVcdTAwMDDSXFycZn1yrVx1MDAwNWlcbnNcdTAwMDTyfyBcdTAwMDWPm+J2XHUwMDA1rZHli1x1MDAxNFwiXHUwMDAzXHUwMDExglF/d/+gXHUwMDEwq7XVT1x1MDAxYtTXn7hcdTAwMWKlQ3al6dZouVZcdTAwMGVcdTAwMTfGv6Xk7vz3w95b92B2jthel3vLn/TH89kifQ==<!-- payload-end -->
+  <defs>
+    <style class="style-fonts">
+      @font-face {
+        font-family: "Virgil";
+        src: url("https://unpkg.com/@excalidraw/excalidraw@undefined/dist/excalidraw-assets/Virgil.woff2");
+      }
+      @font-face {
+        font-family: "Cascadia";
+        src: url("https://unpkg.com/@excalidraw/excalidraw@undefined/dist/excalidraw-assets/Cascadia.woff2");
+      }
+      @font-face {
+        font-family: "Assistant";
+        src: url("https://unpkg.com/@excalidraw/excalidraw@undefined/dist/excalidraw-assets/Assistant-Regular.woff2");
+      }
+    </style>
+    
+  </defs>
+  <rect x="0" y="0" width="454.203125" height="362.4" fill="transparent"/><g transform="translate(43.41015625 30) rotate(0 179.296875 151.2)"><text x="0" y="0" font-family="Cascadia, Segoe UI Emoji" font-size="36px" fill="#1e1e1e" text-anchor="start" style="white-space: pre;" direction="ltr" dominant-baseline="text-before-edge">function foo () {</text><text x="0" y="43.199999999999996" font-family="Cascadia, Segoe UI Emoji" font-size="36px" fill="#1e1e1e" text-anchor="start" style="white-space: pre;" direction="ltr" dominant-baseline="text-before-edge">  const a = 1;</text><text x="0" y="86.39999999999999" font-family="Cascadia, Segoe UI Emoji" font-size="36px" fill="#1e1e1e" text-anchor="start" style="white-space: pre;" direction="ltr" dominant-baseline="text-before-edge">  </text><text x="0" y="129.6" font-family="Cascadia, Segoe UI Emoji" font-size="36px" fill="#1e1e1e" text-anchor="start" style="white-space: pre;" direction="ltr" dominant-baseline="text-before-edge">  console.log(a);</text><text x="0" y="172.79999999999998" font-family="Cascadia, Segoe UI Emoji" font-size="36px" fill="#1e1e1e" text-anchor="start" style="white-space: pre;" direction="ltr" dominant-baseline="text-before-edge">}</text><text x="0" y="215.99999999999997" font-family="Cascadia, Segoe UI Emoji" font-size="36px" fill="#1e1e1e" text-anchor="start" style="white-space: pre;" direction="ltr" dominant-baseline="text-before-edge"/><text x="0" y="259.2" font-family="Cascadia, Segoe UI Emoji" font-size="36px" fill="#1e1e1e" text-anchor="start" style="white-space: pre;" direction="ltr" dominant-baseline="text-before-edge">foo();</text></g><g stroke-linecap="round" transform="translate(30 77.26171875) rotate(0 197.1015625 67.12890625)"><path d="M32 0 C123.89 0, 215.78 0, 362.2 0 M362.2 0 C383.54 0, 394.2 10.67, 394.2 32 M394.2 32 C394.2 51.41, 394.2 70.82, 394.2 102.26 M394.2 102.26 C394.2 123.59, 383.54 134.26, 362.2 134.26 M362.2 134.26 C255.89 134.26, 149.58 134.26, 32 134.26 M32 134.26 C10.67 134.26, 0 123.59, 0 102.26 M0 102.26 C0 87.73, 0 73.2, 0 32 M0 32 C0 10.67, 10.67 0, 32 0" stroke="#e03131" stroke-width="4.5" fill="none" stroke-dasharray="8 12"/></g></svg>

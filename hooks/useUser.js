@@ -17,10 +17,10 @@ export default function useUser() {
       const { user, courses } = result.data;
 
       const campVanilla = courses.find(
-        (course) => course.title === "Camp Vanilla"
+        (course) => course.title === "Camp Vanilla",
       );
       const userCampVanilla = user.courses.find(
-        (userCourse) => userCourse.course_id === campVanilla.id
+        (userCourse) => userCourse.course_id === campVanilla.id,
       );
 
       if (!userCampVanilla.is_payment_paid) {

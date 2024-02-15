@@ -1,0 +1,98 @@
+{
+  "what-is-javascript": {
+    "title": "자바스크립트란?",
+    "display": "normal"
+  },
+  "how-to-study": {
+    "title": "학습은 어떻게 해야 할까?",
+    "display": "normal"
+  },
+  "stepping-in": {
+    "title": "자바스크립트 찍먹",
+    "display": "normal"
+  },
+  "ecmascript": {
+    "title": "EcmaScript",
+    "display": "normal"
+  },
+  "variables": {
+    "title": "변수",
+    "display": "normal"
+  },
+  "naming-variables": {
+    "title": "변수의 이름",
+    "display": "normal"
+  },
+  "data-types": {
+    "title": "자료형",
+    "display": "normal"
+  },
+  "numbers": {
+    "title": "숫자 자료형",
+    "display": "normal"
+  },
+  "numbers-quiz-basic": {
+    "title": "숫자 자료형 퀴즈(기본)",
+    "display": "normal"
+  },
+  "numbers-quiz-advanced": {
+    "title": "숫자 자료형 퀴즈(심화)",
+    "display": "normal"
+  },
+  "boolean": {
+    "title": "불리언 자료형",
+    "display": "normal"
+  },
+  "null-and-undefined": {
+    "title": "null 자료형과 undefined 자료형",
+    "display": "normal"
+  },
+  "string": {
+    "title": "문자 자료형",
+    "display": "normal"
+  },
+  "string-quiz-basic": {
+    "title": "문자 자료형 퀴즈(기본)",
+    "display": "normal"
+  },
+  "string-quiz-advanced": {
+    "title": "문자 자료형 퀴즈(심화)",
+    "display": "normal"
+  },
+  "logical-operators": {
+    "title": "논리 연산자",
+    "display": "normal"
+  },
+  "logical-operators-quiz-basic1": {
+    "title": "논리 연산자 퀴즈(기본) 1",
+    "display": "normal"
+  },
+  "logical-operators-quiz-basic2": {
+    "title": "논리 연산자 퀴즈(기본) 2",
+    "display": "normal"
+  },
+  "logical-operators-quiz-advanced1": {
+    "title": "논리 연산자 퀴즈(심화) 1",
+    "display": "normal"
+  },
+  "logical-operators-quiz-advanced2": {
+    "title": "논리 연산자 퀴즈(심화) 2",
+    "display": "normal"
+  },
+  "comparison-operators": {
+    "title": "비교 연산자",
+    "display": "normal"
+  },
+  "conditional-statements": {
+    "title": "조건문",
+    "display": "normal"
+  },
+  "loops": {
+    "title": "반복문",
+    "display": "normal"
+  },
+  "conditionals-and-loops-quiz-advanced1": {
+    "title": "반복문 & 조건문 퀴즈(심화)",
+    "display": "normal"
+  }
+}

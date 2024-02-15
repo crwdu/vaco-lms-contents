@@ -2,15 +2,8 @@
   "index": {
     "display": "hidden"
   },
-  "week1" : "1주차",
-  "week2": "2주차",
-  "week3": "3주차",
-  "week5": "5주차",
-  "week6": "6주차",
-  "week7": "7주차",
-  "week9": "9주차",
-  "week10": "10주차",
-  "week11": "11주차",
+  "part1": "파트 1",
+  "part2": "파트 2",
   "contact": {
     "title": "Contact ↗",
     "type": "page",

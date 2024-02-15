@@ -21,9 +21,7 @@ export default function CustomError({ message }) {
         </div>
       </header>
 
-      <ErrorDisplay
-        message={message}
-      />
+      <ErrorDisplay message={message} />
 
       <Footer />
     </>

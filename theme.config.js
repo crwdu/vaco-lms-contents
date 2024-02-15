@@ -11,20 +11,15 @@ const mediumUrl = "https://medium.com/vanilla-coding";
 const instagramUrl = "https://www.instagram.com/vanilla_coding";
 const facebookUrl = "https://www.facebook.com/vcoding";
 const youtubeUrl = "https://www.youtube.com/channel/UCqw3KRd7EBORZPqpxU4XLEA";
-const refundPolicy = "https://www.notion.so/vanillacoding/Refund-Regulation-5fb4e6da39ae4665b5f376eb1172cf4b";
+const refundPolicy =
+  "https://www.notion.so/vanillacoding/Refund-Regulation-5fb4e6da39ae4665b5f376eb1172cf4b";
 
 const config = {
+  toc: {
+    float: false,
+  },
   darkMode: false,
-  logo: (
-    <>
-      <Image
-        alt="vaco logo"
-        src={logo}
-        width={150}
-        height={58}
-      />
-    </>
-  ),
+  logo: <Image alt="vaco logo" src={logo} width={150} height={58} />,
   logoLink: process.env.NEXT_PUBLIC_URI,
   editLink: {
     component: () => <></>,
@@ -41,7 +36,7 @@ const config = {
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <meta property="og:title" content="Nextra" />
       <meta property="og:description" content="The next site builder" />
-      <title>바닐라코딩 Camp Vanilla</title>
+      <title>바닐라코딩 JS101</title>
     </>
   ),
   footer: {
@@ -80,11 +75,7 @@ const config = {
           </div>
 
           <div className="flex items-end">
-            <a
-              href={mediumUrl}
-              target="_blank"
-              title="medium"
-            >
+            <a href={mediumUrl} target="_blank" title="medium">
               <div className="flex mr-[44px]">
                 <Image
                   src={mediumIcon}
@@ -94,11 +85,7 @@ const config = {
                 />
               </div>
             </a>
-            <a
-              href={instagramUrl}
-              target="_blank"
-              title="instagram"
-            >
+            <a href={instagramUrl} target="_blank" title="instagram">
               <div className="flex mr-[44px]">
                 <Image
                   src={instagramIcon}
@@ -108,11 +95,7 @@ const config = {
                 />
               </div>
             </a>
-            <a
-              href={facebookUrl}
-              target="_blank"
-              title="facebook"
-            >
+            <a href={facebookUrl} target="_blank" title="facebook">
               <div className="flex mr-[44px]">
                 <Image
                   src={facebookIcon}
@@ -122,11 +105,7 @@ const config = {
                 />
               </div>
             </a>
-            <a
-              href={youtubeUrl}
-              target="_blank"
-              title="youtube"
-            >
+            <a href={youtubeUrl} target="_blank" title="youtube">
               <div className="flex mr-[44px]">
                 <Image
                   src={youTubeIcon}
@@ -139,8 +118,8 @@ const config = {
           </div>
         </div>
       );
-    }
-  }
+    },
+  },
 };
 
 export default config;

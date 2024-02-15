@@ -1,0 +1,21 @@
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 603.4312744140625 405.6" width="1206.862548828125" height="811.2">
+  <!-- svg-source:excalidraw -->
+  <!-- payload-type:application/vnd.excalidraw+json --><!-- payload-version:2 --><!-- payload-start -->eyJ2ZXJzaW9uIjoiMSIsImVuY29kaW5nIjoiYnN0cmluZyIsImNvbXByZXNzZWQiOnRydWUsImVuY29kZWQiOiJ4nM1UTW/TMFx1MDAxOL7vV1jhskkji/PRtLttg4lcbjQhXHUwMDE1xIFwcFx1MDAxMze16tohcdnK1PskLlxcgF3GXHUwMDExIbFDXHUwMDA1XHUwMDEz2mG/iIb/wGuvS9LxcSaRovh5Xvt9Xr+PfbyGkKWmXHUwMDE5tbaRRY9iwlmSk0NrU+OvaF4wKYByzbiQkzw2kUOlsmJ7a4tkmZ0y1ZdyZMdyfD2NcjqmQlx1MDAxNVx1MDAxMPhcdTAwMWPGXGJcdTAwMWSbbyORokfKxFx1MDAxYbSRxvNvo1x1MDAwN1KYlNjDTrtcdTAwMWRcdTAwMDTYrVwiWHFcdTAwMGZSKZpcdTAwMDA9ILygNaMh6+XDcXf/6e542HnMdvbuXHUwMDFlTJxHsFRcdTAwMTU0YJz31JRcdTAwMWJFhYTCa65QuVx1MDAxY9FnLFHDm+pcdTAwMWL432blcpJcdTAwMGVcdTAwMDUtdOW4QmVGYqamXHUwMDFhc5xcbiVcIjVr1MhcdTAwMTGMWr5nh+1cdTAwMDBcdTAwMDctN6hcYj3VdTzbx53Aw67f0U/7lqY9yWWuNd3BVL+1qj6JRylIXHUwMDEzSVx1MDAxNaNyXCKKjOTQpTrucFltXHUwMDAwXHUwMDFhfMhcdTAwMTP6PvadppAhZelQQYjnXHUwMDA3dtBpPGGthpp+YNf1XHUwMDFkN8RurVNryLqJscWLulx1MDAwYjlcdTAwMTnTrp5cIiacN7dSJMutXFwh+pq433BYvdQkS8i1XHUwMDFicOi0/Fx1MDAxMPsh7GSn4jlcdTAwMTOj28txXHUwMDE5j/5goIFcdTAwMTSqx17rXHUwMDA2ea1cdTAwMTV0n4xcdTAwMTnXXHUwMDFk8SrYuFx1MDAxOXZcdTAwMTXbqDz5Un58XHUwMDFiXHTXRovzS/gtP1xcRMKD0feTxafz8v1lJHzbSIhEYCOohVx1MDAwZZigSSRaMPvN+eLbXHUwMDE1Wu9Nx33JN1wiXHUwMDEx2miXpV2hXCLRttGP+Vn59Vx1MDAwMq2XZ1eL+elyuIlcdTAwMTbzOWTZRD/ffS5PTjesXHUwMDE1XTucpfpkWZxcdTAwMGVWj5xicNgrWsmsZmOok4Cq/Pe+yJylTFx1MDAxMP7kP61cdTAwMTl6TFx1MDAxZtzYXHUwMDE0227jXHUwMDE0XHUwMDE0VJO6c15o0Fx1MDAxOXyNeyy4xnpcbrxcdTAwMDPk9V1cdTAwMDVmZcnSXHUwMDAwdf3WK0ZcdTAwMGZ3/32cIHBm1oTrhWqDXHUwMDFlz9Zmv1x1MDAwMODhouQifQ==<!-- payload-end -->
+  <defs>
+    <style class="style-fonts">
+      @font-face {
+        font-family: "Virgil";
+        src: url("https://unpkg.com/@excalidraw/excalidraw@undefined/dist/excalidraw-assets/Virgil.woff2");
+      }
+      @font-face {
+        font-family: "Cascadia";
+        src: url("https://unpkg.com/@excalidraw/excalidraw@undefined/dist/excalidraw-assets/Cascadia.woff2");
+      }
+      @font-face {
+        font-family: "Assistant";
+        src: url("https://unpkg.com/@excalidraw/excalidraw@undefined/dist/excalidraw-assets/Assistant-Regular.woff2");
+      }
+    </style>
+    
+  </defs>
+  <rect x="0" y="0" width="603.4312744140625" height="405.6" fill="transparent"/><g transform="translate(30 30) rotate(0 271.71563720703125 172.8)"><text x="0" y="0" font-family="Cascadia, Segoe UI Emoji" font-size="36px" fill="#1e1e1e" text-anchor="start" style="white-space: pre;" direction="ltr" dominant-baseline="text-before-edge">1. 숫자</text><text x="0" y="43.199999999999996" font-family="Cascadia, Segoe UI Emoji" font-size="36px" fill="#1e1e1e" text-anchor="start" style="white-space: pre;" direction="ltr" dominant-baseline="text-before-edge">2. 문자열</text><text x="0" y="86.39999999999999" font-family="Cascadia, Segoe UI Emoji" font-size="36px" fill="#1e1e1e" text-anchor="start" style="white-space: pre;" direction="ltr" dominant-baseline="text-before-edge">3. 불리언</text><text x="0" y="129.6" font-family="Cascadia, Segoe UI Emoji" font-size="36px" fill="#1e1e1e" text-anchor="start" style="white-space: pre;" direction="ltr" dominant-baseline="text-before-edge">4. null</text><text x="0" y="172.79999999999998" font-family="Cascadia, Segoe UI Emoji" font-size="36px" fill="#1e1e1e" text-anchor="start" style="white-space: pre;" direction="ltr" dominant-baseline="text-before-edge">5. undefined</text><text x="0" y="215.99999999999997" font-family="Cascadia, Segoe UI Emoji" font-size="36px" fill="#1e1e1e" text-anchor="start" style="white-space: pre;" direction="ltr" dominant-baseline="text-before-edge">6. 심볼 (Symbol)</text><text x="0" y="259.2" font-family="Cascadia, Segoe UI Emoji" font-size="36px" fill="#1e1e1e" text-anchor="start" style="white-space: pre;" direction="ltr" dominant-baseline="text-before-edge">7. BigInt</text><text x="0" y="302.4" font-family="Cascadia, Segoe UI Emoji" font-size="36px" fill="#1e1e1e" text-anchor="start" style="white-space: pre;" direction="ltr" dominant-baseline="text-before-edge">8. 객체 (일반 객체, 배열, 함수)</text></g></svg>

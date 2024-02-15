@@ -11,8 +11,11 @@ import cancelIcon from "../public/icons/cancel.svg";
 import messageDisable from "../public/icons/messageDisable.svg";
 import messageEnable from "../public/icons/messageEnable.svg";
 import answerAnimation from "../public/animation/loding.json";
+import CustomSandpack from "../components/CustomSandpack";
 
 import useUser from "../hooks/useUser";
+import { MDXProvider } from "nextra/mdx";
+import { Callout } from "nextra-theme-docs";
 
 const DEFAULT_CONTAINER_HEIGHT = "72px";
 const DEFAULT_FORMCONTAINER_HEIGHT = "48px";
@@ -35,6 +38,8 @@ export default function Nextra({ Component, pageProps }) {
   const textareaRef = useRef(null);
 
   let monthDay = null;
+
+  const shortcodes = { Callout, CustomSandpack };
 
   useEffect(() => {
     const hasVisited = localStorage.getItem("hasVisitedContentPage");
@@ -86,14 +91,14 @@ export default function Nextra({ Component, pageProps }) {
           headers: {
             "Content-Type": "application/json",
           },
-        }
+        },
       );
       const { result: userResult } = await userResponse.json();
       const { user } = userResult.data;
 
       const userId = user.id;
       const campVanilla = user.courses.find(
-        (course) => course.is_admission_exist && course.schedule
+        (course) => course.is_admission_exist && course.schedule,
       );
       const splitedHref = window.location.href.split("/");
       const lessonTitle = splitedHref[splitedHref.length - 1];
@@ -111,7 +116,7 @@ export default function Nextra({ Component, pageProps }) {
             qna: trimedQna,
             lessonTitle,
           }),
-        }
+        },
       );
       const { result: qnaResult } = await qnaResponse.json();
 
@@ -141,7 +146,7 @@ export default function Nextra({ Component, pageProps }) {
     }
   }
 
-  if (!isLoggedIn && (process.env.NODE_ENV === "production")) {
+  if (!isLoggedIn && process.env.NODE_ENV === "production") {
     return <></>;
   }
 
@@ -339,7 +344,7 @@ export default function Nextra({ Component, pageProps }) {
                   <Form className="flex">
                     <Field
                       onKeyDown={(e) => {
-                        if ((e.keyCode === 13) && !e.shiftKey) {
+                        if (e.keyCode === 13 && !e.shiftKey) {
                           e.preventDefault();
                           handleSubmit();
                         }
@@ -422,7 +427,9 @@ export default function Nextra({ Component, pageProps }) {
           <Image src={qnaIcon} alt="logo" />
         </div>
       )}
-      <Component {...pageProps} />
+      <MDXProvider components={shortcodes}>
+        <Component {...pageProps} />
+      </MDXProvider>
     </>
   );
 }

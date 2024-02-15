@@ -1,0 +1,280 @@
+# 📗 문자 자료형
+
+이전에도 조금씩 봤듯이, 문자열은 자바스크립트에서 텍스트를 표현하기 위한 자료형 카테고리입니다.
+
+### 문자열 만들기
+
+자바스크립트에서 문자열을 사용하는 방법은 정확히 3가지가 있습니다.
+
+```javascript
+// 1. 쌍따옴표로 감싸서 만들기
+const a = "first";
+
+// 2. 홑따옴표로 감싸서 만들기
+const b = "second";
+
+// 3. 백틱으로 감싸서 만들기
+const c = `third`;
+```
+
+<Callout>
+백틱 입력키가 어디있는지 모를 경우, 아래와 같이 구글링 해보세요.
+
+"백틱 키 위치 윈도우 혹은 맥" 🖥️
+
+</Callout>
+
+우선 문자열의 양쪽을 같은 기호로 감싸야 문법적으로 유효합니다.
+
+```javascript
+// 양쪽 따옴표가 다르므로 아래 3가지 모두 문법 오류
+const a = "first';
+const b = `second';
+const c = 'third";
+```
+
+프로그래밍을 할때는 항상 이유에 대해서 살펴봐야 합니다. 세 가지의 차이점은 무엇이고, 우리는 어떤 것들을 언제 사용해야 할까요?
+
+쌍따옴표와 홑따옴표는 스타일의 차이 외에 아무런 차이가 없습니다. 그렇지만, **코드는 항상 일관된 스타일로 작성해야 하기에, 둘 중 한가지로 통일해서 작성하도록 해야 합니다.** 그래야 깨끗하고 정돈된 글이 작성되어 팀원들 모두가 함께 읽을 수 있는 글이 탄생합니다.
+
+백틱은 일반 따옴표와는 조금 다릅니다. 특별한 기능이 있습니다.
+
+```javascript
+const greeting = "hello";
+const myName = "ken";
+
+const result = `${greeting} ${myName}`;
+console.log(result);
+```
+
+위와 같은 코드를 실행하니 아래와 같은 결과가 나왔습니다.
+
+![string-console-1](/images/posts/string-console-1.png)
+
+`result` 라는 변수를 출력하니 `'hello ken'` 이라는 문자열이 출력되었네요. 무슨 일이 일어난 걸까요?
+
+잠시 추측해보세요. 어렵지 않습니다. 🙂
+
+생각을 마치신 후에 아래 링크에 들어가셔서 "자바스크립트 삽입" 파트를 살펴보세요.
+
+[First Steps Strings](https://developer.mozilla.org/ko/docs/Learn/JavaScript/First_steps/Strings#javascript_%EC%82%BD%EC%9E%85)
+
+### 문자열 붙이기
+
+문자열은 덧셈 연산이 가능합니다.
+
+```javascript
+const greeting = "hello,";
+const myName = "ken";
+
+console.log(greeting + myName);
+```
+
+위의 예시를 실행하면 아래와 같이 출력됩니다. 정확히 보세요.
+
+![string-console-2](/images/posts/string-console-2.png)
+
+<Callout>당연한 결과이긴 하지만, 쉼표 옆에 공백이 없습니다.</Callout>
+
+문자열은 덧셈 연산이 가능하다고 했지만, 사실 덧셈 연산이라기 보다는 **이어 붙인다고 표현하는게 더욱 정확** 할 것 같습니다. 😎
+
+![string-console-3](/images/posts/string-console-3.png)
+
+### 문자열의 길이
+
+모든 문자열은 우리에게 문자열의 길이를 판별할 수 있는 방법을 제공합니다.
+
+예를 들어 다음과 같죠. 한번 볼까요?
+
+```javascript
+const myName = "ken";
+
+console.log(myName.length);
+```
+
+여러분이 원하는 문자열의 뒤에 `.length` 라고 붙이면 그 구문은 문자열의 길이를 숫자로 알려주게 됩니다.
+
+`"ken"` 이라는 문자열은 3개의 알파벳이 있기 때문에 길이는 3이고, `.length` 를 붙이면 3이 됩니다.
+
+![string-console-4](/images/posts/string-console-4.png)
+
+이쯤에서 이제 우리가 배운 내용이 조금 있으니, 몇 가지를 조합해서 다음과 같은 문제를 해결해 볼 수 있습니다.
+
+아래에 주어진 코드에서 `myName` 변수의 문자열 내용에 따라 출력문이 연동되어 적절히 출력될 수 있도록 코드를 변경해보세요. 다시 말하자면, `myName` 변수의 값만 바꾸어도, 출력 내용이 자동으로 변경될 수 있어야 합니다.
+
+```javascript
+const myName = "ken";
+console.log("안녕하세요, 제 이름은 ken입니다. 제 이름은 3글자 입니다.");
+```
+
+<Callout>
+자바스크립트는 프로그래밍 **"언어"**입니다. 한국어도 언어고, 영어도 언어죠. 상황에 따라 더욱 적절한 워딩은 있을 수 있지만, 한 가지 정답만 있는 것은 아닙니다.\
+\
+배가 고프다. 허기지다. 굶주렸다. 꼬르륵 거린다. 등 모두 동일한 의미죠.\
+\
+프로그래밍 언어 또한 마찬가지입니다. 같은 상황이라도 여러 가지 방법이 있을 수 있고, 우리는 서로의 생각을 교류하고 장단점을 비교하고 최선을 찾아야 합니다.\
+\
+흑백논리로 정답과 오답으로 나누지 마세요.
+
+</Callout>
+
+<details>
+
+<summary>
+  여러분이 생각한 코드가 있다면, 제가 생각한 코드도 한번 보세요. 🥸
+</summary>
+
+```javascript
+const myName = "ken";
+console.log(
+  `안녕하세요, 제 이름은 ${myName}입니다. 제 이름은 ${myName.length}글자 입니다.`,
+);
+```
+
+</details>
+
+또한 반드시 변수에 담지 않아도 길이를 판별할 수 있고, 어디든 문자열이 존재한다면 문자열 뒤에는 `.length` 를 붙여서 그 문자열의 길이가 얼마나 되는지 판별할 수 있습니다.
+
+```javascript
+console.log("hello, world".length);
+```
+
+또한 너무 긴 문장이 있다면 손으로 세지 않아도 몇 글자인지 알 수 있습니다.
+
+```javascript
+const str = "또한 반드시 변수에 담지 않아도 길이를 판별할 수 있고, 어디든 문자열이 존재한다면 문자열 뒤에는 .length 를 붙여서 그 문자열의 길이가 얼마나 되는지 판별할 수 있습니다.";
+console.log(`위 문장은 ${str.length}글자입니다.`;
+```
+
+`.length` 는 숫자로 판별해주기 때문에, 이전에 다루었던 숫자 자료형으로 할 수 있는 연산을 **모두** 할 수 있습니다. 🥸
+
+```javascript
+const a = "looooong".length;
+const b = "short".length;
+
+const str = `${a}과 ${b}의 합은 ${a + b}입니다.`;
+
+console.log(str);
+```
+
+아래와 같은 결과를 확인하셨죠?
+
+![string-console-5](/images/posts/string-console-5.png)
+
+이제 조금씩 조합할 수 있는 재료들이 늘어가네요. 🙂
+
+### 문자열의 인덱스
+
+프로그래밍의 세계에는 인덱스라는 체계가 있습니다. 인덱스는 간략하게 말하면, 프로그래밍 세계에서 사용하는 순서 체계입니다.
+
+현실 세계에서는 순서를 셀 때, 첫 번째, 두 번째, 세 번째의 순서로 진행하지만, 프로그래밍 세계에서는 0번째, 1번째, 2번째의 순서로 진행합니다. 인덱스는 이런 순서 체계를 의미합니다.
+
+문자열에는 이런 인덱스 체계가 적용되어 있기 때문에, 우리가 필요하다면 언제든지 사용할 수 있습니다.
+
+예를 들어, `"abcdef"`라는 문자열이 있다면, a - b - c - d - e - f의 순서로 만들어져 있습니다. 이러한 정보를 담고 있는 것이 **문자열의 인덱스**입니다. 💁🏻‍♂️
+
+![string-draw-1](/images/posts/string-draw-1.svg)
+
+코드에서 우리는 인덱스를 아래와 같이 활용할 수 있습니다.
+
+```javascript
+const str = "abcdef";
+
+console.log(str[0] + str[2] + str[4]);
+```
+
+위의 예시 코드를 실행하면 어떻게 될까요?
+
+![string-console-5](/images/posts/string-console-5.png)
+
+잠시 정리하자면, **문자열의 뒤에 대괄호를 사용하고 대괄호 내부에 인덱스 숫자를 입력하면 해당 인덱스 위치에 있는 문자열에 접근할 수 있습니다.**
+
+아래의 예시 코드를 실행했을때 출력되는 결과는 무엇일까요?
+
+```javascript
+const str = "hello";
+
+console.log(str[1]);
+```
+
+당연히 `"e"` 겠죠?
+
+<Callout>
+  인덱스로 접근하여 가져오는 값 또한 문자열 자료형입니다. 예를 들어, 바로 위에서
+  `"e"`가 따옴표로 감싸져 있는 문자열이었던 이유도 그 때문입니다.
+</Callout>
+
+그렇다면, 아래의 예시 코드는 출력되는 결과가 어떻게 될까요?
+
+```javascript
+const str = "hello";
+
+console.log(str[10]);
+```
+
+여러분이 이전 단계의 내용들을 잘 기억하고 추측해본다면 유추할 수 있습니다. 🧐
+
+직접 실행해보시고 확인해보세요. 확인해보시면 이해가 될 것이라고 생각합니다.
+
+### 문자열의 다양한 기능
+
+문자열에는 다양한 기능들이 있습니다.
+
+아래 코드들을 한 줄씩 각각 실행시켜보며 어떤 기능을 하는지 이해해보시고, 여러분 만의 예시를 만들어 변경하고 실험해보세요. 재미있는 실험 내용이 있다면 친구들과 공유해보세요. 😎
+
+<Callout>
+  문자열 뒤에 사용된 영어 단어(보라색 단어)의 의미를 잘 이해해보시는 것이 매우
+  중요합니다.
+</Callout>
+```javascript const a = "ㅋ".repeat(3); console.log(a);
+
+const b = "hi ken".includes("ken");
+console.log(b);
+
+const c = "what are you doing?".startsWith("are");
+console.log(c);
+
+const d = "I am doing FiNe".endsWith("iNe");
+console.log(d);
+
+const e = "Are you sure?".indexOf(" ");
+console.log(e);
+
+const f = "Yeah I am sure".slice(2, 4);
+console.log(f);
+
+const g = "I?doubt?that".split("?");
+console.log(g);
+
+const h = "vaco".split("");
+console.log(h);
+
+const i = "I am Hungry".toLowerCase();
+console.log(i);
+
+const j = "Hello World".toUpperCase();
+console.log(j);
+
+````
+
+아래 문서의 인스턴스 메서드 파트에서 위에 작성된 보라색 단어들의 이름을 기준으로 찾아서 어떤 기능을 하는지 조사해보세요.
+
+[Global](https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/String#%EC%9D%B8%EC%8A%A4%ED%84%B4%EC%8A%A4_%EB%A9%94%EC%84%9C%EB%93%9C)
+
+위의 예시 코드와 문서를 살펴보시는 과정에서는 반드시 아래와 같은 절차를 따라서 하세요. ✅
+
+1. 문서 내 예제를 먼저 자세히 읽고, 실행시켜 보시면서 감을 읽히세요.
+2. 그리고 문서의 설명 글을 자세히 읽고, 방금 살펴본 예제와 비교해보세요. 이해가 안되면 다시 예제를 실행해보세요.
+3. 파라미터(소괄호 내에 입력해줘야 하는 값)에 대한 부분과 반환값(전체 구문의 실행 결과값)에 대한 내용을 읽고 예제 코드의 내용과 비교해보세요.
+
+### 조합하여 사용해보기
+
+문자열을 붙이면 또 다른 문자열이 됩니다. 문자열의 인덱스 위치를 기준으로 접근하면 해당 인덱스 위치의 문자열을 가져옵니다. 이 문자열 결과물들 또한 문자열이기 때문에, 위에서 봤던 문자열들의 다양한 기능들을 모두 사용할 수 있습니다.
+
+```javascript
+const a = ("hello" + ", world").toUpperCase();
+console.log(a);
+
+const b = "hi_seoul"[2].repeat(10);
+console.log(b);
+````
