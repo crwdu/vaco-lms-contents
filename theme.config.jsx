@@ -20,7 +20,7 @@ const config = {
   },
   darkMode: false,
   logo: <Image alt="vaco logo" src={logo} width={150} height={58} />,
-  logoLink: process.env.NEXT_PUBLIC_URI,
+  logoLink: "/",
   editLink: {
     component: () => <></>,
   },
