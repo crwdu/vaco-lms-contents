@@ -1,50 +1,38 @@
 {
   "functions": {
-    "title": "함수",
-    "display": "normal"
+    "title": "함수"
   },
   "functions-quiz-basic1": {
-    "title": "함수 퀴즈(기본) 1",
-    "display": "normal"
+    "title": "함수 퀴즈(기본) 1"
   },
   "functions-quiz-basic2": {
-    "title": "함수 퀴즈(기본) 2",
-    "display": "normal"
+    "title": "함수 퀴즈(기본) 2"
   },
   "arrays": {
-    "title": "배열",
-    "display": "normal"
+    "title": "배열"
   },
   "arrays-quiz-basic": {
-    "title": "배열 퀴즈(기본)",
-    "display": "normal"
+    "title": "배열 퀴즈(기본)"
   },
   "arrays-quiz-advanced1": {
-    "title": "배열 퀴즈(심화) 1",
-    "display": "normal"
+    "title": "배열 퀴즈(심화) 1"
   },
   "arrays-quiz-advanced2": {
-    "title": "배열 퀴즈(심화) 2",
-    "display": "normal"
+    "title": "배열 퀴즈(심화) 2"
   },
   "objects": {
-    "title": "객체",
-    "display": "normal"
+    "title": "객체"
   },
   "objects-quiz-basic": {
-    "title": "객체 퀴즈(기본)",
-    "display": "normal"
+    "title": "객체 퀴즈(기본)"
   },
   "objects-quiz-advanced1": {
-    "title": "객체 퀴즈(심화) 1",
-    "display": "normal"
+    "title": "객체 퀴즈(심화) 1"
   },
   "objects-quiz-advanced2": {
-    "title": "객체 퀴즈(심화) 2",
-    "display": "normal"
+    "title": "객체 퀴즈(심화) 2"
   },
   "scope": {
-    "title": "스코프",
-    "display": "normal"
+    "title": "스코프"
   }
 }

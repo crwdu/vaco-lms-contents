@@ -1,98 +1,74 @@
 {
   "what-is-javascript": {
-    "title": "자바스크립트란?",
-    "display": "normal"
+    "title": "자바스크립트란?"
   },
   "how-to-study": {
-    "title": "학습은 어떻게 해야 할까?",
-    "display": "normal"
+    "title": "학습은 어떻게 해야 할까?"
   },
   "stepping-in": {
-    "title": "자바스크립트 찍먹",
-    "display": "normal"
+    "title": "자바스크립트 찍먹"
   },
   "ecmascript": {
-    "title": "EcmaScript",
-    "display": "normal"
+    "title": "EcmaScript"
   },
   "variables": {
-    "title": "변수",
-    "display": "normal"
+    "title": "변수"
   },
   "naming-variables": {
-    "title": "변수의 이름",
-    "display": "normal"
+    "title": "변수의 이름"
   },
   "data-types": {
-    "title": "자료형",
-    "display": "normal"
+    "title": "자료형"
   },
   "numbers": {
-    "title": "숫자 자료형",
-    "display": "normal"
+    "title": "숫자 자료형"
   },
   "numbers-quiz-basic": {
-    "title": "숫자 자료형 퀴즈(기본)",
-    "display": "normal"
+    "title": "숫자 자료형 퀴즈(기본)"
   },
   "numbers-quiz-advanced": {
-    "title": "숫자 자료형 퀴즈(심화)",
-    "display": "normal"
+    "title": "숫자 자료형 퀴즈(심화)"
   },
   "boolean": {
-    "title": "불리언 자료형",
-    "display": "normal"
+    "title": "불리언 자료형"
   },
   "null-and-undefined": {
-    "title": "null 자료형과 undefined 자료형",
-    "display": "normal"
+    "title": "null 자료형과 undefined 자료형"
   },
   "string": {
-    "title": "문자 자료형",
-    "display": "normal"
+    "title": "문자 자료형"
   },
   "string-quiz-basic": {
-    "title": "문자 자료형 퀴즈(기본)",
-    "display": "normal"
+    "title": "문자 자료형 퀴즈(기본)"
   },
   "string-quiz-advanced": {
-    "title": "문자 자료형 퀴즈(심화)",
-    "display": "normal"
+    "title": "문자 자료형 퀴즈(심화)"
   },
   "logical-operators": {
-    "title": "논리 연산자",
-    "display": "normal"
+    "title": "논리 연산자"
   },
   "logical-operators-quiz-basic1": {
-    "title": "논리 연산자 퀴즈(기본) 1",
-    "display": "normal"
+    "title": "논리 연산자 퀴즈(기본) 1"
   },
   "logical-operators-quiz-basic2": {
-    "title": "논리 연산자 퀴즈(기본) 2",
-    "display": "normal"
+    "title": "논리 연산자 퀴즈(기본) 2"
   },
   "logical-operators-quiz-advanced1": {
-    "title": "논리 연산자 퀴즈(심화) 1",
-    "display": "normal"
+    "title": "논리 연산자 퀴즈(심화) 1"
   },
   "logical-operators-quiz-advanced2": {
-    "title": "논리 연산자 퀴즈(심화) 2",
-    "display": "normal"
+    "title": "논리 연산자 퀴즈(심화) 2"
   },
   "comparison-operators": {
-    "title": "비교 연산자",
-    "display": "normal"
+    "title": "비교 연산자"
   },
   "conditional-statements": {
-    "title": "조건문",
-    "display": "normal"
+    "title": "조건문"
   },
   "loops": {
-    "title": "반복문",
-    "display": "normal"
+    "title": "반복문"
   },
   "conditionals-and-loops-quiz-advanced1": {
-    "title": "반복문 & 조건문 퀴즈(심화)",
-    "display": "normal"
+    "title": "반복문 & 조건문 퀴즈(심화)"
   }
 }
