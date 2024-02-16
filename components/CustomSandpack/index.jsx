@@ -27,15 +27,19 @@ export default function Sandpack({ files }) {
           initMode="lazy"
           wrapContent={true}
           style={{
-            height: "720px",
+            height: "700px",
             maxHeight: "90%",
           }}
         />
         <SandpackTests
           style={{
-            height: "720px",
+            height: "700px",
             maxHeight: "90%",
           }}
+          verbose={true}
+          watchMode={false}
+          showVerboseButton={false}
+          showWatchButton={false}
         />
       </SandpackLayout>
     </SandpackProvider>
