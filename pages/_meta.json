@@ -1,13 +1,39 @@
 {
   "index": {
-    "display": "hidden"
+    "title": "Welcome!",
+    "display": "hidden",
+    "theme": {
+      "layout": "full",
+      "breadcrumb": false,
+      "footer": true,
+      "sidebar": false,
+      "toc": true,
+      "pagination": false
+    }
   },
-  "part1": "파트 1",
-  "part2": "파트 2",
-  "contact": {
-    "title": "Contact ↗",
-    "type": "page",
-    "href": "https://www.vanillacoding.co",
-    "newWindow": true
+  "part1": {
+    "title": "파트 1",
+    "theme": {
+      "layout": "full",
+      "breadcrumb": false,
+      "footer": true,
+      "sidebar": true,
+      "toc": true,
+      "pagination": true
+    }
+  },
+  "--": {
+    "type": "separator"
+  },
+  "part2": {
+    "title": "파트 2",
+    "theme": {
+      "layout": "full",
+      "breadcrumb": false,
+      "footer": true,
+      "sidebar": true,
+      "toc": true,
+      "pagination": true
+    }
   }
 }
