@@ -18,6 +18,7 @@ const config = {
   toc: {
     float: false,
   },
+  gitTimestamp: null,
   darkMode: false,
   logo: <Image alt="vaco logo" src={logo} width={150} height={58} />,
   logoLink: "/",
