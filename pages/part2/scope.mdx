@@ -6,7 +6,7 @@
 
 예제 코드부터 바로 볼까요?
 
-```javascript
+```javascript copy
 function logSomething() {
   const a = 1;
   console.log(a);
@@ -30,7 +30,7 @@ console.log(a); // 오류 발생
 
 다른 예시들을 살펴보며 시작해볼까요?
 
-```javascript
+```javascript copy
 function foo() {
   const a = 1;
 
@@ -59,7 +59,7 @@ foo();
 
 위 예제 코드에서 함수 내부의 Scope 개념을 한번 살펴보도록 하겠습니다.
 
-```javascript
+```javascript copy
 function foo() {
   /* --- foo scope start --- */
   const a = 1;
@@ -81,7 +81,7 @@ foo();
 
 위 예제 코드에서 **"foo scope start"** 부분부터 **"foo scope end"** 부분 내에서는 언제든지 자유롭게 `a` 라는 변수에 접근하여 사용이 가능한 것입니다.
 
-![scope-2](/images/posts/scope-2.svg)
+![scope-2](/images/posts/scope-2.png)
 
 **이 부분을 우리는 `foo` 함수 Scope라고 부를 수 있고, 현재 `a` 변수는 `foo` 함수 Scope 내부에서 사용 가능합니다.**
 
@@ -89,7 +89,7 @@ foo();
 
 아래 코드를 한번 살펴보세요.
 
-```javascript
+```javascript copy
 const a = 1;
 
 function foo() {
@@ -131,7 +131,7 @@ Scope란 위 그림처럼 계층 구조로 형성됩니다. 어떤 함수로도 
 
 위 그림에서는 가장 최상위에 Global Scope가 존재하고, 그 하위에 `Person` 함수 Scope가 존재하고, `Person` 함수 Scope 내부에 `displayName`이라는 함수의 Scope가 존재합니다.
 
-![scope-4](/images/posts/scope-4.svg)
+![scope-4](/images/posts/scope-4.png)
 
 **이런 Scope 계층에서 가장 중요한 특징은 상위에서 하위 Scope 내부 정보를 접근할 수 없다는 점입니다. ❌**
 
@@ -143,7 +143,7 @@ Scope란 위 그림처럼 계층 구조로 형성됩니다. 어떤 함수로도 
 
 ### 예시 2번
 
-```javascript
+```javascript copy
 const a = 1;
 
 function foo() {
@@ -167,7 +167,7 @@ foo();
 
 ### 예시 3번
 
-```javascript
+```javascript copy
 const a = 1;
 
 function foo() {
@@ -195,7 +195,7 @@ console.log(a); // 로그 #2
 
 ### 예시 4번
 
-```javascript
+```javascript copy
 function foo() {
   const a = 2;
   console.log(a); // 로그 #1

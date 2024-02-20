@@ -10,7 +10,7 @@
 
 아래와 같은 코드를 한번 살펴 볼까요?
 
-```javascript
+```javascript copy
 const a = 10;
 const b = 17;
 
@@ -22,7 +22,7 @@ console.log(result);
 
 크기를 비교하는 연산자는 크기에 대한 판단을 불리언 값으로 결정합니다. 그렇기에 `result` 변수에 할당되는 값은 불리언 자료형입니다. 지금 위의 예시에서는 당연히 `true` 겠죠?
 
-```javascript
+```javascript copy
 const s = true;
 const h = false;
 
@@ -34,7 +34,7 @@ console.log(s === h);
 
 아직 어려운 내용일 수 있지만, 아래 코드의 결과는 무엇이며 왜 그럴까요?
 
-```javascript
+```javascript copy
 const a = 0;
 const b = false;
 
@@ -50,7 +50,7 @@ console.log(a == b);
 
 인터넷에서 여러 가지 코드를 참고하다 보면, 아래와 같이 불리언 값을 조금 다른 방식으로 만들어 사용하는 모습을 볼 수 있습니다. 하지만, 항상 아래의 Good 케이스처럼 만들어 사용하시고 Bad 케이스처럼 사용하는 것은 지양하세요.
 
-```javascript
+```javascript copy
 const o = new Boolean(true); // Bad 👎🏻
 const t = true; // Good 👍🏻
 ```

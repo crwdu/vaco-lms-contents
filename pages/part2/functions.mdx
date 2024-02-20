@@ -20,11 +20,11 @@
 
 함수는 아래와 같이 만들 수 있습니다.
 
-![functions-1](/images/posts/functions-1.svg)
+![functions-1](/images/posts/functions-1.png)
 
 코드로 작성해보자면,
 
-```javascript
+```javascript copy
 function greet() {
   const myName = "ken";
   console.log(`Hello ${myName}`);
@@ -38,7 +38,7 @@ function greet() {
 
 다음과 같은 코드를 한번 실행시켜보세요.
 
-```javascript
+```javascript copy
 console.log(1);
 
 function greet() {
@@ -59,11 +59,11 @@ console.log(2);
 
 함수를 호출하려면 다음과 같이 **함수 이름 뒤에 소괄호**를 붙여 호출할 수 있습니다.
 
-![functions-2](/images/posts/functions-2.svg)
+![functions-2](/images/posts/functions-2.png)
 
 코드로 작성해본다면 아래와 같습니다.
 
-```javascript
+```javascript copy
 function greet() {
   const myName = "ken";
   console.log(`Hello ${myName}`);
@@ -74,11 +74,11 @@ greet(); // greet 함수 호출
 
 위와 같이 `greet` 함수를 호출하는 코드를 추가하면 아래와 같이 출력 결과가 나타납니다.
 
-![functions-3](/images/posts/functions-3.svg)
+![functions-3](/images/posts/functions-3.png)
 
 다시 정리해보자면,
 
-![functions-4](/images/posts/functions-4.svg)
+![functions-4](/images/posts/functions-4.png)
 
 <Callout>
   함수 내부에는 우리가 원하는 만큼의 코드를 마음껏 작성할 수 있습니다. 또 다른
@@ -92,7 +92,7 @@ greet(); // greet 함수 호출
 
 **함수의 반환값 혹은 결과값이라는 것은 `return` 이라는 문법 키워드를 이용하여 지정할 수 있습니다. 💁🏻‍♂️**
 
-```javascript
+```javascript copy
 function getGreeting() {
   const myName = "ken";
   return `Hello ${myName}`;
@@ -103,7 +103,7 @@ function getGreeting() {
 
 위에서 봤던 예시 코드를 다시 조금 변경하여 다시 살펴볼까요?
 
-```javascript
+```javascript copy
 function getGreeting() {
   const myName = "ken";
   return `Hello ${myName}`;
@@ -115,7 +115,7 @@ console.log(result);
 
 위와 같이 코드를 작성한 경우, 6번째 줄에서 `getGreeting` 함수가 호출되어 `"Hello ken"` 이라는 문자열이 반환(return)됩니다. 그리고 이 함수의 반환값인 `"Hello ken"`이 `result` 변수에 대입되어 7번째 줄에서 출력되고 있습니다.
 
-![functions-5](/images/posts/functions-5.svg)
+![functions-5](/images/posts/functions-5.png)
 
 출력 결과를 확인해보면 다음과 같이 나타납니다.
 
@@ -125,7 +125,7 @@ console.log(result);
 
 함수에서 명시적으로 `return` 을 사용하지 않아도 함수의 반환값은 **반드시** 존재합니다.
 
-```javascript
+```javascript copy
 function logGreeting() {
   const myName = "ken";
   console.log(`Hello ${myName}`);
@@ -147,7 +147,7 @@ console.log(result);
 
 함수를 만들때 아래와 같이 매개변수에 대한 가정을 하고 함수 내용을 작성합니다.
 
-```javascript
+```javascript copy
 function getGreeting(name) {
   return `Hello ${name}`;
 }
@@ -155,7 +155,7 @@ function getGreeting(name) {
 
 함수 내용은 함수가 호출되어야 실행됩니다. 매개변수 또한, 함수를 만들 당시에는 이 자리에 어떤 값이 들어올 예정이라는 표식만 해두는 것이며, 실제로 어떤 값이 들어오는지는 함수가 호출되는 시점에 결정됩니다.
 
-```javascript
+```javascript copy
 function getGreeting(name) {
   return `Hello ${name}`;
 }
@@ -168,7 +168,7 @@ console.log(result);
 
 매개변수를 사용하면, 하나의 함수를 활용하여 상황에 맞춰 동적으로 대응할 수 있습니다.
 
-```javascript
+```javascript copy
 function getGreeting(name) {
   return `Hello ${name}`;
 }
@@ -184,7 +184,7 @@ console.log(greetingToWan);
 
 **매개변수는 우리가 원하는 만큼 많이 선언하고 사용할 수 있지만, 같은 함수 내에서는 모든 매개변수의 이름은 고유해야 합니다. 💁🏻‍♂️**
 
-```javascript
+```javascript copy
 function add(a, b) {
   return a + b;
 }
@@ -206,7 +206,7 @@ console.log(result);
 
 코드로 보는게 조금 더 이해가 쉬울것 같으니, 예시를 볼까요? 🥸
 
-```javascript
+```javascript copy
 function eatDinner(menu) {
   if (menu === "burger") {
     console.log("조건문 내부");
@@ -225,7 +225,7 @@ console.log(feeling);
 
 예시를 하나만 더 볼까요?
 
-```javascript
+```javascript copy
 function countDown(year, target) {
   for (let i = year; i > 0; i -= 100) {
     if (i === target) {

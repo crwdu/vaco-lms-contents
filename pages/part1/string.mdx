@@ -6,7 +6,7 @@
 
 자바스크립트에서 문자열을 사용하는 방법은 정확히 3가지가 있습니다.
 
-```javascript
+```javascript copy
 // 1. 쌍따옴표로 감싸서 만들기
 const a = "first";
 
@@ -26,7 +26,7 @@ const c = `third`;
 
 우선 문자열의 양쪽을 같은 기호로 감싸야 문법적으로 유효합니다.
 
-```javascript
+```javascript copy
 // 양쪽 따옴표가 다르므로 아래 3가지 모두 문법 오류
 const a = "first';
 const b = `second';
@@ -39,7 +39,7 @@ const c = 'third";
 
 백틱은 일반 따옴표와는 조금 다릅니다. 특별한 기능이 있습니다.
 
-```javascript
+```javascript copy
 const greeting = "hello";
 const myName = "ken";
 
@@ -63,7 +63,7 @@ console.log(result);
 
 문자열은 덧셈 연산이 가능합니다.
 
-```javascript
+```javascript copy
 const greeting = "hello,";
 const myName = "ken";
 
@@ -86,7 +86,7 @@ console.log(greeting + myName);
 
 예를 들어 다음과 같죠. 한번 볼까요?
 
-```javascript
+```javascript copy
 const myName = "ken";
 
 console.log(myName.length);
@@ -102,7 +102,7 @@ console.log(myName.length);
 
 아래에 주어진 코드에서 `myName` 변수의 문자열 내용에 따라 출력문이 연동되어 적절히 출력될 수 있도록 코드를 변경해보세요. 다시 말하자면, `myName` 변수의 값만 바꾸어도, 출력 내용이 자동으로 변경될 수 있어야 합니다.
 
-```javascript
+```javascript copy
 const myName = "ken";
 console.log("안녕하세요, 제 이름은 ken입니다. 제 이름은 3글자 입니다.");
 ```
@@ -124,7 +124,7 @@ console.log("안녕하세요, 제 이름은 ken입니다. 제 이름은 3글자 
   여러분이 생각한 코드가 있다면, 제가 생각한 코드도 한번 보세요. 🥸
 </summary>
 
-```javascript
+```javascript copy
 const myName = "ken";
 console.log(
   `안녕하세요, 제 이름은 ${myName}입니다. 제 이름은 ${myName.length}글자 입니다.`,
@@ -135,20 +135,20 @@ console.log(
 
 또한 반드시 변수에 담지 않아도 길이를 판별할 수 있고, 어디든 문자열이 존재한다면 문자열 뒤에는 `.length` 를 붙여서 그 문자열의 길이가 얼마나 되는지 판별할 수 있습니다.
 
-```javascript
+```javascript copy
 console.log("hello, world".length);
 ```
 
 또한 너무 긴 문장이 있다면 손으로 세지 않아도 몇 글자인지 알 수 있습니다.
 
-```javascript
+```javascript copy
 const str = "또한 반드시 변수에 담지 않아도 길이를 판별할 수 있고, 어디든 문자열이 존재한다면 문자열 뒤에는 .length 를 붙여서 그 문자열의 길이가 얼마나 되는지 판별할 수 있습니다.";
 console.log(`위 문장은 ${str.length}글자입니다.`;
 ```
 
 `.length` 는 숫자로 판별해주기 때문에, 이전에 다루었던 숫자 자료형으로 할 수 있는 연산을 **모두** 할 수 있습니다. 🥸
 
-```javascript
+```javascript copy
 const a = "looooong".length;
 const b = "short".length;
 
@@ -177,7 +177,7 @@ console.log(str);
 
 코드에서 우리는 인덱스를 아래와 같이 활용할 수 있습니다.
 
-```javascript
+```javascript copy
 const str = "abcdef";
 
 console.log(str[0] + str[2] + str[4]);
@@ -191,7 +191,7 @@ console.log(str[0] + str[2] + str[4]);
 
 아래의 예시 코드를 실행했을때 출력되는 결과는 무엇일까요?
 
-```javascript
+```javascript copy
 const str = "hello";
 
 console.log(str[1]);
@@ -206,7 +206,7 @@ console.log(str[1]);
 
 그렇다면, 아래의 예시 코드는 출력되는 결과가 어떻게 될까요?
 
-```javascript
+```javascript copy
 const str = "hello";
 
 console.log(str[10]);
@@ -226,7 +226,7 @@ console.log(str[10]);
   문자열 뒤에 사용된 영어 단어(보라색 단어)의 의미를 잘 이해해보시는 것이 매우
   중요합니다.
 </Callout>
-```javascript const a = "ㅋ".repeat(3); console.log(a);
+```javascript copy const a = "ㅋ".repeat(3); console.log(a);
 
 const b = "hi ken".includes("ken");
 console.log(b);
@@ -271,7 +271,7 @@ console.log(j);
 
 문자열을 붙이면 또 다른 문자열이 됩니다. 문자열의 인덱스 위치를 기준으로 접근하면 해당 인덱스 위치의 문자열을 가져옵니다. 이 문자열 결과물들 또한 문자열이기 때문에, 위에서 봤던 문자열들의 다양한 기능들을 모두 사용할 수 있습니다.
 
-```javascript
+```javascript copy
 const a = ("hello" + ", world").toUpperCase();
 console.log(a);
 
