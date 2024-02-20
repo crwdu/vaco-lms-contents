@@ -4,6 +4,7 @@ import {
   SandpackTests,
   SandpackLayout,
 } from "@codesandbox/sandpack-react";
+import { autocompletion, completionKeymap } from "@codemirror/autocomplete";
 
 export default function Sandpack({ files }) {
   return (
@@ -30,6 +31,8 @@ export default function Sandpack({ files }) {
             height: "700px",
             maxHeight: "90%",
           }}
+          extensions={[autocompletion()]}
+          extensionsKeymap={[completionKeymap]}
         />
         <SandpackTests
           style={{
