@@ -5,6 +5,8 @@ import { Formik, Field, Form } from "formik";
 import { cloneDeep } from "lodash";
 import { format } from "date-fns";
 import Lottie from "lottie-react";
+import { MDXProvider } from "nextra/mdx";
+import { Callout } from "nextra-theme-docs";
 
 import qnaIcon from "../public/icons/bot.png";
 import cancelIcon from "../public/icons/cancel.svg";
@@ -14,8 +16,7 @@ import answerAnimation from "../public/animation/loding.json";
 import CustomSandpack from "../components/CustomSandpack";
 
 import useUser from "../hooks/useUser";
-import { MDXProvider } from "nextra/mdx";
-import { Callout } from "nextra-theme-docs";
+import useGlobalEvents from "../hooks/useGlobalEvents";
 
 const DEFAULT_CONTAINER_HEIGHT = "72px";
 const DEFAULT_FORMCONTAINER_HEIGHT = "48px";
@@ -25,6 +26,8 @@ const MAX_FROMCONTAINER_HEIGHT = "96px";
 const MAX_TEXTAREA_HEIGHT = "72px";
 
 export default function Nextra({ Component, pageProps }) {
+  useGlobalEvents();
+
   const { isLoggedIn } = useUser();
 
   const [isStartingQna, setQnaStatus] = useState(false);
