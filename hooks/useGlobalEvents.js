@@ -10,13 +10,13 @@ export default function useGlobalEvents() {
 
   // 컨텐츠 진입 - 웹앱 초기화
   useEffect(() => {
-    eventSender.send('visit');
+    eventSender.send("visit");
   }, []);
 
   // 컨텐트 진입 - 페이지 이동
   useEffect(() => {
     const handleRouteChange = (url) => {
-      eventSender.send('visit');
+      eventSender.send("visit");
     };
 
     router.events.on("routeChangeComplete", handleRouteChange);
@@ -30,7 +30,7 @@ export default function useGlobalEvents() {
   useEffect(() => {
     // 웹앱 내 다른 컨텐츠로 이탈
     const handleRouteChange = (url) => {
-      eventSender.send('leave');
+      eventSender.send("leave");
     };
 
     router.events.on("beforeHistoryChange", handleRouteChange);
@@ -38,7 +38,7 @@ export default function useGlobalEvents() {
     // 웹앱 이탈
     const handleVisibilityChange = () => {
       if (document.visibilityState === "hidden") {
-        eventSender.send('leave');
+        eventSender.send("leave");
       }
     };
 
@@ -111,7 +111,7 @@ export default function useGlobalEvents() {
   useEffect(() => {
     const handleClick = (event) => {
       if (event.target.matches(".nextra-button[title='Copy code']")) {
-        eventSender.send('copy');
+        eventSender.send("copy");
       }
     };
 
