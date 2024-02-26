@@ -1,35 +1,21 @@
 {
   "index": {
-    "title": "Welcome!",
+    "title": "바닐라코딩",
     "display": "hidden",
-    "theme": {
-      "layout": "full",
-      "breadcrumb": false,
-      "footer": true,
-      "sidebar": false,
-      "toc": true,
-      "pagination": false
-    }
-  },
-  "part1": {
-    "title": "파트 1",
     "theme": {
       "layout": "full",
       "breadcrumb": false,
       "footer": true,
       "sidebar": true,
       "toc": true,
-      "pagination": true
+      "pagination": false
     }
   },
-  "--": {
-    "type": "separator"
-  },
-  "part2": {
-    "title": "파트 2",
+  "js101": {
+    "title": "🧩 JavaScript 101",
     "theme": {
       "layout": "full",
-      "breadcrumb": false,
+      "breadcrumb": true,
       "footer": true,
       "sidebar": true,
       "toc": true,

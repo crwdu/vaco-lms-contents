@@ -1,0 +1,17 @@
+{
+  "what-is-javascript": {
+    "title": "자바스크립트의 장점은 무엇일까?"
+  },
+  "how-to-study": {
+    "title": "학습은 어떻게 해야할까?"
+  },
+  "stepping-in": {
+    "title": "자바스크립트 찍먹하기"
+  },
+  "ecmascript": {
+    "title": "EcmaScript"
+  },
+  "playground": {
+    "title": "자바스크립트 연습장 프로그램"
+  }
+}

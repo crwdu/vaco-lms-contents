@@ -1,0 +1,20 @@
+{
+  "logical-operators": {
+    "title": "논리 연산자"
+  },
+  "comparison-operators": {
+    "title": "비교 연산자"
+  },
+  "operators-quiz-1": {
+    "title": "연산자 퀴즈 #1"
+  },
+  "operators-quiz-2": {
+    "title": "연산자 퀴즈 #2"
+  },
+  "operators-quiz-3": {
+    "title": "연산자 퀴즈 #3"
+  },
+  "operators-quiz-4": {
+    "title": "연산자 퀴즈 #4"
+  }
+}

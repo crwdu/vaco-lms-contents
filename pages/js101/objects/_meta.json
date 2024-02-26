@@ -1,0 +1,14 @@
+{
+  "objects": {
+    "title": "객체"
+  },
+  "objects-quiz-1": {
+    "title": "객체 퀴즈 #1"
+  },
+  "objects-quiz-2": {
+    "title": "객체 퀴즈 #2"
+  },
+  "objects-quiz-3": {
+    "title": "객체 퀴즈 #3"
+  }
+}

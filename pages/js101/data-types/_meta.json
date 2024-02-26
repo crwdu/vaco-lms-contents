@@ -1,0 +1,29 @@
+{
+  "list-of-types": {
+    "title": "자료형의 종류"
+  },
+  "numbers": {
+    "title": "숫자 자료형"
+  },
+  "numbers-quiz-1": {
+    "title": "숫자 자료형 퀴즈 #1"
+  },
+  "numbers-quiz-2": {
+    "title": "숫자 자료형 퀴즈 #2"
+  },
+  "boolean": {
+    "title": "불리언 자료형"
+  },
+  "null-and-undefined": {
+    "title": "null과 undefined"
+  },
+  "string": {
+    "title": "문자열 자료형"
+  },
+  "string-quiz-1": {
+    "title": "문자열 자료형 퀴즈 #1"
+  },
+  "string-quiz-2": {
+    "title": "문자열 자료형 퀴즈 #2"
+  }
+}

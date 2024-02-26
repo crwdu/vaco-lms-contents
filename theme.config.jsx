@@ -31,13 +31,18 @@ const config = {
   docsRepositoryBase: "https://github.com/shuding/nextra-docs-template",
   sidebar: {
     defaultMenuCollapseLevel: 1,
+    titleComponent: ({ title, type, level }) => {
+      return (
+        <div style={{ textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden" }}>{title}</div>
+      );
+    },
   },
   head: (
     <>
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      <meta property="og:title" content="Nextra" />
-      <meta property="og:description" content="The next site builder" />
-      <title>바닐라코딩 JS101</title>
+      <meta property="og:title" content="바닐라코딩" />
+      <meta property="og:description" content="바닐라코딩" />
+      <title>바닐라코딩</title>
     </>
   ),
   footer: {
