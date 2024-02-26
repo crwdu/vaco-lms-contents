@@ -62,7 +62,7 @@ export default function useGlobalEvents() {
   const [logged100, setLogged100] = useState(false);
   useEffect(() => {
     const logPageScrollEvent = (scrollPercentage) => {
-      eventSender.send(`페이지스크롤 - ${scrollPercentage}%`);
+      eventSender.send("scroll", `${scrollPercentage}%`);
     };
 
     const handleScroll = throttle(() => {

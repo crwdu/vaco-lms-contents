@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 
-type Event = "visit" | "leave" | "copy" | "run_test";
+type ProcessMiningEvent = "visit" | "leave" | "scroll" | "copy" | "run_test";
 
 let user = null;
 
@@ -15,6 +15,12 @@ const getUser = async () => {
       "Content-Type": "application/json",
     },
   });
+
+  if (!userResponse.ok) {
+    alert("로그인 여부를 확인해주세요");
+    location.href = "/";
+  }
+
   const { result: userResult } = await userResponse.json();
 
   user = userResult.data.user;
@@ -25,7 +31,7 @@ const getUser = async () => {
 function useEventSender() {
   const router = useRouter();
 
-  const send = async (event: Event, event_detail: any = null) => {
+  const send = async (event: ProcessMiningEvent, event_detail: any = null) => {
     const user = await getUser();
 
     const eventData = {
