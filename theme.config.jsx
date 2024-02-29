@@ -21,7 +21,7 @@ const config = {
   gitTimestamp: null,
   darkMode: false,
   logo: <Image alt="vaco-logo" src={logo} width={140} height={35} />,
-  logoLink: "/",
+  logoLink: `${process.env.NEXT_PUBLIC_URI}`,
   editLink: {
     component: () => <></>,
   },
