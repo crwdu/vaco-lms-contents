@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "next/image";
 
-import logo from "./public/images/logo/logo_type-bl.png";
+import logo from "./public/images/logo/logo_header.png";
 import mediumIcon from "./public/icons/medium.png";
 import instagramIcon from "./public/icons/instagram.png";
 import facebookIcon from "./public/icons/facebook.png";
@@ -20,7 +20,7 @@ const config = {
   },
   gitTimestamp: null,
   darkMode: false,
-  logo: <Image alt="vaco logo" src={logo} width={150} height={58} />,
+  logo: <Image alt="vaco-logo" src={logo} width={140} height={35} />,
   logoLink: "/",
   editLink: {
     component: () => <></>,
