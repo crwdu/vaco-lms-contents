@@ -6,6 +6,7 @@ import mediumIcon from "./public/icons/medium.png";
 import instagramIcon from "./public/icons/instagram.png";
 import facebookIcon from "./public/icons/facebook.png";
 import youTubeIcon from "./public/icons/youTube.png";
+import favicon from "./public/icons/favicon.png";
 
 const mediumUrl = "https://medium.com/vanilla-coding";
 const instagramUrl = "https://www.instagram.com/vanilla_coding";
@@ -33,7 +34,15 @@ const config = {
     defaultMenuCollapseLevel: 1,
     titleComponent: ({ title, type, level }) => {
       return (
-        <div style={{ textOverflow: "ellipsis", whiteSpace: "nowrap", overflow: "hidden" }}>{title}</div>
+        <div
+          style={{
+            textOverflow: "ellipsis",
+            whiteSpace: "nowrap",
+            overflow: "hidden",
+          }}
+        >
+          {title}
+        </div>
       );
     },
   },
@@ -43,6 +52,7 @@ const config = {
       <meta property="og:title" content="바닐라코딩" />
       <meta property="og:description" content="바닐라코딩" />
       <title>바닐라코딩</title>
+      <link rel="icon" href={favicon.src} type="image/png" />
     </>
   ),
   footer: {
