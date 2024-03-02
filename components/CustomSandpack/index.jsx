@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import {
   SandpackProvider,
   SandpackCodeEditor,
@@ -9,29 +9,43 @@ import {
 import { autocompletion, completionKeymap } from "@codemirror/autocomplete";
 import useEventSender from "../../hooks/useEventSender";
 
-const ListenerIframeMessage = () => {
+const ListenerIframeMessage = ({ testNumber }) => {
   const eventSender = useEventSender();
   const { listen } = useSandpack();
+  const [testResults, setTestResults] = useState([]);
 
   useEffect(() => {
-    const stopListening = listen((msg) => {
+    const handleMessage = (msg) => {
       const { type, event } = msg;
 
       if (type === "test" && event === "test_end") {
         const { test } = msg;
         const { name: testName, status: result } = test;
 
-        eventSender.send("run_test", [{ testName, result }]);
+        setTestResults((prevResults) => [...prevResults, { testName, result }]);
       }
-    });
+    };
+
+    const stopListening = listen(handleMessage);
 
     return () => {
       stopListening();
     };
   }, [listen]);
+
+  useEffect(() => {
+    if (testResults.length === testNumber) {
+      eventSender.send("run_test", testResults);
+      setTestResults([]);
+    }
+  }, [testResults]);
+
+  return null;
 };
 
 export default function CustomSandpack({ files, main = "/app.test.js" }) {
+  const testNumber = files["/app.test.js"].code.split(/it\(|test\(/).length - 1;
+
   return (
     <SandpackProvider
       files={files}
@@ -47,7 +61,7 @@ export default function CustomSandpack({ files, main = "/app.test.js" }) {
       }}
     >
       <SandpackLayout>
-        <ListenerIframeMessage />
+        <ListenerIframeMessage testNumber={testNumber} />
         <SandpackCodeEditor
           showLineNumbers
           showTabs={false}
