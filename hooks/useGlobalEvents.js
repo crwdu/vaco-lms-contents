@@ -55,9 +55,12 @@ export default function useGlobalEvents() {
       eventSender.send("leave");
     };
 
-    router.events.on("beforeHistoryChange", handleRouteChange);
+    router.events.on("routeChangeStart", handleRouteChange);
 
-    // 웹앱 이탈
+    /**
+     * visibliityState가 hidden으로 변함에 따른 이탈 (다른 앱 실행, 화면 잠금, 다른 탭으로 전환 등)
+     * 참고: https://developer.chrome.com/docs/web-platform/page-lifecycle-api
+     */
     const handleVisibilityChange = () => {
       if (document.visibilityState === "hidden") {
         eventSender.send("leave");
@@ -69,13 +72,13 @@ export default function useGlobalEvents() {
     });
 
     return () => {
-      router.events.off("beforeHistoryChange", handleRouteChange);
+      router.events.off("routeChangeStart", handleRouteChange);
 
       document.removeEventListener("visibilitychange", handleVisibilityChange, {
         capture: true,
       });
     };
-  }, []);
+  }, [router]);
 
   // 스크롤 이벤트
   const [logged25, setLogged25] = useState(false);
