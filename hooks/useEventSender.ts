@@ -19,6 +19,7 @@ const getUser = async () => {
   if (!userResponse.ok) {
     alert("로그인 여부를 확인해주세요");
     location.href = "/";
+    return;
   }
 
   const { result: userResult } = await userResponse.json();
