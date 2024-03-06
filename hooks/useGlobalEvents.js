@@ -26,6 +26,28 @@ export default function useGlobalEvents() {
     };
   }, [router]);
 
+  /**
+   * 컨텐츠 진입 - visibilityState가 visible로 변경될 때 (다른 앱에서 복귀, 화면 잠금 해제, 다른 탭에서 본 탭으로 전환 등)
+   * 참고: https://developer.chrome.com/docs/web-platform/page-lifecycle-api
+   */
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === "visible") {
+        eventSender.send("visit");
+      }
+    };
+
+    document.addEventListener("visibilitychange", handleVisibilityChange, {
+      capture: true,
+    });
+
+    return () => {
+      document.removeEventListener("visibilitychange", handleVisibilityChange, {
+        capture: true,
+      });
+    };
+  }, []);
+
   // 컨텐츠 이탈 이벤트
   useEffect(() => {
     // 웹앱 내 다른 컨텐츠로 이탈
