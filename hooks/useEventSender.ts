@@ -17,9 +17,12 @@ const getUser = async () => {
   });
 
   if (!userResponse.ok) {
+    if (process.env.VERCEL_ENV === "development") {
+      return;
+    }
+
     alert("로그인 여부를 확인해주세요");
     location.href = "/";
-    return;
   }
 
   const { result: userResult } = await userResponse.json();
