@@ -35,16 +35,25 @@ const getUser = async () => {
 function useEventSender() {
   const router = useRouter();
 
-  const send = async (event: ProcessMiningEvent, event_detail: any = null) => {
+  /**
+   * Send event to server
+   * @param event 
+   * @param eventDetail 
+   * @param contentPath next/router의 routeChangeComplete 이벤트가 발생할 때 수동으로 pathname 전달하는 용도
+   *                    (next/router에서 접근하는 pathname이 실제 routeChangeComplete 이벤트가 발생할때의 pathname가 아닌 경우가 존재)
+   */
+  const send = async (event: ProcessMiningEvent, eventDetail: any = null, contentPath?: string) => {
     const user = await getUser();
+
+    let finalContentPath = contentPath ? contentPath.replace(router.basePath, "") : router.pathname;
 
     const eventData = {
       user_id: user.id,
       timestamp: new Date().toISOString(),
       course_id: router.basePath,
-      content_path: router.pathname,
+      content_path: finalContentPath,
       event,
-      event_detail,
+      event_detail: eventDetail,
     };
 
     fetch("/api/events", {

@@ -16,7 +16,7 @@ export default function useGlobalEvents() {
   // 컨텐트 진입 - 페이지 이동
   useEffect(() => {
     const handleRouteChange = (url) => {
-      eventSender.send("visit");
+      eventSender.send("visit", undefined, url);
     };
 
     router.events.on("routeChangeComplete", handleRouteChange);
@@ -24,7 +24,7 @@ export default function useGlobalEvents() {
     return () => {
       router.events.off("routeChangeComplete", handleRouteChange);
     };
-  }, [router]);
+  }, [router, eventSender]);
 
   /**
    * 컨텐츠 진입 - visibilityState가 visible로 변경될 때 (다른 앱에서 복귀, 화면 잠금 해제, 다른 탭에서 본 탭으로 전환 등)
@@ -46,7 +46,7 @@ export default function useGlobalEvents() {
         capture: true,
       });
     };
-  }, []);
+  }, [eventSender]);
 
   // 컨텐츠 이탈 이벤트
   useEffect(() => {
