@@ -15,8 +15,8 @@ import messageEnable from "../public/icons/messageEnable.svg";
 import answerAnimation from "../public/animation/loding.json";
 import CustomSandpack from "../components/CustomSandpack";
 
-// import useUser from "../hooks/useUser";
-// import useGlobalEvents from "../hooks/useGlobalEvents";
+import useUser from "../hooks/useUser";
+import useGlobalEvents from "../hooks/useGlobalEvents";
 
 const DEFAULT_CONTAINER_HEIGHT = "72px";
 const DEFAULT_FORMCONTAINER_HEIGHT = "48px";
@@ -26,9 +26,9 @@ const MAX_FROMCONTAINER_HEIGHT = "96px";
 const MAX_TEXTAREA_HEIGHT = "72px";
 
 export default function Nextra({ Component, pageProps }) {
-  // useGlobalEvents();
+  useGlobalEvents();
 
-  const { isLoggedIn } = true;
+  const { isLoggedIn } = useUser();
 
   const [isStartingQna, setQnaStatus] = useState(false);
   const [isQuestionProgressing, setQuestionProgress] = useState(false);
